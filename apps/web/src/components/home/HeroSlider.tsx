@@ -22,7 +22,8 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
   const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
 
-  const handleSearch = () => {
+  const handleSearch = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/pencarian?q=${encodeURIComponent(searchQuery)}`);
     } else {
@@ -129,16 +130,16 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
         </p>
         
         {/* Discovery Bar */}
-        <div className="animate-slide-up-delay-3 bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-2 flex items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto">
+        <form onSubmit={handleSearch} className="animate-slide-up-delay-3 bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-2 flex items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto relative z-50">
           <div className="flex-grow px-6 flex items-center border-r border-gray-200 py-3">
             <MapPin className="text-bandung-hijau mr-4 w-5 h-5 shrink-0" />
-            <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-sm font-semibold tracking-wider" placeholder="Mau pergi ke mana?" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
+            <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-sm font-semibold tracking-wider" placeholder="Mau pergi ke mana?" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}  />
           </div>
           
-          <button onClick={handleSearch} className="bg-[#00C853] text-white px-10 py-4 font-extrabold hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
+          <button type="submit" className="bg-[#00C853] text-white px-10 py-4 font-extrabold hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
             CARI
           </button>
-        </div>
+        </form>
       </div>
 
       {/* Scroll Indicator */}
