@@ -35,8 +35,8 @@ export default function PromoPopup() {
   if (!isOpen) return null;
 
   const backdropCls = `absolute inset-0 bg-black/50 transition-opacity duration-300 ${show ? "opacity-100" : "opacity-0"}`;
-  const cardCls = `relative w-full max-w-sm bg-white rounded-sm overflow-hidden shadow-2xl transition-all duration-300 ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`;
-  const titleCls = `${montserrat.className} text-xl font-bold text-[#1A1A1A] leading-snug mb-2`;
+  const cardCls = `relative w-full max-w-lg bg-white rounded-sm overflow-hidden shadow-2xl transition-all duration-300 ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`;
+  const titleCls = `${montserrat.className} text-2xl font-bold text-[#1A1A1A] leading-snug mb-2`;
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
@@ -53,7 +53,7 @@ export default function PromoPopup() {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="px-7 pt-7 pb-6">
+        <div className="px-8 pt-8 pb-7">
           <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#00C853] bg-[#00C853]/10 px-3 py-1 rounded-full mb-5">
             Pendaftaran Dibuka
           </span>
@@ -63,7 +63,7 @@ export default function PromoPopup() {
             Kota Bandung 2027
           </h2>
 
-          <p className="text-slate-500 text-[13px] leading-relaxed mb-6">
+          <p className="text-slate-500 text-sm leading-relaxed mb-6">
             Daftarkan event unggulan Anda untuk masuk kurasi resmi Disbudpar Kota Bandung.
           </p>
 
