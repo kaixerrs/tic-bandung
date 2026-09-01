@@ -3,17 +3,13 @@ import { Phone, MapPin, Mail, AlertTriangle, MessageCircle, Clock, Globe, ArrowU
 import FAQSection from '@/components/home/FAQSection';
 import { getSiteSettings } from '@/app/actions/cmsActions';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 
 export const metadata: Metadata = {
   title: 'Pusat Bantuan - TIC Kota Bandung',
   description: 'Informasi darurat, kontak resmi, dan FAQ Tourist Information Center Kota Bandung.',
 };
 
-const DestinationMap = dynamic(() => import('@/components/public/DestinationMap'), { 
-  ssr: false,
-  loading: () => <div className="w-full h-full bg-slate-800/50 animate-pulse flex items-center justify-center text-white/50">Memuat Peta...</div>
-});
+import DestinationMapWrapper from '@/components/public/DestinationMapWrapper';
 
 export default async function PusatBantuanPage() {
   const settings = await getSiteSettings();
@@ -170,7 +166,7 @@ export default async function PusatBantuanPage() {
             {/* Right Content - Map */}
             <div className="relative h-[400px] lg:h-auto w-full bg-slate-100">
               <div className="absolute inset-0 z-0 grayscale hover:grayscale-0 transition-all duration-700">
-                <DestinationMap latitude={-6.9217848810924565} longitude={107.60756931267107} name="Tourist Information Center" />
+                <DestinationMapWrapper latitude={-6.9217848810924565} longitude={107.60756931267107} name="Tourist Information Center" />
               </div>
               <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-black/10"></div>
             </div>
