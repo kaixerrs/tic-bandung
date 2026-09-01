@@ -21,11 +21,11 @@ const navLinks = [
 export default function Navbar() {
   const t = useTranslations('Navigation');
   const navLinks = [
-    { name: t('home'), href: '/' },
-    { name: t('destinasi'), href: '/kategori' },
-    { name: t('event'), href: '/event' },
-    { name: t('transportasi'), href: '/transportasi' },
-    { name: t('pusatBantuan'), href: '/pusat-bantuan' },
+    { id: 'home', name: t('home'), href: '/' },
+    { id: 'destinasi', name: t('destinasi'), href: '/kategori' },
+    { id: 'event', name: t('event'), href: '/event' },
+    { id: 'transportasi', name: t('transportasi'), href: '/transportasi' },
+    { id: 'pusatBantuan', name: t('pusatBantuan'), href: '/pusat-bantuan' },
   ];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -75,7 +75,7 @@ export default function Navbar() {
             
             return (
               <Link 
-                key={t(link.name.toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))}
+                key={link.id}
                 href={link.href}
                 className={`relative font-label-caps text-[12px] font-bold uppercase tracking-widest transition-colors duration-300 ${
                   isTransparent 
