@@ -119,7 +119,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
           
           
           <h1 className="text-[48px] md:text-[80px] lg:text-[96px] font-extrabold leading-[0.95] text-white uppercase tracking-wider drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] mb-6 md:mb-10 z-10 relative">
-            PESONA
+            PESONA KOTA
           </h1>
           
           <h1 className={`${allisonFont.className} text-[130px] md:text-[200px] lg:text-[260px] leading-[0.4] text-[#00C853] mb-8 mt-[-15px] md:mt-[-30px] lg:mt-[-40px] z-10 relative`} style={{ textShadow: '0 4px 20px rgba(0, 200, 83, 0.5), 0 0 80px rgba(0, 122, 51, 0.3)' }}>
