@@ -20,9 +20,10 @@ interface DestinationMapProps {
   latitude?: number | null;
   longitude?: number | null;
   name: string;
+  zoom?: number;
 }
 
-export default function DestinationMap({ latitude, longitude, name }: DestinationMapProps) {
+export default function DestinationMap({ latitude, longitude, name, zoom }: DestinationMapProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export default function DestinationMap({ latitude, longitude, name }: Destinatio
     <div className="w-full h-full rounded-sm overflow-hidden shadow-soft border border-gray-100">
       <MapContainer 
         center={[lat, lng]} 
-        zoom={15} 
+        zoom={zoom || 15} 
         scrollWheelZoom={false}
         className="w-full h-full"
       >
