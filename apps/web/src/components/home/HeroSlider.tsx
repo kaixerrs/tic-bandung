@@ -150,8 +150,8 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
       </div>
 
       {/* Slide Info & Indicators - Bottom Right */}
-      <div className="absolute bottom-8 right-6 md:right-10 flex flex-col items-end gap-3 z-30 text-right max-w-xs md:max-w-sm lg:max-w-md">
-        <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end bg-black/40 backdrop-blur-md border border-white/20 p-5 md:p-6 rounded-[2px] shadow-2xl">
+      <div className="absolute bottom-8 right-6 md:right-10 flex flex-col items-end gap-3 z-30 text-right w-[90%] max-w-[280px] sm:max-w-xs">
+        <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end bg-black/40 backdrop-blur-md border border-white/20 p-4 rounded-[2px] shadow-2xl w-full">
           <h3 className="text-white font-display font-bold text-xl md:text-2xl lg:text-3xl drop-shadow-md mb-2">
             {sliders[currentIndex]?.title}
           </h3>
