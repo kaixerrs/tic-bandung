@@ -165,7 +165,7 @@ export default async function PusatBantuanPage() {
 
             {/* Right Content - Map */}
             <div className="relative h-[400px] lg:h-auto w-full bg-slate-100">
-              <div className="absolute inset-0 z-0 grayscale hover:grayscale-0 transition-all duration-700">
+              <div className="absolute inset-0 z-0 transition-all duration-700">
                 <DestinationMapWrapper latitude={-6.9217848810924565} longitude={107.60756931267107} name="Tourist Information Center" zoom={17} />
               </div>
               <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-black/10"></div>
