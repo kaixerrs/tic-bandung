@@ -159,7 +159,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
             {sliders[currentIndex]?.subtitle}
           </p>
           {sliders[currentIndex]?.button_link && (
-            <Link href={sliders[currentIndex].button_link as string} className="inline-flex items-center justify-end gap-2 mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-[2px] text-[10px] md:text-xs font-label-caps tracking-widest text-bandung-kuning hover:text-white transition-all">
+            <Link href={sliders[currentIndex].button_link as string} className="inline-flex items-center justify-end gap-2 mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-[2px] text-[10px] md:text-xs font-bold uppercase tracking-widest text-bandung-kuning hover:text-white transition-all">
               JELAJAHI SEKARANG <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
             </Link>
           )}
