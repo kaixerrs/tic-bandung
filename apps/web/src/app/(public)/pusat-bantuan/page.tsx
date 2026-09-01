@@ -54,7 +54,7 @@ export default async function PusatBantuanPage() {
     <main className="min-h-screen bg-[#f8fafc] flex-grow flex flex-col">
       
       {/* PREMIUM HERO BANNER */}
-      <section className="relative w-full pt-32 md:pt-40 pb-24 md:pb-32 px-4 md:px-8 overflow-hidden bg-slate-900 flex items-center justify-center">
+      <section className="relative w-full pt-24 md:pt-28 pb-24 md:pb-32 px-4 md:px-8 overflow-hidden bg-slate-900 flex items-center justify-center">
         {/* Abstract Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-96 h-96 bg-bandung-hijau/20 rounded-full blur-3xl"></div>
