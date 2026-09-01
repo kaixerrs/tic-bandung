@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   description: 'Informasi darurat, kontak resmi, dan FAQ Tourist Information Center Kota Bandung.',
 };
 
+const DestinationMap = dynamic(() => import('@/components/public/DestinationMap'), { 
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-slate-800/50 animate-pulse flex items-center justify-center text-white/50">Memuat Peta...</div>
+});
+
 export default async function PusatBantuanPage() {
   const settings = await getSiteSettings();
 
