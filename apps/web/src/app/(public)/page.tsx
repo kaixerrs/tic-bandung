@@ -4,6 +4,7 @@ import { Search, Map, Utensils, Sun, Landmark, Calendar, MapPin, Bus, Star, Comp
 import HeroSlider from '@/components/home/HeroSlider';
 import CoECountdownBanner from '@/components/home/CoECountdownBanner';
 import PromoPopup from '@/components/home/PromoPopup';
+import FAQSection from '@/components/home/FAQSection';
 import { createClient } from '@/utils/supabase/server';
 import { Montserrat } from 'next/font/google';
 
@@ -251,6 +252,9 @@ export default async function LandingPage() {
           )}
         </div>
       </section>
+
+      {/* FAQ SECTION */}
+      <FAQSection />
     </main>
   );
 }
