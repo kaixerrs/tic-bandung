@@ -13,7 +13,7 @@ const navLinks = [
   { name: 'Destinasi Wisata', href: '/kategori' },
   { name: 'Calendar of Event', href: '/event' },
   { name: 'Transportasi', href: '/transportasi' },
-  { name: 'Maps', href: '/peta' },
+  { name: 'Pusat Bantuan', href: '/pusat-bantuan' },
 ];
 
 export default function Navbar() {
