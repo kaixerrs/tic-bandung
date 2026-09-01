@@ -50,8 +50,8 @@ export default function Navbar() {
 
   return (
         <nav 
-      className={`${(normalizedPathname === '/' || normalizedPathname === '/id' || normalizedPathname === '/en') ? 'fixed' : 'sticky'} top-0 w-full z-[2000] transition-all duration-300 ${
-        scrolled || !(normalizedPathname === '/' || normalizedPathname === '/id' || normalizedPathname === '/en')
+      className={`${normalizedPathname === '/' ? 'fixed' : 'sticky'} top-0 w-full z-[2000] transition-all duration-300 ${
+        scrolled || normalizedPathname !== '/'
           ? 'bg-white/90 backdrop-blur-md py-3 border-b border-slate-200 shadow-sm' 
           : 'bg-transparent py-6 border-b border-white/20'
       }`}
@@ -61,10 +61,10 @@ export default function Navbar() {
         <Link href="/" className="flex-shrink-0 transition-transform hover:scale-105 flex items-center gap-2 md:gap-3">
           <img src="/logo/tictransparan.png" alt="TIC Kota Bandung" className="h-10 md:h-12 w-auto" />
           <div className="flex flex-col drop-shadow-md">
-            <span className={`text-sm md:text-lg font-bold leading-tight ${scrolled || !(normalizedPathname === '/' || normalizedPathname === '/id' || normalizedPathname === '/en') ? 'text-slate-900' : 'text-white'}`}>
+            <span className={`text-sm md:text-lg font-bold leading-tight ${scrolled || normalizedPathname !== '/' ? 'text-slate-900' : 'text-white'}`}>
               KOTA BANDUNG
             </span>
-            <span className={`font-label-caps text-[8px] md:text-[10px] ${scrolled || !(normalizedPathname === '/' || normalizedPathname === '/id' || normalizedPathname === '/en') ? 'text-[#00C853]' : 'text-white/80'}`}>
+            <span className={`font-label-caps text-[8px] md:text-[10px] ${scrolled || normalizedPathname !== '/' ? 'text-[#00C853]' : 'text-white/80'}`}>
               TOURIST INFORMATION CENTER
             </span>
           </div>
@@ -74,7 +74,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => {
             const isActive = normalizedPathname === link.href || (link.href !== '/' && normalizedPathname.startsWith(link.href));
-            const isTransparent = (normalizedPathname === '/' || normalizedPathname === '/id' || normalizedPathname === '/en') && !scrolled;
+            const isTransparent = normalizedPathname === '/' && !scrolled;
             
             return (
               <Link 
@@ -98,7 +98,7 @@ export default function Navbar() {
           <Link 
             href="/paket-wisata"
             className={`px-8 py-3 font-label-caps uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2 ${
-              (normalizedPathname === '/' || normalizedPathname === '/id' || normalizedPathname === '/en') && !scrolled
+              normalizedPathname === '/' && !scrolled
                 ? 'bg-white text-[#1A1A1A] hover:bg-[#00C853] hover:text-white'
                 : 'bg-[#00C853] text-white hover:bg-[#0050A2] hover:text-white'
             }`}
@@ -109,7 +109,7 @@ export default function Navbar() {
 
         {/* Mobile Toggle Button */}
         <button 
-          className={`lg:hidden p-2 rounded-full transition-colors ${(normalizedPathname === '/' || normalizedPathname === '/id' || normalizedPathname === '/en') && !scrolled ? 'text-white hover:bg-white/20' : 'text-slate-700 hover:bg-slate-100'}`}
+          className={`lg:hidden p-2 rounded-full transition-colors ${normalizedPathname === '/' && !scrolled ? 'text-white hover:bg-white/20' : 'text-slate-700 hover:bg-slate-100'}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
