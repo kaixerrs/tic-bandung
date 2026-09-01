@@ -11,5 +11,30 @@
     "subtitle": "Find essential information, emergency contacts, and answers to frequently asked questions regarding your trip to Bandung.",
     "emergencyContacts": "Official Emergency Contacts",
     "openMap": "Open Map"
+  },
+  "Home": {
+    "eksplorasi": "Exploration",
+    "destinasi": "Destinations",
+    "ikonKota": "CITY ICON",
+    "alamRekreasi": "NATURE & RECREATION",
+    "warisan": "HERITAGE",
+    "limaPuluhPlus": "50+<br/>Destinations",
+    "jelajahi": "Explore",
+    "updateTerkini": "Latest Updates",
+    "artikel": "Articles",
+    "lihatSemua": "View All",
+    "baca": "READ",
+    "visualKota": "City Visuals",
+    "galeri": "Gallery",
+    "lihatSemuaFoto": "VIEW ALL PHOTOS"
+  },
+  "Components": {
+    "bacaSelengkapnya": "Read More",
+    "lihatPromo": "View Promo",
+    "tutup": "Close",
+    "promoEksklusif": "Exclusive Promo!",
+    "butuhBantuan": "Need Help?",
+    "pusatBantuanTIC": "TIC Help Center",
+    "lihatSemuaPertanyaan": "View All Questions"
   }
 }

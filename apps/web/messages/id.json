@@ -11,5 +11,30 @@
     "subtitle": "Temukan informasi penting, kontak darurat, dan jawaban atas pertanyaan umum terkait perjalanan Anda di Kota Bandung.",
     "emergencyContacts": "Kontak Darurat Resmi",
     "openMap": "Buka Peta"
+  },
+  "Home": {
+    "eksplorasi": "Eksplorasi",
+    "destinasi": "Destinasi",
+    "ikonKota": "IKON KOTA",
+    "alamRekreasi": "ALAM & REKREASI",
+    "warisan": "WARISAN",
+    "limaPuluhPlus": "50+<br/>Destinasi",
+    "jelajahi": "Jelajahi",
+    "updateTerkini": "Update Terkini",
+    "artikel": "Artikel",
+    "lihatSemua": "Lihat Semua",
+    "baca": "BACA",
+    "visualKota": "Visual Kota",
+    "galeri": "Galeri",
+    "lihatSemuaFoto": "LIHAT SEMUA FOTO"
+  },
+  "Components": {
+    "bacaSelengkapnya": "Baca Selengkapnya",
+    "lihatPromo": "Lihat Promo",
+    "tutup": "Tutup",
+    "promoEksklusif": "Promo Eksklusif!",
+    "butuhBantuan": "Butuh Bantuan?",
+    "pusatBantuanTIC": "Pusat Bantuan TIC",
+    "lihatSemuaPertanyaan": "Lihat Semua Pertanyaan"
   }
 }

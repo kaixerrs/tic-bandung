@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { MapPin, Calendar, ChevronDown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -19,6 +20,7 @@ interface SliderData {
 }
 
 export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
+  const t = useTranslations('Components');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();

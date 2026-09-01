@@ -8,6 +8,7 @@ import { Montserrat } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "700", "900"] });
 
 export default function PromoPopup() {
+  const t = useTranslations('Components');
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

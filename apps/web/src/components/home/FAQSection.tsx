@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
@@ -27,6 +28,7 @@ const faqs = [
 ];
 
 export default function FAQSection() {
+  const t = useTranslations('Components');
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFAQ = (index: number) => {

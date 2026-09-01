@@ -7,6 +7,7 @@ import PromoPopup from '@/components/home/PromoPopup';
 import FAQSection from '@/components/home/FAQSection';
 import { createClient } from '@/utils/supabase/server';
 import { Montserrat } from 'next/font/google';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '700', '900'] });
 
@@ -14,7 +15,10 @@ const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '700'
 
 export const revalidate = 3600; // Cache for 1 hour
 
-export default async function LandingPage() {
+export default async function LandingPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations('Home');
   const supabase = await createClient();
 
   // Fetch Hero Sliders
@@ -127,8 +131,8 @@ export default async function LandingPage() {
       {/* REKOMENDASI DESTINASI WISATA - HIDDEN PER USER REQUEST */}
       {false && <section className="py-12 md:py-24 px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto relative z-10">
         <div className="text-center mb-10 md:mb-20 border-b border-outline-variant/30 pb-8">
-          <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">Eksplorasi</span>
-          <h2 className="font-headline-lg text-[40px] md:text-[64px] font-black text-[#1A1A1A] uppercase tracking-widest leading-none">Destinasi</h2>
+          <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">{t('eksplorasi')}</span>
+          <h2 className="font-headline-lg text-[40px] md:text-[64px] font-black text-[#1A1A1A] uppercase tracking-widest leading-none">{t('destinasi')}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-[auto_auto] gap-4 md:gap-8 md:h-[600px] lg:h-[800px]">
           {/* Main Large Card */}
@@ -140,7 +144,7 @@ export default async function LandingPage() {
             )}
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>
             <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full bg-gradient-to-t from-black/80 to-transparent">
-              <span className="border border-[#FFCC00] text-[#FFCC00] px-4 py-2 font-label-caps text-[10px] mb-4 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">IKON KOTA</span>
+              <span className="border border-[#FFCC00] text-[#FFCC00] px-4 py-2 font-label-caps text-[10px] mb-4 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">{t('ikonKota')}</span>
               <h3 className="font-headline-lg text-3xl md:text-headline-lg text-white uppercase tracking-widest">Gedung Sate</h3>
             </div>
           </Link>
@@ -153,7 +157,7 @@ export default async function LandingPage() {
             )}
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>
             <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full bg-gradient-to-t from-black/80 to-transparent">
-              <span className="border border-[#FFCC00] text-[#FFCC00] px-4 py-2 font-label-caps text-[10px] mb-4 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">ALAM & REKREASI</span>
+              <span className="border border-[#FFCC00] text-[#FFCC00] px-4 py-2 font-label-caps text-[10px] mb-4 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">{t('alamRekreasi')}</span>
               <h3 className="font-headline-md text-2xl md:text-headline-md text-white uppercase tracking-widest">Alun-Alun</h3>
             </div>
           </Link>
@@ -166,14 +170,14 @@ export default async function LandingPage() {
             )}
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>
             <div className="absolute bottom-0 left-0 p-4 md:p-6 w-full bg-gradient-to-t from-black/80 to-transparent">
-              <span className="border border-[#FFCC00] text-[#FFCC00] px-3 py-1 font-label-caps text-[10px] mb-3 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">WARISAN</span>
+              <span className="border border-[#FFCC00] text-[#FFCC00] px-3 py-1 font-label-caps text-[10px] mb-3 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">{t('warisan')}</span>
               <h3 className="font-body-lg text-lg md:text-body-lg font-bold text-white uppercase tracking-wider">Jalan Braga</h3>
             </div>
           </Link>
           <Link href="/kategori" className="md:col-span-1 relative overflow-hidden bg-[#00C853] group cursor-pointer flex flex-col items-center justify-center p-6 md:p-8 text-center h-[250px] md:h-auto hover:bg-[#1A1A1A] transition-all duration-500 rounded-sm hover:shadow-electric-green hover:-translate-y-2">
-            <h3 className="font-headline-md text-3xl md:text-headline-md text-white mb-6 uppercase tracking-widest">50+<br/>Destinasi</h3>
+            <h3 className="font-headline-md text-3xl md:text-headline-md text-white mb-6 uppercase tracking-widest" dangerouslySetInnerHTML={{ __html: t('limaPuluhPlus') }}></h3>
             <span className="text-white font-label-caps text-[14px] font-bold flex items-center uppercase tracking-widest border-b-2 border-white pb-1">
-              Jelajahi <ArrowRight className="ml-3 w-4 h-4" />
+              {t('jelajahi')} <ArrowRight className="ml-3 w-4 h-4" />
             </span>
           </Link>
         </div>
@@ -183,11 +187,11 @@ export default async function LandingPage() {
       <section className="py-12 md:py-24 px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-20 border-b border-outline-variant/30 pb-8">
           <div>
-            <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">Update Terkini</span>
-            <h2 className="font-headline-lg text-[40px] md:text-[64px] font-black text-[#1A1A1A] uppercase tracking-widest leading-none">Artikel</h2>
+            <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">{t('updateTerkini')}</span>
+            <h2 className="font-headline-lg text-[40px] md:text-[64px] font-black text-[#1A1A1A] uppercase tracking-widest leading-none">{t('artikel')}</h2>
           </div>
           <Link href="/berita" className="mt-6 md:mt-0 text-[#00C853] font-bold flex items-center hover:text-[#009e42] transition-colors text-[14px] md:text-[16px] uppercase tracking-widest">
-            Lihat Semua <ArrowRight className="ml-4 w-5 h-5" />
+            {t('lihatSemua')} <ArrowRight className="ml-4 w-5 h-5" />
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
@@ -219,8 +223,8 @@ export default async function LandingPage() {
       <section className="py-12 md:py-24 px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-20 border-b border-outline-variant/30 pb-8">
           <div>
-            <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">Visual Kota</span>
-            <h2 className="font-headline-lg text-[40px] md:text-[64px] font-black text-[#1A1A1A] uppercase tracking-widest leading-none">Galeri</h2>
+            <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">{t('visualKota')}</span>
+            <h2 className="font-headline-lg text-[40px] md:text-[64px] font-black text-[#1A1A1A] uppercase tracking-widest leading-none">{t('galeri')}</h2>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-[auto_auto] gap-4 md:gap-6 md:h-[500px] lg:h-[600px]">
