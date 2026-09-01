@@ -164,13 +164,12 @@ export default async function PusatBantuanPage() {
             {/* Right Content - Map */}
             <div className="relative h-[400px] lg:h-auto w-full bg-slate-100">
               <iframe 
-                src="https://maps.google.com/maps?width=100%25&height=600&hl=id&q=-6.9217848810924565,107.60756931267107+(Tourist%20Information%20Center%20Bandung)&t=&z=17&ie=UTF8&iwloc=B&output=embed"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=107.597569%2C-6.931784%2C107.617569%2C-6.911784&layer=mapnik&marker=-6.9217848810924565%2C107.60756931267107"
                 width="100%" 
                 height="100%" 
                 style={{border:0}} 
                 allowFullScreen={true} 
                 loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
                 className="absolute inset-0 grayscale hover:grayscale-0 transition-all duration-700"
               ></iframe>
               <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-black/10"></div>
