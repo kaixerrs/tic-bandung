@@ -37,7 +37,7 @@ export default function FAQSection() {
     <section className="w-full bg-slate-50 relative z-10">
       <div className="py-16 md:py-24 px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20">
         <div className="md:w-1/3">
-          <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">Bantuan Pintar</span>
+          <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">Pusat Informasi</span>
           <h2 className="font-headline-lg text-[36px] md:text-[56px] font-black text-[#1A1A1A] uppercase tracking-widest leading-[1.1] mb-6">Tanya<br/>Jawab</h2>
           <p className="text-on-surface-variant font-body-md leading-relaxed text-sm md:text-base">
             Temukan jawaban untuk pertanyaan yang paling sering diajukan oleh para pelancong tentang pesona Kota Bandung.
