@@ -46,7 +46,7 @@ export default async function PublicLayout({
               <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 mb-2">Layanan</h4>
               <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href="/trip-planner">Trip Planner</Link>
               <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href="/peta">Peta Interaktif</Link>
-              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href="#">Pusat Bantuan</Link>
+              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href="/pusat-bantuan">Pusat Bantuan</Link>
             </div>
             <div className="flex flex-col gap-4">
               <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 mb-2">Informasi</h4>
