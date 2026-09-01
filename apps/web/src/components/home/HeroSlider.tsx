@@ -151,7 +151,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
 
       {/* Slide Info & Indicators - Bottom Right */}
       <div className="absolute bottom-8 right-6 md:right-10 flex flex-col items-end gap-3 z-30 text-right max-w-xs md:max-w-sm lg:max-w-md">
-        <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end">
+        <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end bg-black/40 backdrop-blur-md border border-white/20 p-5 md:p-6 rounded-[2px] shadow-2xl">
           <h3 className="text-white font-display font-bold text-xl md:text-2xl lg:text-3xl drop-shadow-md mb-2">
             {sliders[currentIndex]?.title}
           </h3>
@@ -159,7 +159,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
             {sliders[currentIndex]?.subtitle}
           </p>
           {sliders[currentIndex]?.button_link && (
-            <Link href={sliders[currentIndex].button_link as string} className="inline-flex items-center justify-end gap-2 mt-3 text-[10px] md:text-xs font-label-caps tracking-widest text-bandung-kuning hover:text-white transition-colors">
+            <Link href={sliders[currentIndex].button_link as string} className="inline-flex items-center justify-end gap-2 mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-[2px] text-[10px] md:text-xs font-label-caps tracking-widest text-bandung-kuning hover:text-white transition-all">
               JELAJAHI SEKARANG <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
             </Link>
           )}
