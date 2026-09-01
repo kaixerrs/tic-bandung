@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, Calendar, ChevronDown } from 'lucide-react';
+import { MapPin, Calendar, ChevronDown, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Noto_Sans_Sundanese, Allison } from 'next/font/google';
 const allisonFont = Allison({ subsets: ['latin'], weight: '400' });
@@ -148,18 +149,34 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
         <ChevronDown className="w-5 h-5 text-white/50" />
       </div>
 
-      {/* Slider Indicators - Bottom Right */}
-      <div className="absolute bottom-8 right-6 md:right-10 flex gap-3 z-30">
-        {sliders.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`h-1.5 transition-all duration-500 rounded-full ${
-              index === currentIndex ? "w-12 bg-bandung-kuning shadow-electric-yellow" : "w-4 bg-white/40 hover:bg-white/60"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+      {/* Slide Info & Indicators - Bottom Right */}
+      <div className="absolute bottom-8 right-6 md:right-10 flex flex-col items-end gap-3 z-30 text-right max-w-xs md:max-w-sm lg:max-w-md">
+        <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end">
+          <h3 className="text-white font-display font-bold text-xl md:text-2xl lg:text-3xl drop-shadow-md mb-2">
+            {sliders[currentIndex]?.title}
+          </h3>
+          <p className="text-white/90 font-body text-xs md:text-sm drop-shadow-sm line-clamp-3">
+            {sliders[currentIndex]?.subtitle}
+          </p>
+          {sliders[currentIndex]?.button_link && (
+            <Link href={sliders[currentIndex].button_link as string} className="inline-flex items-center justify-end gap-2 mt-3 text-[10px] md:text-xs font-label-caps tracking-widest text-bandung-kuning hover:text-white transition-colors">
+              JELAJAHI SEKARANG <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+            </Link>
+          )}
+        </div>
+
+        <div className="flex gap-3 mt-2">
+          {sliders.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-1.5 transition-all duration-500 rounded-full ${
+                index === currentIndex ? "w-12 bg-bandung-kuning shadow-electric-yellow" : "w-4 bg-white/40 hover:bg-white/60"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </header>
   );
