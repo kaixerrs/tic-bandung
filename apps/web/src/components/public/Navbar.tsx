@@ -94,7 +94,7 @@ export default function Navbar() {
 
         {/* Desktop Right Side - Paket Wisata Button */}
         <div className="hidden lg:flex items-center gap-5">
-          <LanguageSwitcher />
+          <LanguageSwitcher isTransparent={normalizedPathname === '/' && !scrolled} />
           <Link 
             href="/paket-wisata"
             className={`px-8 py-3 font-label-caps uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2 ${

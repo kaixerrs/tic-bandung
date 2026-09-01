@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 import { useState } from 'react';
 import { Globe } from 'lucide-react';
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ isTransparent = false }: { isTransparent?: boolean }) {
   const router = useRouter();
   const pathname = usePathname();
   const currentLocale = useLocale();
@@ -25,10 +25,10 @@ export default function LanguageSwitcher() {
     <div className="relative">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors"
+        className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-colors ${isTransparent ? "border-white/40 hover:bg-white/10" : "border-gray-200 hover:bg-gray-50"}`}
       >
-        <Globe className="w-4 h-4 text-primary" />
-        <span className="text-sm font-bold">{currentLocale.toUpperCase()}</span>
+        <Globe className={`w-4 h-4 ${isTransparent ? "text-white" : "text-primary"}`} />
+        <span className={`text-sm font-bold ${isTransparent ? "text-white" : "text-slate-700"}`}>{currentLocale.toUpperCase()}</span>
       </button>
 
       {isOpen && (
