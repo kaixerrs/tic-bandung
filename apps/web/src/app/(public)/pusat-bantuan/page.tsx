@@ -150,7 +150,7 @@ export default async function PusatBantuanPage() {
                   Chat WhatsApp
                 </a>
                 <a 
-                  href="https://maps.google.com/maps?q=Tourist%20Information%20Center%20Bandung" 
+                  href="https://www.google.com/maps?q=-6.9217848810924565,107.60756931267107" 
                   target="_blank" 
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-3 bg-white text-slate-700 border-2 border-slate-200 px-8 py-4 font-bold rounded-[2px] hover:border-slate-300 hover:bg-slate-50 transition-all duration-300 font-label-caps tracking-widest text-sm"
@@ -164,7 +164,7 @@ export default async function PusatBantuanPage() {
             {/* Right Content - Map */}
             <div className="relative h-[400px] lg:h-auto w-full bg-slate-100">
               <a 
-                href="https://maps.google.com/maps?q=Tourist%20Information%20Center%20Bandung" 
+                href="https://www.google.com/maps?q=-6.9217848810924565,107.60756931267107" 
                 target="_blank"
                 rel="noreferrer"
                 className="absolute inset-0 group-hover:scale-105 transition-all duration-700 block cursor-pointer"
