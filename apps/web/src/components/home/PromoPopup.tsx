@@ -88,7 +88,7 @@ export default function PromoPopup() {
         <div className="bg-white p-8 text-center">
           <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200/50 text-amber-700 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider mb-5">
             <Clock className="w-3 h-3" />
-            Registration Closing Soon
+            Pendaftaran Dibuka
           </div>
 
           <h2 className={`${montserrat.className} text-2xl font-black text-slate-900 mb-3 leading-tight`}>
