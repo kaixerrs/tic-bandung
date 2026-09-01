@@ -3,6 +3,7 @@ import { Phone, MapPin, Mail, AlertTriangle, MessageCircle, Clock, Globe, ArrowU
 import FAQSection from '@/components/home/FAQSection';
 import { getSiteSettings } from '@/app/actions/cmsActions';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 export const metadata: Metadata = {
   title: 'Pusat Bantuan - TIC Kota Bandung',
