@@ -171,16 +171,26 @@ export default async function PusatBantuanPage() {
 
             {/* Right Content - Map */}
             <div className="relative h-[400px] lg:h-auto w-full bg-slate-100">
-              <iframe 
-                src="https://maps.google.com/maps?q=Tourist%20Information%20Center%20Bandung&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-                width="100%" 
-                height="100%" 
-                style={{border:0}} 
-                allowFullScreen={true} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 grayscale hover:grayscale-0 transition-all duration-700"
-              ></iframe>
+              <a 
+                href="https://maps.google.com/maps?q=Tourist%20Information%20Center%20Bandung" 
+                target="_blank"
+                rel="noreferrer"
+                className="absolute inset-0 group-hover:scale-105 transition-all duration-700 block cursor-pointer"
+              >
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: "url('/ASET VISUAL/jalan-asia-afrika.jpg')" }}
+                ></div>
+                <div className="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors duration-500"></div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="bg-white p-4 rounded-full shadow-2xl shadow-black/50 mb-4 animate-bounce">
+                    <MapPin className="w-8 h-8 text-[#00C853]" />
+                  </div>
+                  <span className="bg-white/90 backdrop-blur-sm px-6 py-2 rounded-full font-label-caps text-sm font-bold text-slate-800 shadow-xl">
+                    Buka Peta Interaktif
+                  </span>
+                </div>
+              </a>
               <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-black/10"></div>
             </div>
 
