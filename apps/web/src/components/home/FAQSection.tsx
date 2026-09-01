@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     question: "Di mana lokasi kantor fisik TIC Bandung?",
-    answer: "Kantor utama kami terletak di jantung kota, yaitu di Jl. Asia Afrika No. 1, tepat di sekitar kawasan bersejarah Alun-Alun dan Gedung Merdeka. Kami buka setiap hari mulai pukul 08:00 WIB hingga 16:00 WIB."
+    answer: "Kantor utama kami terletak di Jl. Alun-Alun Timur, Balonggede, Kec. Regol, Kota Bandung, Jawa Barat 40251. Kami buka setiap hari mulai pukul 08:00 WIB hingga 16:00 WIB."
   },
   {
     question: "Bagaimana cara menuju ke Bandung menggunakan transportasi umum?",

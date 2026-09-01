@@ -62,7 +62,7 @@ export default async function PublicLayout({
                   {settings?.address ? (
                     <><strong>Tourist Information Center (TIC)</strong><br/>{settings.address}</>
                   ) : (
-                    <><strong>Tourist Information Center (TIC)</strong><br/>Jl. Asia Afrika No. 1<br/>Kota Bandung</>
+                    <><strong>Tourist Information Center (TIC)</strong><br/>Jl. Alun-Alun Timur, Balonggede<br/>Kec. Regol, Kota Bandung 40251</>
                   )}
                 </span>
               </p>
