@@ -1,0 +1,15 @@
+﻿{
+  "Navigation": {
+    "home": "Home",
+    "destinasi": "Destinations",
+    "pusatBantuan": "Help Center",
+    "event": "Events",
+    "transportasi": "Transport"
+  },
+  "HelpCenter": {
+    "title": "Help Center",
+    "subtitle": "Find essential information, emergency contacts, and answers to frequently asked questions regarding your trip to Bandung.",
+    "emergencyContacts": "Official Emergency Contacts",
+    "openMap": "Open Map"
+  }
+}

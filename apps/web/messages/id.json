@@ -1,0 +1,15 @@
+﻿{
+  "Navigation": {
+    "home": "Beranda",
+    "destinasi": "Destinasi Wisata",
+    "pusatBantuan": "Pusat Bantuan",
+    "event": "Event & Kegiatan",
+    "transportasi": "Transportasi"
+  },
+  "HelpCenter": {
+    "title": "Pusat Bantuan",
+    "subtitle": "Temukan informasi penting, kontak darurat, dan jawaban atas pertanyaan umum terkait perjalanan Anda di Kota Bandung.",
+    "emergencyContacts": "Kontak Darurat Resmi",
+    "openMap": "Buka Peta"
+  }
+}

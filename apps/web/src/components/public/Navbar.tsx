@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, Globe } from 'lucide-react';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 import { Montserrat } from 'next/font/google';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '600', '700', '900'] });
@@ -17,6 +19,14 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const t = useTranslations('Navigation');
+  const navLinks = [
+    { name: t('home'), href: '/' },
+    { name: t('destinasi'), href: '/kategori' },
+    { name: t('event'), href: '/event' },
+    { name: t('transportasi'), href: '/transportasi' },
+    { name: t('pusatBantuan'), href: '/pusat-bantuan' },
+  ];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -65,7 +75,7 @@ export default function Navbar() {
             
             return (
               <Link 
-                key={link.name}
+                key={t(link.name.toLowerCase().replace(/[^a-zA-Z0-9]/g, ''))}
                 href={link.href}
                 className={`relative font-label-caps text-[12px] font-bold uppercase tracking-widest transition-colors duration-300 ${
                   isTransparent 
@@ -81,6 +91,7 @@ export default function Navbar() {
 
         {/* Desktop Right Side - Paket Wisata Button */}
         <div className="hidden lg:flex items-center gap-5">
+          <LanguageSwitcher />
           <Link 
             href="/paket-wisata"
             className={`px-8 py-3 font-label-caps uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2 ${
@@ -125,7 +136,10 @@ export default function Navbar() {
             );
           })}
           
-          <div className="pt-4 mt-2 border-t border-slate-100">
+          <div className="pt-4 mt-2 border-t border-slate-100 flex flex-col gap-3">
+            <div className="flex justify-center">
+              <LanguageSwitcher />
+            </div>
             <Link 
               href="/paket-wisata"
               onClick={() => setIsOpen(false)}

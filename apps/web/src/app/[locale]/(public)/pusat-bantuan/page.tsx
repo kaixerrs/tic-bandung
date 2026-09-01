@@ -11,8 +11,12 @@ export const metadata: Metadata = {
 
 import DestinationMapWrapper from '@/components/public/DestinationMapWrapper';
 
-export default async function PusatBantuanPage() {
+import { getTranslations } from 'next-intl/server';
+
+export default async function PusatBantuanPage({ params }: { params: Promise<{ locale: string }> }) {
   const settings = await getSiteSettings();
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'HelpCenter' });
 
   const emergencyContacts = [
     {
