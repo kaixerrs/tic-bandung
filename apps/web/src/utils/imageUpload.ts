@@ -1,6 +1,4 @@
-import { createClient } from '@/utils/supabase/client';
-
-/**
+﻿/**
  * Compresses an image File to WebP format using HTML Canvas
  * @param file The original image File
  * @param maxWidth The maximum width for the image (aspect ratio is maintained)
@@ -37,7 +35,6 @@ export function compressImageToWebp(file: File, maxWidth = 1200, quality = 0.8):
         canvas.toBlob(
           (blob) => {
             if (blob) {
-              // Convert blob to File
               const newFileName = file.name.replace(/\.[^/.]+$/, "") + ".webp";
               const newFile = new File([blob], newFileName, {
                 type: 'image/webp',
@@ -59,31 +56,26 @@ export function compressImageToWebp(file: File, maxWidth = 1200, quality = 0.8):
 }
 
 /**
- * Uploads a file to Supabase Storage 'uploads' bucket
+ * Uploads a file via our secure server-side API route
  * @param file The file to upload
  * @param folder Optional subfolder inside the bucket (e.g. 'hero', 'news', 'gallery')
  * @returns The public URL of the uploaded image
  */
 export async function uploadToSupabase(file: File, folder = 'general'): Promise<string> {
-  const supabase = createClient();
-  const fileExt = file.name.split('.').pop();
-  const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-  const filePath = `${folder}/${fileName}`;
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('folder', folder);
 
-  const { data, error } = await supabase.storage
-    .from('uploads')
-    .upload(filePath, file, {
-      cacheControl: '3600',
-      upsert: false
-    });
+  const response = await fetch('/api/upload', {
+    method: 'POST',
+    body: formData,
+  });
 
-  if (error) {
-    throw new Error(`Upload failed: ${error.message}`);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Upload failed: ${errorData.error || response.statusText}`);
   }
 
-  const { data: { publicUrl } } = supabase.storage
-    .from('uploads')
-    .getPublicUrl(filePath);
-
-  return publicUrl;
+  const data = await response.json();
+  return data.publicUrl;
 }
