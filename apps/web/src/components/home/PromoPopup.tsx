@@ -10,7 +10,7 @@ const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "700", "900"
 
 export default function PromoPopup() { 
   const t = useTranslations('Promo');
-  const t = useTranslations('Components');
+  const tComp = useTranslations('Components');
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
 
