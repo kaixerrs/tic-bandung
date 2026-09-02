@@ -195,6 +195,13 @@ export default function EventSubmissionTable({ initialData }: { initialData: Sub
       'Instagram': item.instagram,
       'KOL': item.kol_partner,
       'Artis': item.artist_performance,
+      'Deskripsi': item.description,
+      'USP': item.usp,
+      'Target Pengunjung': item.target_visitors,
+      'Pelaksanaan Ke': item.execution_count,
+      'Link Media Promosi (GDrive)': item.promotion_media || '-',
+      'Link Proposal/Poster': item.attachment_link || '-',
+      'Link Surat Kesediaan': item.commitment_letter_link || '-',
       'Status': item.status
     })));
     const wb = XLSX.utils.book_new();
@@ -264,6 +271,18 @@ export default function EventSubmissionTable({ initialData }: { initialData: Sub
                   <td className="p-4 pr-6 text-right">
                     
                     <div className="flex items-center justify-end gap-2">
+                      {item.commitment_letter_link && (
+                        <a 
+                          href={item.commitment_letter_link}
+                          target="_blank"
+                          rel="noreferrer"
+                          download
+                          className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg transition-colors border border-emerald-200 flex items-center justify-center gap-1"
+                          title="Download Surat Kesediaan"
+                        >
+                          <Download className="w-3 h-3" /> Surat
+                        </a>
+                      )}
                       <button 
                         onClick={() => showDetail(item)}
                         className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded-lg transition-colors border border-blue-200 flex items-center justify-center gap-1"
