@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
 import { MapPin, Calendar, ChevronDown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -14,7 +14,9 @@ const sundaFont = Noto_Sans_Sundanese({ subsets: ['sundanese'], weight: '400' })
 interface SliderData {
   id: string;
   title: string;
+title_en?: string;
   subtitle: string;
+subtitle_en?: string;
   image_url: string;
   button_link: string;
 }
@@ -22,6 +24,7 @@ interface SliderData {
 export default function HeroSlider({ sliders }: { sliders: SliderData[] }) { 
   const t = useTranslations('Hero');
   const tComp = useTranslations('Components');
+  const locale = useLocale();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
@@ -120,7 +123,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
           
           
           <h1 className="text-[40px] sm:text-[48px] md:text-[80px] lg:text-[96px] font-extrabold leading-none text-white uppercase tracking-wider drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] mb-6 md:mb-10 z-10 relative">
-            PESONA KOTA
+            {t('subtitle')}
           </h1>
           
           <h1 className={`${allisonFont.className} text-[100px] sm:text-[130px] md:text-[200px] lg:text-[260px] leading-[0.4] text-[#00C853] mb-8 mt-[-15px] md:mt-[-30px] lg:mt-[-40px] z-10 relative`} style={{ textShadow: '0 4px 20px rgba(0, 200, 83, 0.5), 0 0 80px rgba(0, 122, 51, 0.3)' }}>
@@ -130,7 +133,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
 
         {/* Subtitle */}
         <p className="hidden md:block font-body-lg text-[14px] md:text-[20px] text-white/90 mb-8 md:mb-12 max-w-2xl tracking-wide leading-relaxed px-4 drop-shadow-md font-medium">
-          Di mana tradisi berpadu dengan inovasi. Rasakan pengalaman tak terlupakan di jantung Jawa Barat, dari warisan budaya yang kaya hingga gaya hidup modern yang semarak.
+          {t('desc')}
         </p>
         
         {/* Discovery Bar */}
@@ -141,7 +144,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
           </div>
           
           <button type="submit" className="bg-[#00C853] text-white px-4 py-2.5 md:px-10 md:py-4 font-extrabold text-xs md:text-base hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
-            CARI
+            {locale === 'en' ? 'SEARCH' : 'CARI'}
           </button>
         </form>
       </div>
@@ -163,7 +166,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
           </p>
           {sliders[currentIndex]?.button_link && (
             <Link href={sliders[currentIndex].button_link as string} className="inline-flex items-center justify-end gap-2 mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-[2px] text-[10px] md:text-xs font-bold uppercase tracking-widest text-bandung-kuning hover:text-white transition-all">
-              JELAJAHI SEKARANG <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+              {locale === 'en' ? 'EXPLORE NOW' : 'JELAJAHI SEKARANG'} <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
             </Link>
           )}
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -24,6 +25,8 @@ interface DestinationMapProps {
 }
 
 export default function DestinationMap({ latitude, longitude, name, zoom }: DestinationMapProps) {
+  const t = useTranslations('Components');
+  const locale = useLocale();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export default function DestinationMap({ latitude, longitude, name, zoom }: Dest
   }, []);
 
   if (!mounted) {
-    return <div className="w-full h-full bg-gray-100 animate-pulse rounded-sm flex items-center justify-center text-text-muted">Memuat peta...</div>;
+    return <div className="w-full h-full bg-gray-100 animate-pulse rounded-sm flex items-center justify-center text-text-muted">{locale === 'en' ? 'Loading map...' : 'Memuat peta...'}</div>;
   }
 
   // Default to Bandung center if no coordinates

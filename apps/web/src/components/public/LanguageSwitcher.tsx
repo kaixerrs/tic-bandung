@@ -16,7 +16,7 @@ export default function LanguageSwitcher({ isTransparent = false }: { isTranspar
     if (pathname) {
       const segments = pathname.split('/');
       segments[1] = newLocale;
-      router.push(segments.join('/') || '/');
+      window.location.href = segments.join('/') || '/';
     }
     setIsOpen(false);
   };

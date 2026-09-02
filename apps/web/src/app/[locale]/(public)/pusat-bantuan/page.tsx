@@ -21,25 +21,25 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
 
   const emergencyContacts = [
     {
-      title: 'Polisi',
+      title: locale === 'en' ? 'Police' : 'Polisi',
       number: settings?.emergency_police || '110',
-      description: 'Keamanan & Kriminalitas',
+      description: locale === 'en' ? 'Security & Criminality' : 'Keamanan & Kriminalitas',
       icon: <ShieldAlert className="w-8 h-8 text-white" />,
       bgColor: 'bg-blue-500 hover:bg-blue-600',
       shadowHover: 'hover:shadow-[0_10px_30px_rgba(59,130,246,0.4)]'
     },
     {
-      title: 'Ambulans',
+      title: locale === 'en' ? 'Ambulance' : 'Ambulans',
       number: settings?.emergency_ambulance || '119',
-      description: 'Gawat Darurat Medis',
+      description: locale === 'en' ? 'Medical Emergency' : 'Gawat Darurat Medis',
       icon: <HeartPulse className="w-8 h-8 text-white" />,
       bgColor: 'bg-red-500 hover:bg-red-600',
       shadowHover: 'hover:shadow-[0_10px_30px_rgba(239,68,68,0.4)]'
     },
     {
-      title: 'Pemadam',
+      title: locale === 'en' ? 'Firefighter' : 'Pemadam',
       number: settings?.emergency_fire || '113',
-      description: 'Kebakaran & Penyelamatan',
+      description: locale === 'en' ? 'Fire & Rescue' : 'Kebakaran & Penyelamatan',
       icon: <Flame className="w-8 h-8 text-white" />,
       bgColor: 'bg-orange-500 hover:bg-orange-600',
       shadowHover: 'hover:shadow-[0_10px_30px_rgba(249,115,22,0.4)]'
@@ -47,7 +47,7 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
     {
       title: 'Call Center',
       number: '112',
-      description: 'Layanan Terpadu Bandung',
+      description: locale === 'en' ? 'Bandung Integrated Services' : 'Layanan Terpadu Bandung',
       icon: <Phone className="w-8 h-8 text-white" />,
       bgColor: 'bg-[#00C853] hover:bg-[#009e42]',
       shadowHover: 'hover:shadow-[0_10px_30px_rgba(0,200,83,0.4)]'
@@ -72,13 +72,13 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
         <div className="max-w-[1000px] mx-auto relative z-10 text-center flex flex-col items-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-8">
             <span className="w-2 h-2 rounded-full bg-bandung-kuning animate-pulse"></span>
-            <span className="text-white/90 font-label-caps text-xs tracking-widest uppercase">Layanan Informasi Wisatawan</span>
+            <span className="text-white/90 font-label-caps text-xs tracking-widest uppercase">{locale === 'en' ? 'Tourist Information Services' : 'Layanan Informasi Wisatawan'}</span>
           </div>
           <h1 className="font-headline-lg text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-wider mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 drop-shadow-sm leading-tight">
-            Pusat Bantuan
+            {locale === 'en' ? 'Help Center' : 'Pusat Bantuan'}
           </h1>
           <p className="text-slate-300 font-body-lg text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
-            Kami siap memastikan kunjungan Anda di Kota Bandung berjalan aman, nyaman, dan penuh kenangan indah.
+            {locale === 'en' ? 'We are ready to ensure your visit to Bandung is safe, comfortable, and full of beautiful memories.' : 'Kami siap memastikan kunjungan Anda di Kota Bandung berjalan aman, nyaman, dan penuh kenangan indah.'}
           </p>
         </div>
       </section>
@@ -113,12 +113,10 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
             
             {/* Left Content */}
             <div className="p-10 md:p-16 lg:p-20 flex flex-col justify-center">
-              <span className="font-label-caps text-sm text-[#00C853] font-bold uppercase tracking-widest mb-4 block">Kunjungi Kami</span>
-              <h2 className="font-headline-lg text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-wider leading-[1.1] mb-6">
-                Kantor<br/>Pelayanan TIC
-              </h2>
+              <span className="font-label-caps text-sm text-[#00C853] font-bold uppercase tracking-widest mb-4 block">{locale === 'en' ? 'Visit Us' : 'Kunjungi Kami'}</span>
+              <h2 className="font-headline-lg text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-wider leading-[1.1] mb-6">{locale === 'en' ? <>TIC Service<br/>Office</> : <>Kantor<br/>Pelayanan TIC</>}</h2>
               <p className="text-slate-600 font-body-md leading-relaxed mb-10 text-lg">
-                Datang langsung ke kantor kami! Tim TIC dengan senang hati akan memberikan rekomendasi destinasi, peta wisata gratis, dan panduan acara terkini.
+                {locale === 'en' ? 'Come directly to our office! The TIC team will gladly provide destination recommendations, free tourist maps, and the latest event guides.' : 'Datang langsung ke kantor kami! Tim TIC dengan senang hati akan memberikan rekomendasi destinasi, peta wisata gratis, dan panduan acara terkini.'}
               </p>
 
               <div className="space-y-8 mb-12">
@@ -127,7 +125,7 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
                     <MapPin className="w-6 h-6 text-[#00C853]" />
                   </div>
                   <div>
-                    <h4 className="font-headline-sm text-lg font-bold text-slate-900 mb-1">Alamat Fisik</h4>
+                    <h4 className="font-headline-sm text-lg font-bold text-slate-900 mb-1">{locale === 'en' ? 'Physical Address' : 'Alamat Fisik'}</h4>
                     <p className="text-slate-600 font-body-md leading-relaxed whitespace-pre-line">{address}</p>
                   </div>
                 </div>
@@ -137,10 +135,9 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
                     <Clock className="w-6 h-6 text-[#00C853]" />
                   </div>
                   <div>
-                    <h4 className="font-headline-sm text-lg font-bold text-slate-900 mb-1">Jam Operasional</h4>
+                    <h4 className="font-headline-sm text-lg font-bold text-slate-900 mb-1">{locale === 'en' ? 'Operational Hours' : 'Jam Operasional'}</h4>
                     <p className="text-slate-600 font-body-md leading-relaxed">
-                      Setiap Hari: 08:00 - 16:00 WIB<br/>
-                      <span className="text-sm text-slate-500">(Termasuk hari libur nasional)</span>
+                      {locale === 'en' ? <>Everyday: 08:00 - 16:00 WIB<br/><span className="text-sm text-slate-500">(Including national holidays)</span></> : <>Setiap Hari: 08:00 - 16:00 WIB<br/><span className="text-sm text-slate-500">(Termasuk hari libur nasional)</span></>}
                     </p>
                   </div>
                 </div>
@@ -153,18 +150,14 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-3 bg-[#00C853] text-white px-8 py-4 font-bold rounded-[2px] shadow-lg shadow-electric-green hover:bg-[#009e42] hover:-translate-y-1 transition-all duration-300 font-label-caps tracking-widest text-sm"
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  Chat WhatsApp
-                </a>
+                  <MessageCircle className="w-5 h-5" />{locale === 'en' ? 'WhatsApp Chat' : 'Chat WhatsApp'}</a>
                 <a 
                   href="https://www.google.com/maps?q=-6.9217848810924565,107.60756931267107" 
                   target="_blank" 
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-3 bg-white text-slate-700 border-2 border-slate-200 px-8 py-4 font-bold rounded-[2px] hover:border-slate-300 hover:bg-slate-50 transition-all duration-300 font-label-caps tracking-widest text-sm"
                 >
-                  <MapPin className="w-5 h-5" />
-                  Buka di Maps
-                </a>
+                  <MapPin className="w-5 h-5" />{locale === 'en' ? 'Open in Maps' : 'Buka di Maps'}</a>
               </div>
             </div>
 

@@ -37,7 +37,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
     .limit(3);
 
   // Fetch Galleries
-  const { data: galleries } = await supabase
+  const { data: rawGalleries } = await supabase
     .from('galleries')
     .select('*')
     .eq('status', 'published')
@@ -61,6 +61,8 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       id: 'default-1',
       title: "Gedung Sate",
       subtitle: "Ikon bersejarah perpaduan arsitektur Eropa dan Nusantara di jantung kota.",
+      title_en: "Gedung Sate",
+      subtitle_en: "Historic icon blending European and Nusantara architecture in the heart of the city.",
       image_url: "/gedung-sate.webp",
       button_link: "/destinasi/gedung-sate"
     },
@@ -68,6 +70,8 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       id: 'default-2',
       title: "Jalan Asia Afrika",
       subtitle: "Saksi bisu Konferensi Asia Afrika dengan pesona malam yang romantis.",
+      title_en: "Asia Afrika Street",
+      subtitle_en: "Silent witness of the Asian-African Conference with romantic night charm.",
       image_url: "/ASET VISUAL/jalan-asia-afrika.jpg",
       button_link: "/destinasi/jalan-asia-afrika"
     },
@@ -75,6 +79,8 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       id: 'default-3',
       title: "Bandros",
       subtitle: "Jelajahi keindahan alam, budaya, dan kuliner legendaris Parijs van Java.",
+      title_en: "Bandros",
+      subtitle_en: "Explore the natural beauty, culture, and legendary culinary of Parijs van Java.",
       image_url: "/ASET VISUAL/bandros.jpg",
       button_link: "/kategori"
     },
@@ -82,13 +88,19 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       id: 'default-4',
       title: "Boseh",
       subtitle: "Nikmati udara segar dan keindahan kota Bandung dengan bersepeda santai.",
+      title_en: "Boseh",
+      subtitle_en: "Enjoy the fresh air and beauty of Bandung city with a relaxing bike ride.",
       image_url: "/ASET VISUAL/boseh.jpg",
       button_link: "/transportasi"
     }
   ];
 
   // Gunakan data dari CMS jika ada, jika tidak gunakan default
-  const activeSliders = (heroSliders && heroSliders.length > 0) ? heroSliders : defaultSliders;
+  const activeSliders = (heroSliders && heroSliders.length > 0) ? heroSliders.map(h => ({
+    ...h,
+    title: locale === 'en' && h.title_en ? h.title_en : h.title,
+    subtitle: locale === 'en' && h.subtitle_en ? h.subtitle_en : h.subtitle,
+  })) : defaultSliders;
 
   // Default fallback data for news if empty
   const defaultNews = [
@@ -118,7 +130,17 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
     }
   ];
 
-  const activeNews = (newsArticles && newsArticles.length > 0) ? newsArticles : defaultNews;
+  const galleries = rawGalleries?.map(g => ({
+    ...g,
+    title: locale === 'en' && g.title_en ? g.title_en : g.title,
+    description: locale === 'en' && g.description_en ? g.description_en : g.description,
+  })) || [];
+
+  const activeNews = (newsArticles && newsArticles.length > 0) ? newsArticles.map(n => ({
+    ...n,
+    title: locale === 'en' && n.title_en ? n.title_en : n.title,
+    content: locale === 'en' && n.content_en ? n.content_en : n.content,
+  })) : defaultNews;
 
   return (
     <main className="min-h-screen bg-background overflow-hidden relative">
@@ -200,13 +222,13 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
               <Link key={item.id} href={`/berita/${item.slug || '#'}`} className="group cursor-pointer bg-white p-6 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-electric-green transition-all duration-300 border border-gray-100 hover:-translate-y-2">
                 <div className="relative w-full h-[250px] md:h-80 overflow-hidden mb-6 rounded-sm bg-surface-container-high">
                   {item.image_url ? (
-                    <Image fill sizes="(max-width: 768px) 100vw, 33vw" src={item.image_url} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" alt={item.title} />
+                    <Image fill sizes="(max-width: 768px) 100vw, 33vw" src={item.image_url} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" alt={locale === 'en' ? (item.title_en || item.title) : item.title} />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center"><ImageIcon className="w-12 h-12 text-outline opacity-50" /></div>
                   )}
                 </div>
                 <span className={`text-[#0050A2] font-label-caps text-[10px] uppercase tracking-widest mb-4 inline-block  bg-surface-container-low px-3 py-1 rounded-full`}>{item.category}</span>
-                <h3 className="font-headline-md text-xl md:text-headline-md text-on-surface group-hover:text-[#00C853] transition-colors mb-6 tracking-wide leading-tight line-clamp-3">{item.title}</h3>
+                <h3 className="font-headline-md text-xl md:text-headline-md text-on-surface group-hover:text-[#00C853] transition-colors mb-6 tracking-wide leading-tight line-clamp-3">{locale === 'en' ? (item.title_en || item.title) : item.title}</h3>
                 <div className="flex items-center text-on-surface-variant border-t border-outline-variant/30 pt-4">
                   <span className="font-label-caps text-xs tracking-widest">
                     {new Date(item.date_published).toLocaleDateString(locale, {day: 'numeric', month: 'long', year: 'numeric'}).toUpperCase()}
@@ -228,7 +250,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-[auto_auto] gap-4 md:gap-6 md:h-[500px] lg:h-[600px]">
-          {galleries && galleries.length > 0 ? (
+          {(galleries && galleries.length > 0) ? (
             galleries.map((item: any, i: number) => {
               let gridClass = 'md:col-span-1 h-[250px] md:h-auto';
               if (i === 0) gridClass = 'md:col-span-2 md:row-span-2 h-[300px] md:h-auto';
@@ -245,8 +267,8 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                 <div className="absolute bottom-0 left-0 p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <h3 className="font-headline-md text-2xl md:text-3xl text-white font-bold tracking-wider mb-2">{item.title}</h3>
-                  {item.description && <p className="text-white/80 font-body-md line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{item.description}</p>}
+                  <h3 className="font-headline-md text-2xl md:text-3xl text-white font-bold tracking-wider mb-2">{locale === 'en' ? (item.title_en || item.title) : item.title}</h3>
+                  {item.description && <p className="text-white/80 font-body-md line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{locale === 'en' ? (item.description_en || item.description) : item.description}</p>}
                 </div>
               </div>
               );

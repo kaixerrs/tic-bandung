@@ -4,7 +4,8 @@
     "destinasi": "Destinasi Wisata",
     "pusatBantuan": "Pusat Bantuan",
     "event": "Event & Kegiatan",
-    "transportasi": "Transportasi"
+    "transportasi": "Transportasi",
+    "paketWisata": "PAKET WISATA"
   },
   "HelpCenter": {
     "title": "Pusat Bantuan",
@@ -40,7 +41,17 @@
     "promoEksklusif": "Promo Eksklusif!",
     "butuhBantuan": "Butuh Bantuan?",
     "pusatBantuanTIC": "Pusat Bantuan TIC",
-    "lihatSemuaPertanyaan": "Lihat Semua Pertanyaan"
+    "lihatSemuaPertanyaan": "Lihat Semua Pertanyaan",
+    "readArticle": "Baca artikel menarik ini:",
+    "linkCopied": "Tautan berhasil disalin!",
+    "commentsSoon": "Fitur komentar akan segera hadir!",
+    "share": "Bagikan",
+    "comment": "Komentar",
+    "copyLink": "Salin Tautan",
+    "free": "Gratis",
+    "paid": "Berbayar",
+    "available": "Ada",
+    "loadingMap": "Memuat peta..."
   },
   "Kategori": {
     "metaTitle": "Kategori Wisata | TIC Kota Bandung",
@@ -305,5 +316,32 @@
     "a4": "Kami tidak secara langsung menyediakan pemandu wisata, namun kami dapat merekomendasikan mitra agen perjalanan resmi dan komunitas pemandu wisata bersertifikat yang ada di Kota Bandung.",
     "q5": "Apa yang harus dilakukan jika mengalami keadaan darurat medis atau keamanan?",
     "a5": "Segera hubungi nomor telepon darurat resmi: 112 (Panggilan Darurat Umum), 110 (Polisi), atau 113 (Pemadam Kebakaran). Kami telah mencantumkan semua kontak penting di menu Pusat Bantuan."
+  },
+  "CategoryUI": {
+    "home": "Beranda",
+    "category": "Kategori",
+    "searchPlaceholder": "Cari nama destinasi...",
+    "district": "Kawasan",
+    "price": "Harga",
+    "free": "Gratis",
+    "paid": "Berbayar",
+    "showing": "Menampilkan",
+    "destinations": "destinasi",
+    "notFound": "Pencarian Tidak Ditemukan",
+    "tryChange": "Coba ubah kata kunci atau hapus filter kawasan/harga."
+  },
+  "WalkingUI": {
+    "heroTitle": "Menyelami Sejarah,<br/>Satu Langkah Sekaligus.",
+    "heroDesc": "Rasakan magisnya kota Bandung dengan menyusuri rute-rute bersejarah jalan kakinya. Panduan rute terkurasi untuk perjalanan waktu Anda.",
+    "home": "Beranda",
+    "category": "Kategori",
+    "route1Title": "Braga Heritage Walk",
+    "route1Desc": "Menyusuri jalan legendaris tempat lahirnya julukan Parijs van Java.",
+    "stop1Title": "Titik Nol Kilometer Bandung",
+    "stop1Desc": "Batu penanda awal pembangunan jalan Raya Pos oleh Daendels yang menjadi cikal bakal berkembangnya kota Bandung.",
+    "stop2Title": "Gedung Merdeka & Museum KAA",
+    "stop2Desc": "Menengok kemegahan gedung tempat berlangsungnya Konferensi Asia Afrika tahun 1955.",
+    "stop3Title": "Jalan Braga (Bragaweg)",
+    "stop3Desc": "Berjalan santai menikmati fasad bangunan Art Deco peninggalan Belanda, mampir ke toko roti jadul dan galeri lukisan jalanan."
   }
 }

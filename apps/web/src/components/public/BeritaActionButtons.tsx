@@ -2,14 +2,16 @@
 
 import { Share2, MessageCircle, Link as LinkIcon } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 export default function BeritaActionButtons({ title }: { title: string }) {
+  const t = useTranslations("Components");
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
           title: title,
-          text: `Baca artikel menarik ini: ${title}`,
+          text: `${t('readArticle')}  ${title}`,
           url: window.location.href,
         });
       } catch (err) {
@@ -22,11 +24,11 @@ export default function BeritaActionButtons({ title }: { title: string }) {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.href);
-    toast.success("Tautan berhasil disalin!");
+    toast.success(t("linkCopied"));
   };
 
   const handleComment = () => {
-    toast("Fitur komentar akan segera hadir!", { icon: "💬" });
+    toast(t("commentsSoon"), { icon: "💬" });
   };
 
   return (
@@ -34,22 +36,19 @@ export default function BeritaActionButtons({ title }: { title: string }) {
       <button 
         onClick={handleShare}
         className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-500 hover:text-[#3D7A5E] hover:border-[#3D7A5E] hover:bg-green-50 transition-all"
-        title="Bagikan"
-      >
+        title={t("share")}>
         <Share2 className="w-4 h-4" />
       </button>
       <button 
         onClick={handleComment}
         className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-500 hover:text-[#3D7A5E] hover:border-[#3D7A5E] hover:bg-green-50 transition-all"
-        title="Komentar"
-      >
+        title={t("comment")}>
         <MessageCircle className="w-4 h-4" />
       </button>
       <button 
         onClick={handleCopy}
         className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-500 hover:text-[#3D7A5E] hover:border-[#3D7A5E] hover:bg-green-50 transition-all"
-        title="Salin Tautan"
-      >
+        title={t("copyLink")}>
         <LinkIcon className="w-4 h-4" />
       </button>
     </div>

@@ -56,7 +56,7 @@ export default function PromoPopup() {
 
         <div className="px-8 pt-8 pb-7">
           <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#00C853] bg-[#00C853]/10 px-3 py-1 rounded-full mb-5">
-            Pendaftaran Dibuka
+            {t('badge')}
           </span>
 
           <h2 className={titleCls}>

@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Plus, Minus } from 'lucide-react';
 
-const faqs = [
+export default function FAQSection() {
+  const t = useTranslations('Components');
+  const tFAQ = useTranslations('FAQ');
+
+  const faqs = [
   {
     question: tFAQ('q1'),
     answer: tFAQ('a1')
@@ -26,10 +30,6 @@ const faqs = [
     answer: tFAQ('a5')
   }
 ];
-
-export default function FAQSection() {
-  const t = useTranslations('Components');
-  const tFAQ = useTranslations('FAQ');
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFAQ = (index: number) => {
@@ -43,7 +43,7 @@ export default function FAQSection() {
           <span className="font-label-caps text-[14px] md:text-[18px] text-[#00C853] font-bold uppercase tracking-widest mb-4 block">{tFAQ('tag')}</span>
           <h2 className="font-headline-lg text-[36px] md:text-[56px] font-black text-[#1A1A1A] uppercase tracking-widest leading-[1.1] mb-6">{tFAQ('title')}</h2>
           <p className="text-on-surface-variant font-body-md leading-relaxed text-sm md:text-base">
-            Temukan jawaban untuk pertanyaan yang paling sering diajukan oleh para pelancong tentang pesona Kota Bandung.
+            {tFAQ('subtitle')}
           </p>
         </div>
 

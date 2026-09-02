@@ -5,12 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Clock, Ticket, ChevronRight, Navigation, Download } from 'lucide-react';
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   const supabase = await createClient();
-  const t = await getTranslations('SlugPage');
-  const tUI = await getTranslations('UI');
+  const t = await getTranslations({ locale: resolvedParams.locale, namespace: 'SlugPage' });
   
   const { data: destination } = await supabase
     .from('destinations')
@@ -18,7 +17,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .eq('slug', slug)
     .single();
 
-  if (!destination) const t = await getTranslations({ locale: (await params).locale, namespace: 'SlugPage' });
   if (!destination) return { title: t('metaNotFound') };
 
   return {
@@ -32,7 +30,7 @@ export const revalidate = 3600; // Cache for 1 hour
 export default async function DestinationDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string; locale: string }>
 }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;

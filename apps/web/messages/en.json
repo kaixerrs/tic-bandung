@@ -4,7 +4,8 @@
     "destinasi": "Destinations",
     "pusatBantuan": "Help Center",
     "event": "Events",
-    "transportasi": "Transport"
+    "transportasi": "Transport",
+    "paketWisata": "TOUR PACKAGES"
   },
   "HelpCenter": {
     "title": "Help Center",
@@ -40,7 +41,17 @@
     "promoEksklusif": "Exclusive Promo!",
     "butuhBantuan": "Need Help?",
     "pusatBantuanTIC": "TIC Help Center",
-    "lihatSemuaPertanyaan": "View All Questions"
+    "lihatSemuaPertanyaan": "View All Questions",
+    "readArticle": "Read this interesting article:",
+    "linkCopied": "Link copied successfully!",
+    "commentsSoon": "Comments feature coming soon!",
+    "share": "Share",
+    "comment": "Comment",
+    "copyLink": "Copy Link",
+    "free": "Free",
+    "paid": "Paid",
+    "available": "Available",
+    "loadingMap": "Loading map..."
   },
   "Kategori": {
     "metaTitle": "Tourism Categories | TIC Bandung City",
@@ -305,5 +316,32 @@
     "a4": "We do not directly provide tour guides, but we can recommend official travel agent partners and certified tour guide communities in Bandung City.",
     "q5": "What should I do if I experience a medical or security emergency?",
     "a5": "Immediately contact the official emergency numbers: 112 (General Emergency), 110 (Police), or 113 (Fire Dept). We have listed all important contacts in the Help Center menu."
+  },
+  "CategoryUI": {
+    "home": "Home",
+    "category": "Category",
+    "searchPlaceholder": "Search destinations...",
+    "district": "District",
+    "price": "Price",
+    "free": "Free",
+    "paid": "Paid",
+    "showing": "Showing",
+    "destinations": "destinations",
+    "notFound": "No Results Found",
+    "tryChange": "Try changing keywords or removing district/price filters."
+  },
+  "WalkingUI": {
+    "heroTitle": "Dive Into History,<br/>One Step at a Time.",
+    "heroDesc": "Experience the magic of Bandung by strolling along its historic routes. Curated walking guides for your time travel.",
+    "home": "Home",
+    "category": "Category",
+    "route1Title": "Braga Heritage Walk",
+    "route1Desc": "Stroll down the legendary street where the nickname Parijs van Java was born.",
+    "stop1Title": "Bandung Zero Kilometer Point",
+    "stop1Desc": "The initial marker of the Great Post Road construction by Daendels, which became the forerunner of Bandung's development.",
+    "stop2Title": "Gedung Merdeka & KAA Museum",
+    "stop2Desc": "Look at the grandeur of the building where the Asian-African Conference took place in 1955.",
+    "stop3Title": "Braga Street (Bragaweg)",
+    "stop3Desc": "Take a leisurely walk enjoying the Dutch Art Deco building facades, stop by an old-school bakery and street painting galleries."
   }
 }

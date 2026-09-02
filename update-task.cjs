@@ -1,0 +1,12 @@
+﻿const fs = require("fs");
+let p = "C:/Users/faiz/.gemini/antigravity-ide/brain/13363e8a-ca2d-4164-b630-8848e72db34a/task.md";
+let c = fs.readFileSync(p, "utf8");
+c = c.replace(/- `\[ \]` 1\. Run Database Migration/, "- `[x]` 1. Run Database Migration");
+c = c.replace(/- `\[ \]` Add `_en` columns to `destinations`/g, "- `[x]` Add `_en` columns to `destinations`");
+c = c.replace(/- `\[ \]` Add `_en` columns to `news_articles`/g, "- `[x]` Add `_en` columns to `news_articles`");
+c = c.replace(/- `\[ \]` Add `_en` columns to `hero_sliders`/g, "- `[x]` Add `_en` columns to `hero_sliders`");
+c = c.replace(/- `\[ \]` Add `_en` columns to `galleries`/g, "- `[x]` Add `_en` columns to `galleries`");
+c = c.replace(/- `\[ \]` Add `_en` columns to `categories`/g, "- `[x]` Add `_en` columns to `categories`");
+c = c.replace(/- `\[ \]` Add `_en` columns to `events`/g, "- `[x]` Add `_en` columns to `events`");
+c = c.replace(/- `\[ \]` 2\. Update Admin Panel/, "- `[/]` 2. Update Admin Panel");
+fs.writeFileSync(p, c, "utf8");

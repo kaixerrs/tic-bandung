@@ -65,11 +65,11 @@ export default function CoECountdownBanner() {
           </div>
           
           <h2 className={`${montserrat.className} text-3xl md:text-5xl font-bold text-slate-900 mb-4 leading-tight`}>
-            Pendaftaran Calendar of Event <span className="text-[#C9971E]">2027</span>
+            {t('title').split(' 2027')[0]} <span className="text-[#C9971E]">2027</span>
           </h2>
           
           <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
-            Punya event unggulan di Kota Bandung? Daftarkan segera untuk masuk ke dalam kurasi resmi Calendar of Event (CoE) Dinas Kebudayaan dan Pariwisata Kota Bandung tahun 2027.
+            {t('desc')}
           </p>
 
           <Link 

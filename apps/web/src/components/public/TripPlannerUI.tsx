@@ -2,44 +2,44 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Map, MapPin, Clock, ArrowRight, Compass, Camera, Palette } from 'lucide-react';
 import Image from 'next/image';
 
 // Data statis Itinerary 3H2M (FR-10)
-const ITINERARIES = [
+const getItineraries = (locale: string) => [
   {
     id: 'heritage',
     title: 'Bandung Heritage',
     icon: Compass,
     color: '#C9971E',
-    description: 'Jelajahi mesin waktu melintasi jejak kolonial dan arsitektur bersejarah di jantung Kota Bandung.',
+    description: `${locale === 'en' ? "Explore the time machine across colonial traces and historical architecture in the heart of Bandung City." : "Jelajahi mesin waktu melintasi jejak kolonial dan arsitektur bersejarah di jantung Kota Bandung."}`,
     image: 'https://images.unsplash.com/photo-1549473889-14f410d83298?q=80&w=1200',
     days: [
       {
-        day: 'Hari Pertama',
-        title: 'Jantung Kota & Titik Nol',
+        day: `${locale === 'en' ? "Day 1" : "Hari Pertama"}`,
+        title: `${locale === 'en' ? "City Heart & Point Zero" : "Jantung Kota & Titik Nol"}`,
         activities: [
-          { time: '09:00', title: 'Jalan Braga & Asia Afrika', desc: 'Menikmati pagi dengan berjalan kaki melintasi gedung-gedung Art Deco peninggalan Belanda.', slug: 'braga' },
-          { time: '13:00', title: 'Museum Konferensi Asia Afrika', desc: 'Menyelami sejarah persatuan bangsa-bangsa Asia dan Afrika.', slug: 'museum-konferensi-asia-afrika' },
-          { time: '16:00', title: 'Alun-Alun Bandung & Masjid Raya', desc: 'Bersantai sore di rumput sintetis Alun-Alun Kota Bandung.', slug: 'alun-alun-bandung' }
+          { time: '09:00', title: `${locale === 'en' ? "Braga & Asia Afrika Street" : "Jalan Braga & Asia Afrika"}`, desc: `${locale === 'en' ? "Enjoy the morning walking across Dutch colonial Art Deco buildings." : "Menikmati pagi dengan berjalan kaki melintasi gedung-gedung Art Deco peninggalan Belanda."}`, slug: 'braga' },
+          { time: '13:00', title: `${locale === 'en' ? "Asian-African Conference Museum" : "Museum Konferensi Asia Afrika"}`, desc: `${locale === 'en' ? "Dive into the history of the unity of Asian and African nations." : "Menyelami sejarah persatuan bangsa-bangsa Asia dan Afrika."}`, slug: 'museum-konferensi-asia-afrika' },
+          { time: '16:00', title: `${locale === 'en' ? "Bandung Square & Grand Mosque" : "Alun-Alun Bandung & Masjid Raya"}`, desc: `${locale === 'en' ? "Relax in the afternoon on the synthetic grass of Bandung City Square." : "Bersantai sore di rumput sintetis Alun-Alun Kota Bandung."}`, slug: 'alun-alun-bandung' }
         ]
       },
       {
-        day: 'Hari Kedua',
-        title: 'Saksi Bisu Sejarah',
+        day: `${locale === 'en' ? "Day 2" : "Hari Kedua"}`,
+        title: `${locale === 'en' ? "Silent Witness of History" : "Saksi Bisu Sejarah"}`,
         activities: [
-          { time: '09:00', title: 'Gedung Sate', desc: 'Ikon kota Bandung dengan arsitektur perpaduan Eropa dan Nusantara.', slug: 'gedung-sate' },
-          { time: '13:00', title: 'Museum Geologi', desc: 'Mempelajari sejarah bumi, fosil dinosaurus, dan formasi geologi cekungan Bandung.', slug: 'museum-geologi' },
-          { time: '16:00', title: 'Monumen Perjuangan Rakyat', desc: 'Tugu bersejarah dengan relief perjuangan rakyat Jawa Barat.', slug: 'monju' }
+          { time: '09:00', title: `${locale === 'en' ? "Gedung Sate" : "Gedung Sate"}`, desc: `${locale === 'en' ? "Bandung city icon with a blend of European and Archipelago architecture." : "Ikon kota Bandung dengan arsitektur perpaduan Eropa dan Nusantara."}`, slug: 'gedung-sate' },
+          { time: '13:00', title: `${locale === 'en' ? "Geological Museum" : "Museum Geologi"}`, desc: `${locale === 'en' ? "Learn about earth history, dinosaur fossils, and the geological formation of the Bandung basin." : "Mempelajari sejarah bumi, fosil dinosaurus, dan formasi geologi cekungan Bandung."}`, slug: 'museum-geologi' },
+          { time: '16:00', title: `${locale === 'en' ? "People's Struggle Monument" : "Monumen Perjuangan Rakyat"}`, desc: `${locale === 'en' ? "Historical monument with reliefs of the struggle of the West Java people." : "Tugu bersejarah dengan relief perjuangan rakyat Jawa Barat."}`, slug: 'monju' }
         ]
       },
       {
-        day: 'Hari Ketiga',
-        title: 'Nostalgia Penutup',
+        day: `${locale === 'en' ? "Day 3" : "Hari Ketiga"}`,
+        title: `${locale === 'en' ? "Closing Nostalgia" : "Nostalgia Penutup"}`,
         activities: [
-          { time: '10:00', title: 'Taman Sejarah Bandung', desc: 'Taman tematik yang menceritakan tokoh-tokoh penting Kota Bandung.', slug: 'taman-sejarah' },
-          { time: '12:00', title: 'Kuliner Legendaris Braga', desc: 'Makan siang sebelum kembali ke kota asal.', slug: 'kopi-aroma' }
+          { time: '10:00', title: `${locale === 'en' ? "Bandung History Park" : "Taman Sejarah Bandung"}`, desc: `${locale === 'en' ? "Thematic park telling the story of important figures of Bandung City." : "Taman tematik yang menceritakan tokoh-tokoh penting Kota Bandung."}`, slug: 'taman-sejarah' },
+          { time: '12:00', title: `${locale === 'en' ? "Legendary Braga Culinary" : "Kuliner Legendaris Braga"}`, desc: `${locale === 'en' ? "Lunch before returning to your hometown." : "Makan siang sebelum kembali ke kota asal."}`, slug: 'kopi-aroma' }
         ]
       }
     ]
@@ -49,33 +49,33 @@ const ITINERARIES = [
     title: 'Escape to Nature',
     icon: Camera,
     color: '#3D7A5E',
-    description: 'Menjauh sejenak dari hiruk pikuk kota dan meresapi kesejukan alam pegunungan Bandung.',
+    description: `${locale === 'en' ? "Get away from the hustle and bustle of the city and absorb the coolness of Bandung's mountain nature." : "Menjauh sejenak dari hiruk pikuk kota dan meresapi kesejukan alam pegunungan Bandung."}`,
     image: 'https://images.unsplash.com/photo-1555018617-1fdf5b1ceeb1?q=80&w=1200',
     days: [
       {
-        day: 'Hari Pertama',
-        title: 'Sejuknya Bandung Utara',
+        day: `${locale === 'en' ? "Day 1" : "Hari Pertama"}`,
+        title: `${locale === 'en' ? "Coolness of North Bandung" : "Sejuknya Bandung Utara"}`,
         activities: [
-          { time: '08:00', title: 'Tahura Ir. H. Djuanda', desc: 'Trekking pagi menikmati hutan pinus dan Goa Belanda & Jepang.', slug: 'tahura' },
-          { time: '12:00', title: 'Tebing Keraton', desc: 'Pemandangan luar biasa patahan Lembang dari ketinggian.', slug: 'tebing-keraton' },
-          { time: '15:00', title: 'Curug Dago', desc: 'Air terjun historis tempat bertapanya raja-raja Thailand.', slug: 'curug-dago' }
+          { time: '08:00', title: `${locale === 'en' ? "Tahura Ir. H. Djuanda" : "Tahura Ir. H. Djuanda"}`, desc: `${locale === 'en' ? "Morning trekking enjoying the pine forest and Dutch & Japanese Caves." : "Trekking pagi menikmati hutan pinus dan Goa Belanda & Jepang."}`, slug: 'tahura' },
+          { time: '12:00', title: `${locale === 'en' ? "Keraton Cliff" : "Tebing Keraton"}`, desc: `${locale === 'en' ? "Incredible view of the Lembang fault from a height." : "Pemandangan luar biasa patahan Lembang dari ketinggian."}`, slug: 'tebing-keraton' },
+          { time: '15:00', title: `${locale === 'en' ? "Dago Waterfall" : "Curug Dago"}`, desc: `${locale === 'en' ? "Historical waterfall where Thai kings meditated." : "Air terjun historis tempat bertapanya raja-raja Thailand."}`, slug: 'curug-dago' }
         ]
       },
       {
-        day: 'Hari Kedua',
-        title: 'Eksplorasi Ruang Terbuka',
+        day: `${locale === 'en' ? "Day 2" : "Hari Kedua"}`,
+        title: `${locale === 'en' ? "Open Space Exploration" : "Eksplorasi Ruang Terbuka"}`,
         activities: [
-          { time: '09:00', title: 'Taman Hutan Babakan Siliwangi', desc: 'Berjalan di Forest Walk terpanjang di Asia Tenggara.', slug: 'baksil' },
-          { time: '13:00', title: 'Teras Cikapundung', desc: 'Bersantai di pinggir sungai dengan konsep amphitheater.', slug: 'teras-cikapundung' },
-          { time: '16:00', title: 'Taman Lansia & Cisangkuy', desc: 'Sore santai ditemani udara sejuk dan kuda tunggang.', slug: 'taman-lansia' }
+          { time: '09:00', title: `${locale === 'en' ? "Babakan Siliwangi Forest Park" : "Taman Hutan Babakan Siliwangi"}`, desc: `${locale === 'en' ? "Walk on the longest Forest Walk in Southeast Asia." : "Berjalan di Forest Walk terpanjang di Asia Tenggara."}`, slug: 'baksil' },
+          { time: '13:00', title: `${locale === 'en' ? "Cikapundung Terrace" : "Teras Cikapundung"}`, desc: `${locale === 'en' ? "Relax by the river with an amphitheater concept." : "Bersantai di pinggir sungai dengan konsep amphitheater."}`, slug: 'teras-cikapundung' },
+          { time: '16:00', title: `${locale === 'en' ? "Lansia Park & Cisangkuy" : "Taman Lansia & Cisangkuy"}`, desc: `${locale === 'en' ? "Relaxing afternoon accompanied by cool air and horseback riding." : "Sore santai ditemani udara sejuk dan kuda tunggang."}`, slug: 'taman-lansia' }
         ]
       },
       {
-        day: 'Hari Ketiga',
-        title: 'Penghijauan Kota',
+        day: `${locale === 'en' ? "Day 3" : "Hari Ketiga"}`,
+        title: `${locale === 'en' ? "City Greening" : "Penghijauan Kota"}`,
         activities: [
-          { time: '09:00', title: 'Bandung Zoo (Kebun Binatang)', desc: 'Interaksi dengan satwa di bawah rimbunnya pohon besar.', slug: 'bandung-zoo' },
-          { time: '13:00', title: 'Taman Balai Kota', desc: 'Taman tematik di pusat pemerintahan sebelum pulang.', slug: 'taman-balai-kota' }
+          { time: '09:00', title: `${locale === 'en' ? "Bandung Zoo" : "Bandung Zoo (Kebun Binatang)"}`, desc: `${locale === 'en' ? "Interact with animals under the shade of big trees." : "Interaksi dengan satwa di bawah rimbunnya pohon besar."}`, slug: 'bandung-zoo' },
+          { time: '13:00', title: `${locale === 'en' ? "City Hall Park" : "Taman Balai Kota"}`, desc: `${locale === 'en' ? "Thematic park in the government center before going home." : "Taman tematik di pusat pemerintahan sebelum pulang."}`, slug: 'taman-balai-kota' }
         ]
       }
     ]
@@ -85,41 +85,44 @@ const ITINERARIES = [
     title: 'Art & Creative',
     icon: Palette,
     color: '#2C7A7A',
-    description: 'Menyelami urat nadi kreativitas anak muda Bandung melalui art space dan kampung kreatif.',
+    description: `${locale === 'en' ? "Dive into the creative pulse of Bandung youth through art spaces and creative villages." : "Menyelami urat nadi kreativitas anak muda Bandung melalui art space dan kampung kreatif."}`,
     image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=1200',
     days: [
       {
-        day: 'Hari Pertama',
-        title: 'Eksplorasi Seni Modern',
+        day: `${locale === 'en' ? "Day 1" : "Hari Pertama"}`,
+        title: `${locale === 'en' ? "Modern Art Exploration" : "Eksplorasi Seni Modern"}`,
         activities: [
-          { time: '10:00', title: 'NuArt Sculpture Park', desc: 'Galeri karya seni patung I Nyoman Nuarta di tengah taman hijau.', slug: 'nuart' },
-          { time: '14:00', title: 'Selasar Sunaryo Art Space', desc: 'Galeri seni kontemporer di Dago Pakar yang estetik.', slug: 'selasar-sunaryo' },
-          { time: '17:00', title: 'Bukit Bintang / Dago Atas', desc: 'Makan malam dengan pemandangan lampu kota Bandung.', slug: 'bukit-bintang' }
+          { time: '10:00', title: `${locale === 'en' ? "NuArt Sculpture Park" : "NuArt Sculpture Park"}`, desc: `${locale === 'en' ? "Gallery of I Nyoman Nuarta's sculpture artwork in the middle of a green park." : "Galeri karya seni patung I Nyoman Nuarta di tengah taman hijau."}`, slug: 'nuart' },
+          { time: '14:00', title: `${locale === 'en' ? "Selasar Sunaryo Art Space" : "Selasar Sunaryo Art Space"}`, desc: `${locale === 'en' ? "Aesthetic contemporary art gallery in Dago Pakar." : "Galeri seni kontemporer di Dago Pakar yang estetik."}`, slug: 'selasar-sunaryo' },
+          { time: '17:00', title: `${locale === 'en' ? "Bukit Bintang / Upper Dago" : "Bukit Bintang / Dago Atas"}`, desc: `${locale === 'en' ? "Dinner with a view of Bandung city lights." : "Makan malam dengan pemandangan lampu kota Bandung."}`, slug: 'bukit-bintang' }
         ]
       },
       {
-        day: 'Hari Kedua',
-        title: 'Produk Lokal & Kriya',
+        day: `${locale === 'en' ? "Day 2" : "Hari Kedua"}`,
+        title: `${locale === 'en' ? "Local Products & Crafts" : "Produk Lokal & Kriya"}`,
         activities: [
-          { time: '10:00', title: 'Sentra Rajut Binong Jati', desc: 'Melihat langsung proses pembuatan rajut khas Bandung.', slug: 'binong-jati' },
-          { time: '13:00', title: 'Saung Angklung Udjo', desc: 'Pertunjukan angklung interaktif dan kebudayaan Sunda.', slug: 'saung-udjo' },
-          { time: '16:00', title: 'Cihampelas Walk', desc: 'Jalan-jalan sore di pusat belanja dengan konsep semi-outdoor.', slug: 'ciwalk' }
+          { time: '10:00', title: `${locale === 'en' ? "Binong Jati Knitting Center" : "Sentra Rajut Binong Jati"}`, desc: `${locale === 'en' ? "See firsthand the process of making typical Bandung knits." : "Melihat langsung proses pembuatan rajut khas Bandung."}`, slug: 'binong-jati' },
+          { time: '13:00', title: `${locale === 'en' ? "Saung Angklung Udjo" : "Saung Angklung Udjo"}`, desc: `${locale === 'en' ? "Interactive angklung performance and Sundanese culture." : "Pertunjukan angklung interaktif dan kebudayaan Sunda."}`, slug: 'saung-udjo' },
+          { time: '16:00', title: `${locale === 'en' ? "Cihampelas Walk" : "Cihampelas Walk"}`, desc: `${locale === 'en' ? "Afternoon stroll in a shopping center with a semi-outdoor concept." : "Jalan-jalan sore di pusat belanja dengan konsep semi-outdoor."}`, slug: 'ciwalk' }
         ]
       },
       {
-        day: 'Hari Ketiga',
-        title: 'Wisata Sentra Sepatu',
+        day: `${locale === 'en' ? "Day 3" : "Hari Ketiga"}`,
+        title: `${locale === 'en' ? "Shoe Center Tourism" : "Wisata Sentra Sepatu"}`,
         activities: [
-          { time: '09:00', title: 'Sentra Sepatu Cibaduyut', desc: 'Belanja produk kulit dan sepatu buatan tangan lokal.', slug: 'cibaduyut' },
-          { time: '13:00', title: 'Pusat Oleh-Oleh Pasteur', desc: 'Membeli buah tangan sebelum meninggalkan Bandung.', slug: 'pasteur' }
+          { time: '09:00', title: `${locale === 'en' ? "Cibaduyut Shoe Center" : "Sentra Sepatu Cibaduyut"}`, desc: `${locale === 'en' ? "Shop for leather products and local handmade shoes." : "Belanja produk kulit dan sepatu buatan tangan lokal."}`, slug: 'cibaduyut' },
+          { time: '13:00', title: `${locale === 'en' ? "Pasteur Souvenir Center" : "Pusat Oleh-Oleh Pasteur"}`, desc: `${locale === 'en' ? "Buy souvenirs before leaving Bandung." : "Membeli buah tangan sebelum meninggalkan Bandung."}`, slug: 'pasteur' }
         ]
       }
     ]
   }
 ];
 
-export default function TripPlannerUI() { 
+export default function TripPlannerUI() {
+  const locale = useLocale();
+  const l = (id: string, en: string) => locale === 'en' ? en : id; 
   const t = useTranslations('TripPlanner');
+  const ITINERARIES = getItineraries(locale);
   const [activeTab, setActiveTab] = useState(ITINERARIES[0].id);
 
   const activeItinerary = ITINERARIES.find(i => i.id === activeTab) || ITINERARIES[0];
@@ -132,7 +135,7 @@ export default function TripPlannerUI() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10 pointer-events-none"></div>
         <Image
           src={activeItinerary.image}
-          alt="{t('heroTitle')} Cover"
+          alt="{activeItinerary.title} Cover"
           fill
           className="object-cover opacity-40 transition-opacity duration-1000"
           priority
@@ -140,13 +143,13 @@ export default function TripPlannerUI() {
         
         <div className="max-w-[1200px] mx-auto px-4 md:px-8 relative z-20 text-center">
           <span className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-white/90 text-sm font-medium mb-6 border border-white/20">
-            <Map className="w-4 h-4" /> Itinerary Builder 3D2N
+            <Map className="w-4 h-4" /> {l('Itinerary Builder 3D2N', '3D2N Itinerary Builder')}
           </span>
           <h1 className="text-4xl md:text-6xl font-bold font-display text-white mb-6">
             Rencana Perjalanan
           </h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Tidak perlu bingung menyusun jadwal. Pilih tema wisata Anda dan ikuti rekomendasi rute 3 Hari 2 Malam (3D2N) terbaik di Bandung.
+            {l('Tidak perlu bingung menyusun jadwal. Pilih tema wisata Anda dan ikuti rekomendasi rute 3 Hari 2 Malam (3D2N) terbaik di Bandung.', 'No need to get confused planning your schedule. Choose your tour theme and follow the best 3 Days 2 Nights (3D2N) route recommendations in Bandung.')}
           </p>
         </div>
       </div>
@@ -197,12 +200,12 @@ export default function TripPlannerUI() {
               
               <div className="pt-6 border-t border-[#f6f3f0] flex flex-col gap-3">
                 <div className="flex justify-between text-sm font-bold text-[#1b1c1a]">
-                  <span>Durasi:</span>
-                  <span>3 Hari 2 Malam</span>
+                  <span>{l('Durasi:', 'Duration:')}</span>
+                  <span>{l('3 Hari 2 Malam', '3 Days 2 Nights')}</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-[#1b1c1a]">
-                  <span>Total Destinasi:</span>
-                  <span>{activeItinerary.days.reduce((acc, day) => acc + day.activities.length, 0)} Tempat</span>
+                  <span>{l('Total Destinasi:', 'Total Destinations:')}</span>
+                  <span>{activeItinerary.days.reduce((acc, day) => acc + day.activities.length, 0)} {l('Tempat', 'Places')}</span>
                 </div>
               </div>
             </div>

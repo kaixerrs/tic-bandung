@@ -8,13 +8,13 @@ import { ScrollReveal } from '@/components/ui/animations/ScrollReveal';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'] });
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Transportasi' });
   return { title: t('metaTitle'), description: t('metaDesc') };
 }
 
-export default async function Page({ params }) {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('Transportasi');
@@ -46,16 +46,16 @@ export default async function Page({ params }) {
           {/* Card 1: Whoosh (Image Card) */}
           <ScrollReveal className="md:col-span-2 h-full">
           <div className="bg-slate-900 h-full rounded-sm md:rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group relative">
-            <Image fill sizes="(max-width: 768px) 100vw, 50vw" src="/ASET VISUAL/Whoosh.jpg" className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" alt="Kereta Cepat Whoosh" />
+            <Image fill sizes="(max-width: 768px) 100vw, 50vw" src="/ASET VISUAL/Whoosh.jpg" className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" alt="{locale === 'en' ? 'Fast Train' : 'Kereta Cepat'} Whoosh" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/10 to-transparent"></div>
             
             <div className="absolute inset-0 p-4 md:p-10 flex flex-col justify-end">
               <div className="inline-flex items-center justify-center w-max px-2 py-0.5 md:px-3 md:py-1 bg-blue-600 text-white text-[9px] md:text-xs font-bold rounded-full mb-2 md:mb-4 uppercase tracking-wider">
-                Kereta Cepat
+                {locale === 'en' ? 'Fast Train' : 'Kereta Cepat'}
               </div>
               <h2 className="text-lg md:text-3xl font-bold text-white mb-1 md:mb-2 tracking-tight">Whoosh</h2>
               <p className="text-slate-300 font-medium leading-relaxed max-w-md text-[10px] md:text-base hidden md:block">
-                Jakarta - Bandung dalam 45 menit. Terkoneksi langsung dengan KA Feeder ke pusat kota.
+                {locale === 'en' ? 'Jakarta - Bandung in 45 minutes. Directly connected with Feeder Train to the city center.' : 'Jakarta - Bandung dalam 45 menit. Terkoneksi langsung dengan KA Feeder ke pusat kota.'}
               </p>
               <Link href="https://kcic.co.id" className="inline-flex items-center gap-1 md:gap-2 text-white font-bold mt-1 md:mt-4 text-[10px] md:text-base group-hover:gap-3 transition-all hover:text-blue-300">
                 Jadwal & Tiket <ArrowRight className="w-5 h-5"/>
@@ -75,7 +75,7 @@ export default async function Page({ params }) {
               </div>
               <h2 className="text-lg md:text-3xl font-bold text-white mb-1 md:mb-2 tracking-tight">Bandros</h2>
               <p className="text-slate-300 font-medium leading-relaxed max-w-md text-[10px] md:text-base hidden md:block">
-                Bus wisata tematik untuk berkeliling landmark bersejarah Kota Bandung.
+                {locale === 'en' ? 'Thematic tour bus to go around the historical landmarks of Bandung City.' : 'Bus wisata tematik untuk berkeliling landmark bersejarah Kota Bandung.'}
               </p>
               <Link href="https://uptangkutan-bandung.id/bandros/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 md:gap-2 text-white font-bold mt-2 md:mt-4 text-[10px] md:text-base group-hover:gap-3 transition-all hover:text-amber-300">
                 Jadwal & Rute <ArrowRight className="w-5 h-5"/>
@@ -92,9 +92,9 @@ export default async function Page({ params }) {
               <div className="inline-flex items-center justify-center w-max px-2 py-0.5 md:px-3 md:py-1 bg-emerald-600 text-white text-[9px] md:text-xs font-bold rounded-full mb-1 md:mb-3 uppercase tracking-wider">
                 Ride Hailing
               </div>
-              <h3 className="text-sm md:text-xl font-bold text-white mb-1 md:mb-2 leading-tight">Transportasi Online</h3>
+              <h3 className="text-sm md:text-xl font-bold text-white mb-1 md:mb-2 leading-tight">{locale === 'en' ? 'Online Transportation' : 'Transportasi Online'}</h3>
               <p className="text-slate-300 text-sm leading-relaxed hidden md:block">
-                Tersedia 24 jam. Patuhi aturan titik jemput khusus (Shelter) di stasiun.
+                {locale === 'en' ? 'Available 24 hours. Obey the rules of specific pick-up points (Shelters) at stations.' : 'Tersedia 24 jam. Patuhi aturan titik jemput khusus (Shelter) di stasiun.'}
               </p>
             </div>
           </div>

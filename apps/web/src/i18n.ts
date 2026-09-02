@@ -9,8 +9,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = 'id';
   }
 
+  const messages = (await import(`../messages/${locale}.json`)).default;
+  console.log(`Loaded messages for ${locale}:`, Object.keys(messages));
+
   return {
     locale: locale,
-    messages: (await import(`../messages/${locale}.json`)).default
+    messages
   };
 });

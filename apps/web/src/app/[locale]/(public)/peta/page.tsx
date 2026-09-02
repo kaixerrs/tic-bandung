@@ -1,9 +1,10 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/utils/supabase/server';
 import MapClientWrapper from '@/components/public/MapClientWrapper';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Peta' });
   return { title: t('metaTitle'), description: t('metaDesc') };

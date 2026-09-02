@@ -8,7 +8,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '700', '900'] });
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Kategori' });
   return {
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function KategoriPage({ params }) {
+export default async function KategoriPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('Kategori');
@@ -26,19 +26,19 @@ export default async function KategoriPage({ params }) {
   const { data: stats } = await supabase.from('category_stats_view').select('*');
   const { data: categories } = await supabase.from('categories').select('id, name, slug, image_url, pillar');
 
-  const getImage = (slug) => {
+  const getImage = (slug: string) => {
     if (!categories) return null;
     const category = categories.find(c => c.slug === slug || c.slug.includes(slug) || slug.includes(c.slug));
     return category?.image_url || null;
   };
 
-  const renderBg = (slug) => {
+  const renderBg = (slug: string) => {
     const img = getImage(slug);
     if (img) return <img src={img} alt="" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700" />;
     return null;
   };
   
-  const getCount = (slug, fallback) => {
+  const getCount = (slug: string, fallback: string) => {
     if (!stats) return fallback;
     const category = stats.find(s => s.slug === slug);
     return category ? `${category.total_published_locations} ${t('lokasi')}` : fallback;

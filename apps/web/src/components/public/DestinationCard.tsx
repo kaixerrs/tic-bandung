@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Clock } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface DestinationProps {
   id: string;
@@ -16,6 +17,8 @@ interface DestinationProps {
 }
 
 export default function DestinationCard({ destination }: { destination: DestinationProps }) {
+  const t = useTranslations('Components');
+  const locale = useLocale();
   const imageUrl = destination.image_url || 'https://images.unsplash.com/photo-1549473889-14f410d83298?q=80&w=800&auto=format&fit=crop'; // Placeholder
 
   return (
@@ -77,9 +80,9 @@ export default function DestinationCard({ destination }: { destination: Destinat
             {/* Logic NFR-09: Tiga state harga */}
             {destination.ticket_type !== 'UNCONFIRMED' ? (
               <span className="font-bold text-sm text-[#3D7A5E]">
-                {destination.ticket_type === 'FREE' ? 'Gratis' : 
-                 destination.ticket_nominal ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(destination.ticket_nominal) : 
-                 'Berbayar'}
+                {destination.ticket_type === 'FREE' ? t('free') : 
+                 destination.ticket_nominal ? new Intl.NumberFormat(locale === 'id' ? 'id-ID' : 'en-US', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(destination.ticket_nominal) : 
+                 t('paid')}
               </span>
             ) : (
               <span></span> /* Empty span to keep flex-between layout if no price */
@@ -89,7 +92,7 @@ export default function DestinationCard({ destination }: { destination: Destinat
             {destination.operating_hours && (
               <div className="flex items-center gap-1.5 text-[#4f4635] text-xs font-medium">
                 <Clock className="w-3.5 h-3.5" />
-                <span>Ada</span> {/* Or parse JSON to show open status */}
+                <span>{t('available')}</span> {/* Or parse JSON to show open status */}
               </div>
             )}
           </div>

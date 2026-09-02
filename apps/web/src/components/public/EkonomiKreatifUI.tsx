@@ -1,29 +1,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { ChevronRight, Music, Film, Gamepad2, Palette, PenTool, Tv, Radio, MonitorPlay, Camera, SearchCode, Shirt, Utensils, BookOpen, Lightbulb, Building2, Brush, Newspaper } from 'lucide-react';
 
 const SUBSECTORS = [
-  { name: 'Pengembangan Permainan', icon: Gamepad2 },
-  { name: 'Arsitektur', icon: Building2 },
-  { name: 'Desain Interior', icon: Brush },
-  { name: 'Musik', icon: Music },
-  { name: 'Seni Rupa', icon: Palette },
-  { name: 'Desain Produk', icon: PenTool },
-  { name: 'Fesyen', icon: Shirt },
-  { name: 'Kuliner', icon: Utensils },
-  { name: 'Film, Animasi, dan Video', icon: Film },
-  { name: 'Fotografi', icon: Camera },
-  { name: 'Desain Komunikasi Visual', icon: Tv },
-  { name: 'Televisi dan Radio', icon: Radio },
-  { name: 'Kriya', icon: Lightbulb },
-  { name: 'Periklanan', icon: MonitorPlay },
-  { name: 'Seni Pertunjukan', icon: Music },
-  { name: 'Penerbitan', icon: BookOpen },
-  { name: 'Aplikasi', icon: SearchCode },
+  { en: 'Game Development', id: 'Pengembangan Permainan', icon: Gamepad2 },
+  { en: 'Architecture', id: 'Arsitektur', icon: Building2 },
+  { en: 'Interior Design', id: 'Desain Interior', icon: Brush },
+  { en: 'Music', id: 'Musik', icon: Music },
+  { en: 'Fine Arts', id: 'Seni Rupa', icon: Palette },
+  { en: 'Product Design', id: 'Desain Produk', icon: PenTool },
+  { en: 'Fashion', id: 'Fesyen', icon: Shirt },
+  { en: 'Culinary', id: 'Kuliner', icon: Utensils },
+  { en: 'Film, Animation, and Video', id: 'Film, Animasi, dan Video', icon: Film },
+  { en: 'Photography', id: 'Fotografi', icon: Camera },
+  { en: 'Visual Communication Design', id: 'Desain Komunikasi Visual', icon: Tv },
+  { en: 'Television and Radio', id: 'Televisi dan Radio', icon: Radio },
+  { en: 'Crafts', id: 'Kriya', icon: Lightbulb },
+  { en: 'Advertising', id: 'Periklanan', icon: MonitorPlay },
+  { en: 'Performing Arts', id: 'Seni Pertunjukan', icon: Music },
+  { en: 'Publishing', id: 'Penerbitan', icon: BookOpen },
+  { en: 'Applications', id: 'Aplikasi', icon: SearchCode },
 ];
 
-export default function EkonomiKreatifUI() { 
+export default function EkonomiKreatifUI() {
+  const locale = useLocale();
+  const l = (id: string, en: string) => locale === 'en' ? en : id; 
   const t = useTranslations('Ekonomi');
   return (
     <main className="min-h-screen bg-[#fcf9f5]">
@@ -44,10 +46,10 @@ export default function EkonomiKreatifUI() {
             UCCN City of Design
           </span>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-6 leading-none">
-            Nadi <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9971E] to-[#f4d17f]">Kreativitas</span><br/> Pasundan
+            {l('Nadi ', 'Pulse of ')}<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9971E] to-[#f4d17f]">{l('Kreativitas', 'Creativity')}</span><br/> {l('Pasundan', 'in Pasundan')}
           </h1>
           <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-            Mengenal 17 Sub-sektor penggerak roda ekonomi dan budaya yang menetapkan Bandung sebagai Kota Kreatif Dunia.
+            {l('Mengenal 17 Sub-sektor penggerak roda ekonomi dan budaya yang menetapkan Bandung sebagai Kota Kreatif Dunia.', 'Discover the 17 sub-sectors driving the economy and culture that established Bandung as a World Creative City.')}
           </p>
         </div>
       </div>
@@ -56,11 +58,11 @@ export default function EkonomiKreatifUI() {
         
         {/* Breadcrumb */}
         <nav className="flex justify-center text-[#4f4635] text-sm mb-16 items-center gap-2 font-medium">
-          <Link className="hover:text-[#7a5900] transition-colors" href="/">Beranda</Link>
+          <Link className="hover:text-[#7a5900] transition-colors" href="/">{l('Beranda', 'Home')}</Link>
           <ChevronRight className="w-4 h-4" />
-          <Link className="hover:text-[#7a5900] transition-colors" href="/kategori">Kategori</Link>
+          <Link className="hover:text-[#7a5900] transition-colors" href="/kategori">{l('Kategori', 'Category')}</Link>
           <ChevronRight className="w-4 h-4" />
-          <span className="text-[#1b1c1a] font-bold">Ekonomi Kreatif</span>
+          <span className="text-[#1b1c1a] font-bold">{l('Ekonomi Kreatif', 'Creative Economy')}</span>
         </nav>
 
         {/* Editorial Text */}
@@ -72,10 +74,10 @@ export default function EkonomiKreatifUI() {
           </div>
           <div className="lg:col-span-7 prose prose-lg text-[#4f4635] leading-relaxed">
             <p>
-              Bandung tidak hanya dikenal karena keindahan alam dan warisan sejarahnya, tetapi juga sebagai kuali peleburan ide-ide segar. Sejak 2015, UNESCO menetapkan Bandung ke dalam Jaringan Kota Kreatif (UCCN) di bidang desain.
+              {l('Bandung tidak hanya dikenal karena keindahan alam dan warisan sejarahnya, tetapi juga sebagai kuali peleburan ide-ide segar. Sejak 2015, UNESCO menetapkan Bandung ke dalam Jaringan Kota Kreatif (UCCN) di bidang desain.', 'Bandung is known not only for its natural beauty and historical heritage, but also as a melting pot of fresh ideas. Since 2015, UNESCO has designated Bandung into the Creative Cities Network (UCCN) in the field of design.')}
             </p>
             <p>
-              Denyut nadi kota ini dijaga oleh anak-anak mudanya yang bergerak bebas di 17 sub-sektor ekonomi kreatif. Mulai dari panggung indie independen, studio animasi kelas dunia, hingga lorong-lorong distro fesyen yang mendikte tren nasional.
+              {l('Denyut nadi kota ini dijaga oleh anak-anak mudanya yang bergerak bebas di 17 sub-sektor ekonomi kreatif. Mulai dari panggung indie independen, studio animasi kelas dunia, hingga lorong-lorong distro fesyen yang mendikte tren nasional.', 'The pulse of this city is maintained by its youth moving freely across 17 creative economy sub-sectors. Ranging from independent indie stages, world-class animation studios, to the fashion distro alleys that dictate national trends.')}
             </p>
           </div>
         </div>
@@ -98,7 +100,7 @@ export default function EkonomiKreatifUI() {
                     <Icon className="w-6 h-6 text-[#4f4635] group-hover:text-white transition-colors duration-300" />
                   </div>
                   <span className="font-bold text-sm text-[#1b1c1a] group-hover:text-[#C9971E] transition-colors duration-300">
-                    {sector.name}
+                    {locale === 'en' ? sector.en : sector.id}
                   </span>
                 </div>
               );

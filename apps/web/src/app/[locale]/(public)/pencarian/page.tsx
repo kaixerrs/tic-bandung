@@ -1,7 +1,8 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/utils/supabase/server';
 import CategoryListingUI from '@/components/public/CategoryListingUI';
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Pencarian' });
   return {
@@ -15,7 +16,7 @@ export default async function PencarianPage({
   params,
 
 }: {
-  searchParams: Promise<{ q?: string }>
+  searchParams: Promise<{ q?: string }>, params: Promise<{ locale: string }>
 }) {
   const resolvedParams = await searchParams;
   const q = resolvedParams.q || '';

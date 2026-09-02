@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ChevronRight, Filter, Search, X } from 'lucide-react';
 import DestinationCard from '@/components/public/DestinationCard';
 import { CustomSelect } from '@/components/ui/CustomSelect';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface Destination {
   id: string;
@@ -40,6 +40,8 @@ export default function CategoryListingUI({
   const [selectedPrice, setSelectedPrice] = useState<'FREE' | 'PAID' | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const t = useTranslations('UI');
+  const tc = useTranslations('CategoryUI');
+  const locale = useLocale();
 
   // Extract unique districts for the filter dropdown
   const uniqueDistricts = useMemo(() => {
@@ -67,7 +69,7 @@ export default function CategoryListingUI({
     <main className="min-h-screen bg-[#fcf9f5]">
       {/* Header Banner - Hero Image with Parallax & Gradient */}
       <div 
-        className="pt-32 pb-24 relative overflow-hidden"
+        className="pt-16 md:pt-20 pb-12 lg:pb-16 relative overflow-hidden"
       >
         {category.image_url ? (
           <>
@@ -107,11 +109,11 @@ export default function CategoryListingUI({
           </div>
         )}
 
-        <div className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 relative z-10 mt-10">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <nav className="flex text-white/80 text-sm mb-6 items-center gap-2 font-medium">
-            <Link className="hover:text-white transition-colors" href="/">Beranda</Link>
+            <Link className="hover:text-white transition-colors" href="/">{locale === 'en' ? 'Home' : 'Beranda'}</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link className="hover:text-white transition-colors" href="/kategori">Kategori</Link>
+            <Link className="hover:text-white transition-colors" href="/kategori">{locale === 'en' ? 'Category' : 'Kategori'}</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-white">{category.name}</span>
           </nav>
@@ -127,70 +129,7 @@ export default function CategoryListingUI({
       </div>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 py-12">
-        {/* Filter Bar (FR-03) */}
-        <div className="bg-white p-4 rounded-sm shadow-sm border border-[#d3c5af]/50 mb-10 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between sticky top-[80px] z-40">
-          
-          <div className="relative w-full md:w-96">
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-[#7a5900] focus:ring-1 focus:ring-[#7a5900] outline-none transition-all text-[#1b1c1a]" 
-              placeholder="Cari nama destinasi..." 
-              type="text" 
-            />
-          </div>
-
-          <div className="flex flex-row gap-2 md:gap-3 w-full md:w-auto">
-            <div className="grid grid-cols-2 gap-2 md:gap-3 flex-1 md:w-auto">
-              <div className="flex items-center gap-1.5 md:gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 md:px-4 py-2">
-                <Filter className="w-4 h-4 text-gray-500 shrink-0" />
-                <CustomSelect 
-                  value={selectedDistrict || ''} 
-                  onChange={(e) => setSelectedDistrict(e.target.value || null)}
-                  className="bg-transparent border-none font-medium !p-0 w-full min-w-[10px]"
-                  wrapperClassName="flex-1 min-w-0"
-                  placeholder="Kawasan"
-                  options={uniqueDistricts.map(d => ({ label: d, value: d }))}
-                />
-              </div>
-
-              <div className="flex items-center gap-1.5 md:gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 md:px-4 py-2">
-                <span className="text-[#3D7A5E] font-bold text-sm shrink-0">Rp</span>
-                <CustomSelect 
-                  value={selectedPrice || ''} 
-                  onChange={(e) => setSelectedPrice(e.target.value as 'FREE' | 'PAID' | null)}
-                  className="bg-transparent border-none font-medium !p-0 w-full min-w-[10px]"
-                  wrapperClassName="flex-1 min-w-0"
-                  placeholder="Harga"
-                  options={[
-                    { label: 'Gratis', value: 'FREE' },
-                    { label: 'Berbayar', value: 'PAID' }
-                  ]}
-                />
-              </div>
-            </div>
-
-            {(selectedDistrict || selectedPrice || searchQuery) && (
-              <button 
-                onClick={() => {
-                  setSelectedDistrict(null);
-                  setSelectedPrice(null);
-                  setSearchQuery('');
-                }}
-                className="p-3 text-red-500 bg-red-50 hover:bg-red-100 rounded-xl transition-colors shrink-0 flex items-center justify-center"
-                title="Reset Filters"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Results Info */}
-        <div className="mb-6 text-[#4f4635] font-medium">
-          Menampilkan <span className="text-[#1b1c1a] font-bold">{filteredDestinations.length}</span> destinasi
-        </div>
+        
 
         {/* Grid Layout (NFR-23 Reusability) */}
         {filteredDestinations.length > 0 ? (
@@ -218,8 +157,8 @@ export default function CategoryListingUI({
           </div>
         ) : (
           <div className="text-center py-20 bg-white rounded-sm border border-dashed border-[#d3c5af]">
-            <p className="text-xl text-[#4f4635] mb-2">Pencarian Tidak Ditemukan</p>
-            <p className="text-[#4f4635]/70">Coba ubah kata kunci atau hapus filter kawasan/harga.</p>
+            <p className="text-xl text-[#4f4635] mb-2">{tc('notFound')}</p>
+            <p className="text-[#4f4635]/70">{tc('tryChange')}</p>
           </div>
         )}
       </div>

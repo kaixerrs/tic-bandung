@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, Globe } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Montserrat } from 'next/font/google';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '600', '700', '900'] });
@@ -20,12 +20,14 @@ const navLinks = [
 
 export default function Navbar() {
   const t = useTranslations('Navigation');
+  const locale = useLocale();
+  const getHref = (path) => locale === 'en' ? '/en' + (path === '/' ? '' : path) : path;
   const navLinks = [
-    { id: 'home', name: t('home'), href: '/' },
-    { id: 'destinasi', name: t('destinasi'), href: '/kategori' },
-    { id: 'event', name: t('event'), href: '/event' },
-    { id: 'transportasi', name: t('transportasi'), href: '/transportasi' },
-    { id: 'pusatBantuan', name: t('pusatBantuan'), href: '/pusat-bantuan' },
+    { id: 'home', name: t('home'), href: getHref('/') },
+    { id: 'destinasi', name: t('destinasi'), href: getHref('/kategori') },
+    { id: 'event', name: t('event'), href: getHref('/event') },
+    { id: 'transportasi', name: t('transportasi'), href: getHref('/transportasi') },
+    { id: 'pusatBantuan', name: t('pusatBantuan'), href: getHref('/pusat-bantuan') },
   ];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -96,15 +98,13 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-5">
           <LanguageSwitcher isTransparent={normalizedPathname === '/' && !scrolled} />
           <Link 
-            href="/paket-wisata"
+            href={locale === 'en' ? '/en/paket-wisata' : '/paket-wisata'}
             className={`px-8 py-3 font-label-caps uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2 ${
               normalizedPathname === '/' && !scrolled
                 ? 'bg-white text-[#1A1A1A] hover:bg-[#00C853] hover:text-white'
                 : 'bg-[#00C853] text-white hover:bg-[#0050A2] hover:text-white'
             }`}
-          >
-            PLAN TRIP
-          </Link>
+          >{locale === 'en' ? 'TOUR PACKAGES' : 'PAKET WISATA'}</Link>
         </div>
 
         {/* Mobile Toggle Button */}
@@ -144,7 +144,7 @@ export default function Navbar() {
               <LanguageSwitcher />
             </div>
             <Link 
-              href="/paket-wisata"
+              href={locale === 'en' ? '/en/paket-wisata' : '/paket-wisata'}
               onClick={() => setIsOpen(false)}
               className="flex w-full justify-center px-4 py-3 bg-[#3D7A5E] text-white text-sm font-bold rounded-xl shadow-sm"
             >
