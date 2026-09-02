@@ -118,28 +118,28 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
         <div className="relative mb-8 text-center flex flex-col items-center justify-center">
           
           
-          <h1 className="text-[48px] md:text-[80px] lg:text-[96px] font-extrabold leading-[0.95] text-white uppercase tracking-wider drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] mb-6 md:mb-10 z-10 relative">
+          <h1 className="text-[40px] sm:text-[48px] md:text-[80px] lg:text-[96px] font-extrabold leading-none text-white uppercase tracking-wider drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] mb-6 md:mb-10 z-10 relative">
             PESONA KOTA
           </h1>
           
-          <h1 className={`${allisonFont.className} text-[130px] md:text-[200px] lg:text-[260px] leading-[0.4] text-[#00C853] mb-8 mt-[-15px] md:mt-[-30px] lg:mt-[-40px] z-10 relative`} style={{ textShadow: '0 4px 20px rgba(0, 200, 83, 0.5), 0 0 80px rgba(0, 122, 51, 0.3)' }}>
+          <h1 className={`${allisonFont.className} text-[100px] sm:text-[130px] md:text-[200px] lg:text-[260px] leading-[0.4] text-[#00C853] mb-8 mt-[-15px] md:mt-[-30px] lg:mt-[-40px] z-10 relative`} style={{ textShadow: '0 4px 20px rgba(0, 200, 83, 0.5), 0 0 80px rgba(0, 122, 51, 0.3)' }}>
             Bandung
           </h1>
         </div>
 
         {/* Subtitle */}
-        <p className="font-body-lg text-[16px] md:text-[20px] text-white/90 mb-12 max-w-2xl tracking-wide leading-relaxed px-4 drop-shadow-md font-medium">
+        <p className="font-body-lg text-[14px] md:text-[20px] text-white/90 mb-8 md:mb-12 max-w-2xl tracking-wide leading-relaxed px-4 drop-shadow-md font-medium">
           Di mana tradisi berpadu dengan inovasi. Rasakan pengalaman tak terlupakan di jantung Jawa Barat, dari warisan budaya yang kaya hingga gaya hidup modern yang semarak.
         </p>
         
         {/* Discovery Bar */}
-        <form onSubmit={handleSearch} className="bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-2 flex items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto relative z-50">
-          <div className="flex-grow px-6 flex items-center border-r border-gray-200 py-3">
+        <form onSubmit={handleSearch} className="bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-1.5 md:p-2 flex items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto relative z-50">
+          <div className="flex-grow px-3 md:px-6 flex items-center border-r border-gray-200 py-2 md:py-3">
             <MapPin className="text-bandung-hijau mr-4 w-5 h-5 shrink-0" />
             <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-sm font-semibold tracking-wider" placeholder="Mau pergi ke mana?" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}  />
           </div>
           
-          <button type="submit" className="bg-[#00C853] text-white px-10 py-4 font-extrabold hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
+          <button type="submit" className="bg-[#00C853] text-white px-5 py-3 md:px-10 md:py-4 font-extrabold hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
             CARI
           </button>
         </form>
@@ -152,12 +152,12 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
       </div>
 
       {/* Slide Info & Indicators - Bottom Right */}
-      <div className="absolute bottom-8 right-6 md:right-10 flex flex-col items-end gap-3 z-30 text-right w-[90%] max-w-[280px] sm:max-w-xs">
-        <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end bg-black/40 backdrop-blur-md border border-white/20 p-4 rounded-[2px] shadow-2xl w-full">
-          <h3 className="text-white font-display font-bold text-xl md:text-2xl lg:text-3xl drop-shadow-md mb-2">
+      <div className="absolute bottom-28 md:bottom-8 right-4 md:right-10 flex flex-col items-end gap-2 md:gap-3 z-30 text-right w-[85%] max-w-[220px] md:max-w-xs">
+        <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end bg-black/50 backdrop-blur-md border border-white/20 p-3 md:p-4 rounded-[2px] shadow-2xl w-full">
+          <h3 className="text-white font-display font-bold text-lg md:text-2xl lg:text-3xl drop-shadow-md mb-2">
             {sliders[currentIndex]?.title}
           </h3>
-          <p className="text-white/90 font-body text-xs md:text-sm drop-shadow-sm line-clamp-3">
+          <p className="text-white/90 font-body text-[10px] md:text-sm drop-shadow-sm line-clamp-2 md:line-clamp-3">
             {sliders[currentIndex]?.subtitle}
           </p>
           {sliders[currentIndex]?.button_link && (
