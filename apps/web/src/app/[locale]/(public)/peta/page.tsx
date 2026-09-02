@@ -3,10 +3,11 @@ import MapClientWrapper from '@/components/public/MapClientWrapper';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 
-export const metadata = {
-  title: 'Peta Interaktif Wisata | TIC Kota Bandung',
-  description: 'Jelajahi seluruh destinasi wisata di Kota Bandung melalui peta interaktif.',
-};
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Peta' });
+  return { title: t('metaTitle'), description: t('metaDesc') };
+}
 
 export default async function PetaPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const resolvedParams = await searchParams;

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { ChevronRight, Music, Film, Gamepad2, Palette, PenTool, Tv, Radio, MonitorPlay, Camera, SearchCode, Shirt, Utensils, BookOpen, Lightbulb, Building2, Brush, Newspaper } from 'lucide-react';
 
 const SUBSECTORS = [
@@ -22,7 +23,8 @@ const SUBSECTORS = [
   { name: 'Aplikasi', icon: SearchCode },
 ];
 
-export default function EkonomiKreatifUI() {
+export default function EkonomiKreatifUI() { 
+  const t = useTranslations('Ekonomi');
   return (
     <main className="min-h-screen bg-[#fcf9f5]">
       

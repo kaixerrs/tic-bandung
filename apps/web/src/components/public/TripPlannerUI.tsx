@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Map, MapPin, Clock, ArrowRight, Compass, Camera, Palette } from 'lucide-react';
 import Image from 'next/image';
 
@@ -117,7 +118,8 @@ const ITINERARIES = [
   }
 ];
 
-export default function TripPlannerUI() {
+export default function TripPlannerUI() { 
+  const t = useTranslations('TripPlanner');
   const [activeTab, setActiveTab] = useState(ITINERARIES[0].id);
 
   const activeItinerary = ITINERARIES.find(i => i.id === activeTab) || ITINERARIES[0];
@@ -130,7 +132,7 @@ export default function TripPlannerUI() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10 pointer-events-none"></div>
         <Image
           src={activeItinerary.image}
-          alt="Trip Planner Cover"
+          alt="{t('heroTitle')} Cover"
           fill
           className="object-cover opacity-40 transition-opacity duration-1000"
           priority

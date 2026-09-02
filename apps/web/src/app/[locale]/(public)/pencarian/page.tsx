@@ -1,18 +1,28 @@
 import { createClient } from '@/utils/supabase/server';
 import CategoryListingUI from '@/components/public/CategoryListingUI';
 
-export const metadata = {
-  title: 'Pencarian Destinasi | TIC Kota Bandung',
-  description: 'Cari destinasi wisata di Kota Bandung.',
-};
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Pencarian' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDesc'),
+  };
+}
 
 export default async function PencarianPage({
   searchParams,
+  params,
+
 }: {
   searchParams: Promise<{ q?: string }>
 }) {
   const resolvedParams = await searchParams;
   const q = resolvedParams.q || '';
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations('Pencarian');
+  const tUI = await getTranslations('UI');
   const supabase = await createClient();
 
   let query = supabase

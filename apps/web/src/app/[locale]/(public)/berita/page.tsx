@@ -7,10 +7,14 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: 'Berita & Update Terkini | TIC Kota Bandung',
-  description: 'Berita terbaru, artikel wisata, dan update terkini dari Dinas Pariwisata Kota Bandung.',
-};
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Berita' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDesc'),
+  };
+}
 
 export default async function BeritaPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -28,10 +32,10 @@ export default async function BeritaPage({ params }: { params: Promise<{ locale:
     <main className="w-full bg-[#fcf9f5] min-h-screen overflow-x-hidden">
       <ModernHero 
         breadcrumbText={t('artikel') || 'Berita'}
-        title="Berita & Artikel"
-        highlightText="Terkini"
+        title={t('heroTitle')}
+        highlightText={t('heroHighlight')}
         highlightGradient="from-green-600 to-green-400"
-        description="Dapatkan informasi terbaru mengenai destinasi wisata, acara menarik, dan tips perjalanan di Kota Bandung."
+        description={t('heroDesc')}
       />
 
       <section className="py-6 md:py-12 px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto relative z-10">
@@ -59,8 +63,8 @@ export default async function BeritaPage({ params }: { params: Promise<{ locale:
             ))
           ) : (
             <div className="col-span-full text-center py-24 text-on-surface-variant">
-              <h3 className="text-2xl font-bold mb-4">Belum ada berita</h3>
-              <p>Berita dan artikel terbaru akan segera hadir.</p>
+              <h3 className="text-2xl font-bold mb-4">{t('noNews')}</h3>
+              <p>{t('noNewsDesc')}</p>
             </div>
           )}
         </div>

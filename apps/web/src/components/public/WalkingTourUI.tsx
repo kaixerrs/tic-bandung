@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { ChevronRight, Map, ArrowRight, MapPin } from 'lucide-react';
 
 const TOUR_ROUTES = [
@@ -31,7 +32,8 @@ const TOUR_ROUTES = [
   }
 ];
 
-export default function WalkingTourUI() {
+export default function WalkingTourUI() { 
+  const t = useTranslations('Walking');
   const route = TOUR_ROUTES[0]; // For MVP, we render the first route
 
   return (
@@ -68,7 +70,7 @@ export default function WalkingTourUI() {
           <ChevronRight className="w-4 h-4" />
           <Link className="hover:text-[#8C5A3C] transition-colors" href="/kategori">Kategori</Link>
           <ChevronRight className="w-4 h-4" />
-          <span className="text-[#1b1c1a] font-bold">Walking Tour</span>
+          <span className="text-[#1b1c1a] font-bold">{t('title')}</span>
         </nav>
 
         {/* Route Details */}

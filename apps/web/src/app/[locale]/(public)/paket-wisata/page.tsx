@@ -3,25 +3,30 @@ import { ScrollReveal } from '@/components/ui/animations/ScrollReveal';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ModernHero } from '@/components/ui/ModernHero';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ChevronRight, ExternalLink, ShieldCheck, Compass, Users, CheckCircle2, Building, TreePine, Camera } from 'lucide-react';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '700', '900'] });
 
-export const metadata = {
-  title: 'Paket Wisata | TIC Kota Bandung',
-  description: 'Pilihan paket wisata resmi dari asosiasi ASTINDO dan ASITA.',
-};
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'PaketWisata' });
+  return { title: t('metaTitle'), description: t('metaDesc') };
+}
 
-export default function PaketWisataPage() {
+export default async function Page({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations('PaketWisata');
   return (
     <main className="w-full bg-[#fcf9f5] min-h-screen overflow-hidden">
       
 
       <ModernHero 
-        breadcrumbText="Paket Wisata"
-        title="Jelajahi Bandung"
+        breadcrumbText={t('heroTitle')}
+        title={t('heroTitle')}
         highlightText="Tanpa Beban."
-        description="Nikmati kemudahan menjelajahi Kota Bandung dengan pilihan paket wisata eksklusif, terpercaya, dan bersertifikat dari asosiasi resmi pariwisata."
+        description={t('heroDesc')}
       />
 
       {/* Association Cards Section */}

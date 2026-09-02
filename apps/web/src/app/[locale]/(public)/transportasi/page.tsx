@@ -1,27 +1,32 @@
 ﻿import Link from 'next/link';
 import Image from 'next/image';
 import { ModernHero } from '@/components/ui/ModernHero';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ArrowRight, Bus, Train, Plane, Bike, CarTaxiFront, ExternalLink, Map, Info, ChevronRight } from 'lucide-react';
 import { Montserrat } from 'next/font/google';
 import { ScrollReveal } from '@/components/ui/animations/ScrollReveal';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'] });
 
-export const metadata = {
-  title: 'Panduan Transportasi | TIC Kota Bandung',
-  description: 'Informasi lengkap rute angkutan umum, transportasi online, dan mobilitas di Kota Bandung.',
-};
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Transportasi' });
+  return { title: t('metaTitle'), description: t('metaDesc') };
+}
 
-export default function TransportasiPage() {
+export default async function Page({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations('Transportasi');
   return (
     <main className="w-full bg-[#f8f9fa] min-h-screen pb-32 overflow-hidden selection:bg-blue-100">
       
 <ModernHero 
-        breadcrumbText="Transportasi"
-        title="Jelajahi Bandung"
+        breadcrumbText={t('heroTitle')}
+        title={t('heroTitle')}
         highlightText="Tanpa Batas."
         highlightGradient="from-blue-600 to-blue-400"
-        description="Sistem transportasi terintegrasi untuk kenyamanan perjalanan Anda. Dari kereta cepat hingga sepeda santai keliling kota."
+        description={t('heroDesc')}
         layoutVariant="left"
         illustration={
           <div className="absolute inset-0 flex items-center justify-center">

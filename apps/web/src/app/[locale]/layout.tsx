@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { Analytics } from '@vercel/analytics/react';
 
 const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken-grotesk" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" });
@@ -49,6 +50,7 @@ export default async function RootLayout({
           {children}
           <Toaster position="bottom-right" toastOptions={{ duration: 4000, style: { background: '#363636', color: '#fff' } }} />
         </NextIntlClientProvider>
+          <Analytics />
       </body>
     </html>
   );

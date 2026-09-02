@@ -26,7 +26,12 @@
     "baca": "READ",
     "visualKota": "City Visuals",
     "galeri": "Gallery",
-    "lihatSemuaFoto": "VIEW ALL PHOTOS"
+    "lihatSemuaFoto": "VIEW ALL PHOTOS",
+    "gedungSate": "Gedung Sate",
+    "alunAlun": "City Square",
+    "jalanBraga": "Braga Street",
+    "noNews": "No latest tourism news yet.",
+    "noGallery": "Gallery collection is not available yet."
   },
   "Components": {
     "bacaSelengkapnya": "Read More",
@@ -36,5 +41,169 @@
     "butuhBantuan": "Need Help?",
     "pusatBantuanTIC": "TIC Help Center",
     "lihatSemuaPertanyaan": "View All Questions"
+  },
+  "Kategori": {
+    "metaTitle": "Tourism Categories | TIC Bandung City",
+    "metaDesc": "Explore various categories of tourist destinations in Bandung City.",
+    "lokasi": "Locations",
+    "breadcrumb": "Tourist Destinations",
+    "heroTitle": "City Exploration",
+    "heroHighlight": "Bandung",
+    "heroDesc": "Discover the diverse charms of Bandung City through our curated destination guide divided into three main pillars of tourism experience.",
+    "pillarStayDesc": "Hotels, Spas, and Medical Tourism",
+    "pillarExploreDesc": "Recreation, History, Arts, Religion, Sports & Walking Tours",
+    "pillarLifestyleDesc": "Culinary, Shopping, Creative Villages & Co-Working Spaces"
+  },
+  "UI": {
+    "searchDest": "Search destinations...",
+    "allAreas": "All Areas",
+    "ticketPrice": "Ticket Price",
+    "free": "Free",
+    "paid": "Paid",
+    "unconfirmed": "Unconfirmed",
+    "applyFilter": "Apply Filters",
+    "clearFilter": "Clear Filters",
+    "noDestinations": "No destinations found.",
+    "exploreNow": "Explore Now",
+    "viewAll": "View All",
+    "readMore": "Read More",
+    "backToHome": "Back to Home"
+  },
+  "Event": {
+    "metaTitle": "Calendar of Events (COE) | TIC Bandung City",
+    "metaDesc": "Annual event schedule and official event registration for Bandung City.",
+    "heroBreadcrumb": "Calendar of Events",
+    "heroTitle": "Calendar of Events",
+    "heroHighlight": "(COE)",
+    "heroDesc": "An annual agenda curating the best events in Bandung City. Discover various festivals, art performances, and cultural celebrations throughout the year.",
+    "timelineTitle": "2027 CoE Curation Timeline",
+    "timeline1Date": "Sept 1 - 15, 2026",
+    "timeline1Title": "Registration & Document Submission",
+    "timeline1Desc": "Organizers submit proposals and supporting documents.",
+    "timeline2Date": "Oct 11 - 17, 2026",
+    "timeline2Title": "CoE Curation Phase",
+    "timeline2Desc": "Assessment by professional curators.",
+    "timeline3Date": "Oct 18 - 31, 2026",
+    "timeline3Title": "Preparation Phase",
+    "timeline3Desc": "Finalizing concepts for selected events.",
+    "timeline4Date": "November 2026",
+    "timeline4Title": "Official Launching",
+    "timeline4Desc": "Official announcement before the Disparbud calendar is released.",
+    "criteriaTitle": "CoE Criteria & Terms",
+    "criteria1": "For events entering the <strong>Top 10</strong>, they must have a track record of being held in Bandung City for 3 consecutive years.",
+    "criteria2": "Organizers are willing and required to report event results after completion.",
+    "criteria3": "Must include a track record of previous event promotional media (Flyers, Logos, Photos, & Videos).",
+    "criteria4": "The form format is adjusted to the <strong>KEN (Karisma Event Nusantara)</strong> standard from Kemenparekraf.",
+    "registerTitle": "Register Your Event",
+    "registerDesc": "Make your event part of the main tourism attraction of Bandung City in 2027.",
+    "registerTerms": "By registering, you agree to the CoE curation terms & conditions of Bandung City."
+  },
+  "SlugPage": {
+    "metaNotFound": "Destination Not Found",
+    "metaDesc": "Detailed information about {name} in Bandung City.",
+    "home": "Home",
+    "category": "Category",
+    "photoBy": "Photo by:",
+    "about": "About",
+    "noDescription": "No description available for this destination.",
+    "photoGallery": "Photo Gallery",
+    "importantInfo": "Important Information",
+    "openingHours": "Opening Hours",
+    "foundedYear": "Founded Year",
+    "address": "Address",
+    "downloadLeaflet": "Download Leaflet",
+    "eventMetaNotFound": "Event Not Found",
+    "eventMetaDesc": "Information about event {name} in Bandung City.",
+    "eventAbout": "About Event",
+    "newsMetaNotFound": "News Not Found",
+    "newsMetaDesc": "Read news about {title}.",
+    "newsRelated": "Related News",
+    "newsBack": "Back to News List",
+    "readAlso": "Read Also"
+  },
+  "Kuliner": {
+    "title": "Bandung Culinary",
+    "subtitle": "Taste the Flavors",
+    "desc": "Explore a variety of legendary and modern culinary delights in Bandung City.",
+    "searchPlaceholder": "Search culinary...",
+    "metaTitle": "Bandung Culinary | TIC Bandung City",
+    "metaDesc": "Explore legendary and modern culinary delights in Bandung City.",
+    "breadcrumb": "Culinary",
+    "heroTitle": "Culinary",
+    "heroHighlight": "Bandung",
+    "heroDesc": "Explore a variety of legendary and modern culinary delights that tantalize your taste buds in Bandung City.",
+    "categoryTitle": "Choose Culinary Category"
+  },
+  "PaketWisata": {
+    "metaTitle": "Tour Packages | TIC Bandung City",
+    "metaDesc": "Find the best tour packages to explore Bandung City easily and comfortably.",
+    "heroTitle": "Tour Packages",
+    "heroDesc": "Find the best tour packages to explore Bandung City easily and comfortably.",
+    "comingSoon": "Tour packages will be available soon."
+  },
+  "Berita": {
+    "metaTitle": "News & Latest Updates | TIC Bandung City",
+    "metaDesc": "Latest news, tourism articles, and updates from Bandung City Tourism Office.",
+    "heroTitle": "News & Articles",
+    "heroHighlight": "Latest",
+    "heroDesc": "Get the latest information on tourist destinations, interesting events, and travel tips in Bandung City.",
+    "noNews": "No news yet",
+    "noNewsDesc": "Latest news and articles will be available soon."
+  },
+  "Pencarian": {
+    "metaTitle": "Search Results | TIC Bandung City",
+    "metaDesc": "Search results for tourist destinations, events, and culinary in Bandung City.",
+    "heroTitle": "Search Results",
+    "heroDesc": "Showing search results for \"{query}\" across the Bandung City tourism directory.",
+    "destinations": "Destinations ({count})",
+    "events": "Events ({count})",
+    "culinary": "Culinary ({count})",
+    "noDestinations": "No tourist destinations match your search.",
+    "tryAnotherKeyword": "Try using different keywords.",
+    "noEvents": "No events match your search.",
+    "noCulinary": "No culinary places match your search."
+  },
+  "Transportasi": {
+    "metaTitle": "Transportation | TIC Bandung City",
+    "metaDesc": "Transportation guide in Bandung City.",
+    "heroTitle": "Transportation",
+    "heroDesc": "Guide to getting around Bandung City using public transportation.",
+    "comingSoon": "Transportation information will be available soon."
+  },
+  "Peta": {
+    "metaTitle": "Tourism Map | TIC Bandung City",
+    "metaDesc": "Interactive tourism map of Bandung City.",
+    "heroTitle": "Tourism Map",
+    "heroDesc": "Explore tourist destinations, culinary spots, and events on the interactive map of Bandung City.",
+    "comingSoon": "Interactive map will be available soon."
+  },
+  "TripPlanner": {
+    "metaTitle": "Trip Planner | TIC Bandung City",
+    "metaDesc": "Plan your trip to Bandung City.",
+    "heroTitle": "Trip Planner",
+    "heroDesc": "Plan your itinerary easily and comfortably.",
+    "comingSoon": "Trip Planner feature will be available soon."
+  },
+  "PusatBantuan": {
+    "metaTitle": "Help Center | TIC Bandung City",
+    "metaDesc": "Find important information and emergency contacts in Bandung City.",
+    "heroTitle": "Help Center",
+    "heroDesc": "Find important information, emergency contacts, and answers to common questions regarding your trip to Bandung City.",
+    "emergencyContacts": "Official Emergency Contacts",
+    "tic": "Tourism Information Center (TIC)",
+    "ticAddress": "Bandung City Culture and Tourism Office",
+    "openMap": "Open Map"
+  },
+  "Ekonomi": {
+    "title": "Creative Economy & Shopping Center",
+    "desc": "Bandung is famous as the creative industry center of Indonesia. Explore unique centers that produce high-quality local products.",
+    "centerTitle": "Creative Center"
+  },
+  "Walking": {
+    "title": "Walking Tour",
+    "desc": "Explore Bandung City on foot. Feel the city's atmosphere, historic architecture, and local life up close.",
+    "routeSelect": "Select Route",
+    "startWalking": "Start Walking",
+    "distance": "Distance"
   }
 }

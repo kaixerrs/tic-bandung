@@ -1,3 +1,4 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -8,6 +9,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   const supabase = await createClient();
+  const t = await getTranslations('SlugPage');
+  const tUI = await getTranslations('UI');
   
   const { data: destination } = await supabase
     .from('destinations')
@@ -15,11 +18,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .eq('slug', slug)
     .single();
 
-  if (!destination) return { title: 'Destinasi Tidak Ditemukan' };
+  if (!destination) const t = await getTranslations({ locale: (await params).locale, namespace: 'SlugPage' });
+  if (!destination) return { title: t('metaNotFound') };
 
   return {
     title: `${destination.name} | TIC Kota Bandung`,
-    description: destination.description || `Informasi lengkap mengenai ${destination.name} di Kota Bandung.`,
+    description: destination.description || t('metaDesc', { name: destination.name }),
   };
 }
 
@@ -33,6 +37,8 @@ export default async function DestinationDetailPage({
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   const supabase = await createClient();
+  const t = await getTranslations('SlugPage');
+  const tUI = await getTranslations('UI');
 
   // Fetch Destination details, images, and category
   const { data: dest, error } = await supabase
@@ -104,9 +110,9 @@ export default async function DestinationDetailPage({
           <div className="max-w-[1600px] mx-auto w-full">
             {/* Breadcrumb */}
             <nav className="flex text-white/80 text-sm mb-4 items-center gap-2 font-medium">
-              <Link className="hover:text-white transition-colors" href="/">Beranda</Link>
+              <Link className="hover:text-white transition-colors" href="/">{t('home')}</Link>
               <ChevronRight className="w-4 h-4" />
-              <Link className="hover:text-white transition-colors" href="/kategori">Kategori</Link>
+              <Link className="hover:text-white transition-colors" href="/kategori">{t('category')}</Link>
               <ChevronRight className="w-4 h-4" />
               {category && (
                 <>
@@ -130,7 +136,7 @@ export default async function DestinationDetailPage({
         {/* NFR-11 Photo Credit */}
         {photoCredit && (
           <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm text-white/70 text-[10px] px-2 py-1 rounded">
-            Foto oleh: {photoCredit}
+            {t('photoBy')} {photoCredit}
           </div>
         )}
       </div>
@@ -142,14 +148,14 @@ export default async function DestinationDetailPage({
           {/* Left Column: Description & Content */}
           <div className="lg:col-span-2 space-y-8">
             <div className="bg-white p-5 md:p-8 rounded-sm border border-[#d3c5af]/50 shadow-sm">
-              <h2 className="text-2xl font-bold text-[#1b1c1a] mb-4">Tentang {dest.name}</h2>
+              <h2 className="text-2xl font-bold text-[#1b1c1a] mb-4">{t('about')} {dest.name}</h2>
               <div className="prose prose-lg text-[#4f4635] leading-relaxed max-w-none">
                 {dest.description ? (
                   dest.description.split('\n').map((paragraph: string, idx: number) => (
                     <p key={idx} className="mb-4">{paragraph}</p>
                   ))
                 ) : (
-                  <p className="italic">Belum ada deskripsi untuk destinasi ini.</p>
+                  <p className="italic">{t('noDescription')}</p>
                 )}
               </div>
             </div>
@@ -167,7 +173,7 @@ export default async function DestinationDetailPage({
             {/* Galeri Foto */}
             {dest.images && dest.images.length > 1 && (
               <div className="bg-white p-5 md:p-8 rounded-sm border border-[#d3c5af]/50 shadow-sm mt-8">
-                <h3 className="text-2xl font-bold text-[#1b1c1a] mb-6">Galeri Foto</h3>
+                <h3 className="text-2xl font-bold text-[#1b1c1a] mb-6">{t('photoGallery')}</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {dest.images.slice(1).map((imgUrl: string, idx: number) => (
                     <div key={idx} className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer border border-[#f6f3f0]">
@@ -187,7 +193,7 @@ export default async function DestinationDetailPage({
           {/* Right Column: Info Panel */}
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-sm border border-[#d3c5af]/50 shadow-sm sticky top-24">
-              <h3 className="text-lg font-bold text-[#1b1c1a] mb-6 border-b border-[#f6f3f0] pb-4">Informasi Penting</h3>
+              <h3 className="text-lg font-bold text-[#1b1c1a] mb-6 border-b border-[#f6f3f0] pb-4">{t('importantInfo')}</h3>
               
               <div className="space-y-6">
                 
@@ -198,10 +204,10 @@ export default async function DestinationDetailPage({
                       <Ticket className="w-5 h-5 text-[#3D7A5E]" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-1">Harga Tiket</p>
+                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-1">{tUI('ticketPrice')}</p>
                       <p className="font-semibold text-lg text-[#1b1c1a]">
                         {ticketType === 'FREE' ? (
-                          <span className="text-[#3D7A5E]">Gratis</span>
+                          <span className="text-[#3D7A5E]">{tUI('free')}</span>
                         ) : ticketNominal ? (
                           new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(ticketNominal)
                         ) : (
@@ -219,7 +225,7 @@ export default async function DestinationDetailPage({
                       <Clock className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-2">Jam Buka</p>
+                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-2">{t('openingHours')}</p>
                       <div className="space-y-1">
                         {openingHoursEntries.map(([day, time]) => (
                           <div key={day} className="flex gap-2 text-sm">
@@ -240,7 +246,7 @@ export default async function DestinationDetailPage({
                       <Clock className="w-5 h-5 text-purple-600" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-1">Tahun Berdiri</p>
+                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-1">{t('foundedYear')}</p>
                       <p className="font-medium text-lg text-[#1b1c1a]">
                         {dest.founded_year}
                       </p>
@@ -255,7 +261,7 @@ export default async function DestinationDetailPage({
                       <MapPin className="w-5 h-5 text-[#C9971E]" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-1">Alamat Lokasi</p>
+                      <p className="text-xs font-bold text-[#4f4635] uppercase tracking-wider mb-1">{t('address')}</p>
                       <p className="font-medium text-sm text-[#1b1c1a] leading-relaxed mb-3">
                         {dest.address}
                       </p>

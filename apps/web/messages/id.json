@@ -26,7 +26,12 @@
     "baca": "BACA",
     "visualKota": "Visual Kota",
     "galeri": "Galeri",
-    "lihatSemuaFoto": "LIHAT SEMUA FOTO"
+    "lihatSemuaFoto": "LIHAT SEMUA FOTO",
+    "gedungSate": "Gedung Sate",
+    "alunAlun": "Alun-Alun",
+    "jalanBraga": "Jalan Braga",
+    "noNews": "Belum ada berita wisata terbaru.",
+    "noGallery": "Koleksi galeri belum tersedia."
   },
   "Components": {
     "bacaSelengkapnya": "Baca Selengkapnya",
@@ -36,5 +41,169 @@
     "butuhBantuan": "Butuh Bantuan?",
     "pusatBantuanTIC": "Pusat Bantuan TIC",
     "lihatSemuaPertanyaan": "Lihat Semua Pertanyaan"
+  },
+  "Kategori": {
+    "metaTitle": "Kategori Wisata | TIC Kota Bandung",
+    "metaDesc": "Jelajahi beragam kategori destinasi wisata di Kota Bandung.",
+    "lokasi": "Lokasi",
+    "breadcrumb": "Destinasi Wisata",
+    "heroTitle": "Eksplorasi Kota",
+    "heroHighlight": "Bandung",
+    "heroDesc": "Temukan beragam pesona Kota Bandung melalui panduan destinasi pilihan kami yang terbagi dalam tiga pilar utama pengalaman wisata.",
+    "pillarStayDesc": "Hotel, Spa, dan Pariwisata Medis",
+    "pillarExploreDesc": "Rekreasi, Sejarah, Seni, Religi, Olahraga & Walking Tour",
+    "pillarLifestyleDesc": "Kuliner, Belanja, Kampung Kreatif & Co-Working Space"
+  },
+  "UI": {
+    "searchDest": "Cari destinasi wisata...",
+    "allAreas": "Semua Wilayah",
+    "ticketPrice": "Harga Tiket",
+    "free": "Gratis",
+    "paid": "Berbayar",
+    "unconfirmed": "Belum Dikonfirmasi",
+    "applyFilter": "Terapkan Filter",
+    "clearFilter": "Hapus Filter",
+    "noDestinations": "Belum ada destinasi.",
+    "exploreNow": "Jelajahi Sekarang",
+    "viewAll": "Lihat Semua",
+    "readMore": "Baca Selengkapnya",
+    "backToHome": "Kembali ke Beranda"
+  },
+  "Event": {
+    "metaTitle": "Calendar of Events (COE) | TIC Kota Bandung",
+    "metaDesc": "Jadwal acara tahunan Kota Bandung dan pendaftaran event resmi.",
+    "heroBreadcrumb": "Calendar of Events",
+    "heroTitle": "Calendar of Events",
+    "heroHighlight": "(COE)",
+    "heroDesc": "Agenda tahunan yang mengkurasi acara-acara terbaik di Kota Bandung. Temukan ragam festival, pertunjukan seni, dan perayaan budaya sepanjang tahun.",
+    "timelineTitle": "Timeline Kurasi CoE 2027",
+    "timeline1Date": "1 - 15 September 2026",
+    "timeline1Title": "Pendaftaran & Pengumpulan Berkas",
+    "timeline1Desc": "Penyelenggara menyerahkan proposal dan dokumen pendukung.",
+    "timeline2Date": "11 - 17 Oktober 2026",
+    "timeline2Title": "Tahap Kurasi CoE",
+    "timeline2Desc": "Penilaian oleh dewan kurator profesional.",
+    "timeline3Date": "18 - 31 Oktober 2026",
+    "timeline3Title": "Tahap Persiapan (Preparation)",
+    "timeline3Desc": "Finalisasi konsep untuk event terpilih.",
+    "timeline4Date": "November 2026",
+    "timeline4Title": "Launching Resmi",
+    "timeline4Desc": "Pengumuman resmi sebelum kalender Disparbud dirilis.",
+    "criteriaTitle": "Kriteria & Ketentuan CoE",
+    "criteria1": "Untuk event yang masuk <strong>Top 10</strong>, harus memiliki rekam jejak menyelenggarakan event-nya di Kota Bandung selama 3 tahun berturut-turut.",
+    "criteria2": "Penyelenggara bersedia dan wajib melaporkan hasil event setelah kegiatan selesai.",
+    "criteria3": "Wajib menyertakan rekam jejak media promosi event sebelumnya (Flyer, Logo, Foto, & Video kegiatan).",
+    "criteria4": "Format isian formulir disesuaikan dengan standar <strong>KEN (Karisma Event Nusantara)</strong> dari Kemenparekraf.",
+    "registerTitle": "Daftarkan Event Anda",
+    "registerDesc": "Jadikan event Anda bagian dari daya tarik utama pariwisata Kota Bandung di tahun 2027.",
+    "registerTerms": "Dengan mendaftar, Anda menyetujui syarat & ketentuan kurasi CoE Kota Bandung."
+  },
+  "SlugPage": {
+    "metaNotFound": "Destinasi Tidak Ditemukan",
+    "metaDesc": "Informasi lengkap mengenai {name} di Kota Bandung.",
+    "home": "Beranda",
+    "category": "Kategori",
+    "photoBy": "Foto oleh:",
+    "about": "Tentang",
+    "noDescription": "Belum ada deskripsi untuk destinasi ini.",
+    "photoGallery": "Galeri Foto",
+    "importantInfo": "Informasi Penting",
+    "openingHours": "Jam Buka",
+    "foundedYear": "Tahun Berdiri",
+    "address": "Alamat Lokasi",
+    "downloadLeaflet": "Download Leaflet",
+    "eventMetaNotFound": "Event Tidak Ditemukan",
+    "eventMetaDesc": "Informasi mengenai event {name} di Kota Bandung.",
+    "eventAbout": "Tentang Event",
+    "newsMetaNotFound": "Berita Tidak Ditemukan",
+    "newsMetaDesc": "Baca berita mengenai {title}.",
+    "newsRelated": "Berita Terkait",
+    "newsBack": "Kembali ke Daftar Berita",
+    "readAlso": "Baca Juga"
+  },
+  "Kuliner": {
+    "title": "Kuliner Bandung",
+    "subtitle": "Jelajah Rasa",
+    "desc": "Eksplorasi ragam kuliner legendaris dan kekinian yang menggugah selera di Kota Bandung.",
+    "searchPlaceholder": "Cari tempat kuliner...",
+    "metaTitle": "Kuliner Bandung | TIC Kota Bandung",
+    "metaDesc": "Jelajahi kuliner legendaris dan kekinian di Kota Bandung.",
+    "breadcrumb": "Kuliner",
+    "heroTitle": "Kuliner",
+    "heroHighlight": "Bandung",
+    "heroDesc": "Eksplorasi ragam kuliner legendaris dan kekinian yang menggugah selera di Kota Bandung.",
+    "categoryTitle": "Pilih Kategori Kuliner"
+  },
+  "PaketWisata": {
+    "metaTitle": "Paket Wisata | TIC Kota Bandung",
+    "metaDesc": "Temukan paket wisata terbaik untuk menjelajahi Kota Bandung dengan mudah dan nyaman.",
+    "heroTitle": "Paket Wisata",
+    "heroDesc": "Temukan paket wisata terbaik untuk menjelajahi Kota Bandung dengan mudah dan nyaman.",
+    "comingSoon": "Informasi paket wisata akan segera hadir."
+  },
+  "Berita": {
+    "metaTitle": "Berita & Update Terkini | TIC Kota Bandung",
+    "metaDesc": "Berita terbaru, artikel wisata, dan update terkini dari Dinas Pariwisata Kota Bandung.",
+    "heroTitle": "Berita & Artikel",
+    "heroHighlight": "Terkini",
+    "heroDesc": "Dapatkan informasi terbaru mengenai destinasi wisata, acara menarik, dan tips perjalanan di Kota Bandung.",
+    "noNews": "Belum ada berita",
+    "noNewsDesc": "Berita dan artikel terbaru akan segera hadir."
+  },
+  "Pencarian": {
+    "metaTitle": "Hasil Pencarian | TIC Kota Bandung",
+    "metaDesc": "Hasil pencarian untuk destinasi, event, dan kuliner di Kota Bandung.",
+    "heroTitle": "Hasil Pencarian",
+    "heroDesc": "Menampilkan hasil pencarian untuk \"{query}\" di seluruh direktori wisata Kota Bandung.",
+    "destinations": "Destinasi ({count})",
+    "events": "Event ({count})",
+    "culinary": "Kuliner ({count})",
+    "noDestinations": "Belum ada destinasi wisata yang cocok dengan pencarian Anda.",
+    "tryAnotherKeyword": "Coba gunakan kata kunci lain.",
+    "noEvents": "Belum ada event yang cocok dengan pencarian Anda.",
+    "noCulinary": "Belum ada tempat kuliner yang cocok dengan pencarian Anda."
+  },
+  "Transportasi": {
+    "metaTitle": "Transportasi | TIC Kota Bandung",
+    "metaDesc": "Panduan transportasi di Kota Bandung.",
+    "heroTitle": "Transportasi",
+    "heroDesc": "Panduan cara berkeliling Kota Bandung menggunakan transportasi umum.",
+    "comingSoon": "Informasi transportasi akan segera hadir."
+  },
+  "Peta": {
+    "metaTitle": "Peta Wisata | TIC Kota Bandung",
+    "metaDesc": "Peta wisata interaktif Kota Bandung.",
+    "heroTitle": "Peta Wisata",
+    "heroDesc": "Eksplorasi destinasi wisata, kuliner, dan event dalam peta interaktif Kota Bandung.",
+    "comingSoon": "Peta interaktif akan segera hadir."
+  },
+  "TripPlanner": {
+    "metaTitle": "Trip Planner | TIC Kota Bandung",
+    "metaDesc": "Rencanakan perjalanan Anda ke Kota Bandung.",
+    "heroTitle": "Trip Planner",
+    "heroDesc": "Rencanakan itinerary perjalanan Anda dengan mudah dan nyaman.",
+    "comingSoon": "Fitur Trip Planner akan segera hadir."
+  },
+  "PusatBantuan": {
+    "metaTitle": "Pusat Bantuan | TIC Kota Bandung",
+    "metaDesc": "Temukan informasi penting dan kontak darurat di Kota Bandung.",
+    "heroTitle": "Pusat Bantuan",
+    "heroDesc": "Temukan informasi penting, kontak darurat, dan jawaban atas pertanyaan umum terkait perjalanan Anda di Kota Bandung.",
+    "emergencyContacts": "Kontak Darurat Resmi",
+    "tic": "Pusat Informasi Pariwisata (TIC)",
+    "ticAddress": "Kantor Dinas Kebudayaan dan Pariwisata Kota Bandung",
+    "openMap": "Buka Peta"
+  },
+  "Ekonomi": {
+    "title": "Pusat Ekonomi Kreatif & Belanja",
+    "desc": "Bandung terkenal sebagai pusat industri kreatif Indonesia. Jelajahi berbagai sentra unik yang menghasilkan produk lokal berkualitas tinggi.",
+    "centerTitle": "Sentra Kreatif"
+  },
+  "Walking": {
+    "title": "Walking Tour",
+    "desc": "Jelajahi Kota Bandung dengan berjalan kaki. Rasakan atmosfer kota, arsitektur bersejarah, dan kehidupan lokal lebih dekat.",
+    "routeSelect": "Pilih Rute",
+    "startWalking": "Mulai Jalan",
+    "distance": "Jarak"
   }
 }

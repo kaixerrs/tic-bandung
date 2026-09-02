@@ -145,7 +145,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>
             <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full bg-gradient-to-t from-black/80 to-transparent">
               <span className="border border-[#FFCC00] text-[#FFCC00] px-4 py-2 font-label-caps text-[10px] mb-4 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">{t('ikonKota')}</span>
-              <h3 className="font-headline-lg text-3xl md:text-headline-lg text-white uppercase tracking-widest">Gedung Sate</h3>
+              <h3 className="font-headline-lg text-3xl md:text-headline-lg text-white uppercase tracking-widest">{t('gedungSate')}</h3>
             </div>
           </Link>
           {/* Top Right Card */}
@@ -158,7 +158,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>
             <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full bg-gradient-to-t from-black/80 to-transparent">
               <span className="border border-[#FFCC00] text-[#FFCC00] px-4 py-2 font-label-caps text-[10px] mb-4 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">{t('alamRekreasi')}</span>
-              <h3 className="font-headline-md text-2xl md:text-headline-md text-white uppercase tracking-widest">Alun-Alun</h3>
+              <h3 className="font-headline-md text-2xl md:text-headline-md text-white uppercase tracking-widest">{t('alunAlun')}</h3>
             </div>
           </Link>
           {/* Bottom Right Small Cards */}
@@ -171,7 +171,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>
             <div className="absolute bottom-0 left-0 p-4 md:p-6 w-full bg-gradient-to-t from-black/80 to-transparent">
               <span className="border border-[#FFCC00] text-[#FFCC00] px-3 py-1 font-label-caps text-[10px] mb-3 inline-block tracking-widest rounded-full  bg-black/40 backdrop-blur-sm">{t('warisan')}</span>
-              <h3 className="font-body-lg text-lg md:text-body-lg font-bold text-white uppercase tracking-wider">Jalan Braga</h3>
+              <h3 className="font-body-lg text-lg md:text-body-lg font-bold text-white uppercase tracking-wider">{t('jalanBraga')}</h3>
             </div>
           </Link>
           <Link href="/kategori" className="md:col-span-1 relative overflow-hidden bg-[#00C853] group cursor-pointer flex flex-col items-center justify-center p-6 md:p-8 text-center h-[250px] md:h-auto hover:bg-[#1A1A1A] transition-all duration-500 rounded-sm hover:shadow-electric-green hover:-translate-y-2">
@@ -215,7 +215,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
               </Link>
             ))
           ) : (
-            <div className="col-span-3 text-center py-12 text-on-surface-variant">Belum ada berita wisata terbaru.</div>
+            <div className="col-span-3 text-center py-12 text-on-surface-variant">{t('noNews')}</div>
           )}
         </div>
       </section>
@@ -252,7 +252,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
               );
             })
           ) : (
-            <div className="col-span-full text-center py-12 text-gray-500">Koleksi galeri belum tersedia.</div>
+            <div className="col-span-full text-center py-12 text-gray-500">{t('noGallery')}</div>
           )}
         </div>
       </section>

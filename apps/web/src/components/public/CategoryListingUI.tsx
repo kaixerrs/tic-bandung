@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronRight, Filter, Search, X } from 'lucide-react';
 import DestinationCard from '@/components/public/DestinationCard';
 import { CustomSelect } from '@/components/ui/CustomSelect';
+import { useTranslations } from 'next-intl';
 
 interface Destination {
   id: string;
@@ -38,6 +39,7 @@ export default function CategoryListingUI({
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
   const [selectedPrice, setSelectedPrice] = useState<'FREE' | 'PAID' | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const t = useTranslations('UI');
 
   // Extract unique districts for the filter dropdown
   const uniqueDistricts = useMemo(() => {
