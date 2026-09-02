@@ -99,7 +99,7 @@ export default function Navbar() {
           <LanguageSwitcher isTransparent={normalizedPathname === '/' && !scrolled} />
           <Link 
             href={locale === 'en' ? '/en/paket-wisata' : '/paket-wisata'}
-            className={`px-8 py-3 font-label-caps uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 md:px-8 md:py-3 text-xs md:text-sm font-label-caps uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2 ${
               normalizedPathname === '/' && !scrolled
                 ? 'bg-white text-[#1A1A1A] hover:bg-[#00C853] hover:text-white'
                 : 'bg-[#00C853] text-white hover:bg-[#0050A2] hover:text-white'

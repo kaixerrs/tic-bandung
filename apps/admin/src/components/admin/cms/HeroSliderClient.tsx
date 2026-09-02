@@ -6,6 +6,7 @@ import { useState, useTransition, useRef, useEffect } from 'react';
 import { Plus, Edit, Trash2, X, Loader2, UploadCloud } from 'lucide-react';
 import { createHeroSlider, updateHeroSlider, deleteHeroSlider } from '@/app/actions/cmsActions';
 import { compressImageToWebp, uploadToSupabase } from '@/utils/imageUpload';
+import ImageCropperModal from '@/components/ui/ImageCropperModal';
 
 type HeroSlider = {
   id: string;
@@ -32,6 +33,9 @@ function HeroSliderFormModal({
   const [error, setError] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(initialData?.image_url || null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [originalFile, setOriginalFile] = useState<File | null>(null);
+  const [cropModalOpen, setCropModalOpen] = useState(false);
+  const [cropTargetFile, setCropTargetFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -47,20 +51,32 @@ function HeroSliderFormModal({
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file type
       if (!file.type.startsWith('image/')) {
         setError('File yang dipilih bukan gambar valid.');
         return;
       }
-      setSelectedFile(file);
+      setOriginalFile(file);
+      setCropTargetFile(file);
+      setCropModalOpen(true);
       setError(null);
-      
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      e.target.value = '';
     }
+  };
+
+  const handleEditImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (originalFile) {
+      setCropTargetFile(originalFile);
+      setCropModalOpen(true);
+    }
+  };
+
+  const handleCropComplete = (croppedBlob: Blob) => {
+    const file = new File([croppedBlob], cropTargetFile?.name || 'cropped.jpg', { type: 'image/jpeg' });
+    setSelectedFile(file);
+    setPreviewImage(URL.createObjectURL(file));
+    setCropModalOpen(false);
+    setCropTargetFile(null);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -129,11 +145,20 @@ function HeroSliderFormModal({
                 {previewImage ? (
                   <>
                     <img src={previewImage} alt="Preview" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity gap-3">
                       <span className="text-white font-medium flex items-center gap-2">
                         <UploadCloud className="w-5 h-5" /> Ganti Gambar
                       </span>
                     </div>
+                    {originalFile && (
+                      <button
+                        type="button"
+                        onClick={handleEditImage}
+                        className="absolute top-2 right-2 z-10 px-3 py-1.5 bg-white/90 hover:bg-white text-gray-700 text-xs font-bold rounded-lg shadow-md transition-colors flex items-center gap-1"
+                      >
+                        <Edit className="w-3 h-3" /> Adjust
+                      </button>
+                    )}
                   </>
                 ) : (
                   <div className="text-center p-4">
