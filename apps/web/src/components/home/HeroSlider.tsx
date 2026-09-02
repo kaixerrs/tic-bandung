@@ -113,7 +113,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-40 text-center px-4 max-w-5xl mx-auto flex flex-col items-center h-full justify-start pt-36 md:justify-center md:pt-0">
+      <div className="relative z-40 text-center px-4 max-w-5xl mx-auto flex flex-col items-center h-full justify-start pt-48 md:justify-center md:pt-0">
                 {/* Main Title */}
         <div className="relative mb-8 text-center flex flex-col items-center justify-center">
           
