@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -45,7 +45,7 @@ export default function CategoryListingUI({
   const uniqueDistricts = useMemo(() => {
     const districts = initialDestinations
       .map(d => d.district)
-      .filter((d): d is string => d !== null && d.trim() !== '');
+      .filter((d): d is string => typeof d === 'string' && d.trim() !== '');
     return Array.from(new Set(districts)).sort();
   }, [initialDestinations]);
 
@@ -226,3 +226,4 @@ export default function CategoryListingUI({
     </main>
   );
 }
+
