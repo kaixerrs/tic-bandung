@@ -21,7 +21,7 @@ const navLinks = [
 export default function Navbar() {
   const t = useTranslations('Navigation');
   const locale = useLocale();
-  const getHref = (path) => locale === 'en' ? '/en' + (path === '/' ? '' : path) : path;
+  const getHref = (path: string) => locale === 'en' ? '/en' + (path === '/' ? '' : path) : path;
   const navLinks = [
     { id: 'home', name: t('home'), href: getHref('/') },
     { id: 'destinasi', name: t('destinasi'), href: getHref('/kategori') },
