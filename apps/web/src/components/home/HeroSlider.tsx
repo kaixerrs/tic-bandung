@@ -132,12 +132,12 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
         </div>
 
         {/* Subtitle */}
-        <p className="hidden md:block font-body-lg text-[14px] md:text-[20px] text-white/90 mb-8 md:mb-12 max-w-2xl tracking-wide leading-relaxed px-4 drop-shadow-md font-medium">
+        <p className="block font-body-lg text-[14px] md:text-[20px] text-white/90 mb-8 md:mb-12 max-w-2xl tracking-wide leading-relaxed px-4 drop-shadow-md font-medium">
           {t('desc')}
         </p>
         
         {/* Discovery Bar */}
-        <form onSubmit={handleSearch} className="bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-1.5 md:p-2 flex items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto relative z-50">
+        <form onSubmit={handleSearch} className="hidden bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-1.5 md:p-2 items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto relative z-50">
           <div className="flex-grow px-3 md:px-6 flex items-center border-r border-gray-200 py-1.5 md:py-3">
             <MapPin className="text-bandung-hijau mr-2 md:mr-4 w-4 h-4 md:w-5 md:h-5 shrink-0" />
             <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-xs md:text-sm font-semibold tracking-wider" placeholder={t('searchPlaceholder')} type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}  />

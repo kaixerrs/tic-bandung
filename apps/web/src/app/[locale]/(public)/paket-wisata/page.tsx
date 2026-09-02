@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       />
 
       {/* Association Cards Section */}
-      <section className="relative z-20 w-full max-w-[1600px] px-4 md:px-8 lg:px-12 mx-auto pb-16 md:pb-32 -mt-8">
+      <section className="relative z-20 w-full max-w-[1600px] px-4 md:px-8 lg:px-12 mx-auto pb-16 md:pb-32 mt-4 md:-mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           
           {/* ASITA Card */}
