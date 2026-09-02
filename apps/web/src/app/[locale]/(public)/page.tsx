@@ -209,7 +209,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
                 <h3 className="font-headline-md text-xl md:text-headline-md text-on-surface group-hover:text-[#00C853] transition-colors mb-6 tracking-wide leading-tight line-clamp-3">{item.title}</h3>
                 <div className="flex items-center text-on-surface-variant border-t border-outline-variant/30 pt-4">
                   <span className="font-label-caps text-xs tracking-widest">
-                    {new Date(item.date_published).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'}).toUpperCase()}
+                    {new Date(item.date_published).toLocaleDateString(locale, {day: 'numeric', month: 'long', year: 'numeric'}).toUpperCase()}
                   </span>
                 </div>
               </Link>

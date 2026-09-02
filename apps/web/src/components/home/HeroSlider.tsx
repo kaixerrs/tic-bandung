@@ -19,7 +19,8 @@ interface SliderData {
   button_link: string;
 }
 
-export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
+export default function HeroSlider({ sliders }: { sliders: SliderData[] }) { 
+  const t = useTranslations('Hero');
   const t = useTranslations('Components');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
@@ -136,7 +137,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
         <form onSubmit={handleSearch} className="bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-1.5 md:p-2 flex items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto relative z-50">
           <div className="flex-grow px-3 md:px-6 flex items-center border-r border-gray-200 py-1.5 md:py-3">
             <MapPin className="text-bandung-hijau mr-2 md:mr-4 w-4 h-4 md:w-5 md:h-5 shrink-0" />
-            <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-xs md:text-sm font-semibold tracking-wider" placeholder="Mau pergi ke mana?" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}  />
+            <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-xs md:text-sm font-semibold tracking-wider" placeholder={t('searchPlaceholder')} type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}  />
           </div>
           
           <button type="submit" className="bg-[#00C853] text-white px-4 py-2.5 md:px-10 md:py-4 font-extrabold text-xs md:text-base hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
@@ -147,7 +148,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 animate-bounce">
-        <span className="font-label-caps text-white/50 text-[10px] tracking-widest uppercase">Gulir</span>
+        <span className="font-label-caps text-white/50 text-[10px] tracking-widest uppercase">{t('scroll')}</span>
         <ChevronDown className="w-5 h-5 text-white/50" />
       </div>
 
