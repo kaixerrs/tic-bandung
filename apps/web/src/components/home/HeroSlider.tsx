@@ -113,7 +113,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-20 text-center px-4 max-w-5xl mx-auto flex flex-col items-center h-full justify-center">
+      <div className="relative z-40 text-center px-4 max-w-5xl mx-auto flex flex-col items-center h-full justify-center">
                 {/* Main Title */}
         <div className="relative mb-8 text-center flex flex-col items-center justify-center">
           
@@ -128,18 +128,18 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
         </div>
 
         {/* Subtitle */}
-        <p className="font-body-lg text-[14px] md:text-[20px] text-white/90 mb-8 md:mb-12 max-w-2xl tracking-wide leading-relaxed px-4 drop-shadow-md font-medium">
+        <p className="hidden md:block font-body-lg text-[14px] md:text-[20px] text-white/90 mb-8 md:mb-12 max-w-2xl tracking-wide leading-relaxed px-4 drop-shadow-md font-medium">
           Di mana tradisi berpadu dengan inovasi. Rasakan pengalaman tak terlupakan di jantung Jawa Barat, dari warisan budaya yang kaya hingga gaya hidup modern yang semarak.
         </p>
         
         {/* Discovery Bar */}
         <form onSubmit={handleSearch} className="bg-white/95 backdrop-blur-xl border border-white/60 w-full max-w-lg p-1.5 md:p-2 flex items-center rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto relative z-50">
-          <div className="flex-grow px-3 md:px-6 flex items-center border-r border-gray-200 py-2 md:py-3">
-            <MapPin className="text-bandung-hijau mr-4 w-5 h-5 shrink-0" />
-            <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-sm font-semibold tracking-wider" placeholder="Mau pergi ke mana?" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}  />
+          <div className="flex-grow px-3 md:px-6 flex items-center border-r border-gray-200 py-1.5 md:py-3">
+            <MapPin className="text-bandung-hijau mr-2 md:mr-4 w-4 h-4 md:w-5 md:h-5 shrink-0" />
+            <input className="w-full bg-transparent border-none text-gray-900 placeholder:text-gray-500 focus:ring-0 focus:outline-none font-body-md text-xs md:text-sm font-semibold tracking-wider" placeholder="Mau pergi ke mana?" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}  />
           </div>
           
-          <button type="submit" className="bg-[#00C853] text-white px-5 py-3 md:px-10 md:py-4 font-extrabold hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
+          <button type="submit" className="bg-[#00C853] text-white px-4 py-2.5 md:px-10 md:py-4 font-extrabold text-xs md:text-base hover:bg-[#009e42] transition-all duration-300 flex items-center font-label-caps tracking-widest rounded-xl shadow-[0_8px_20px_rgba(0,122,51,0.3)] hover:shadow-[0_12px_25px_rgba(0,122,51,0.5)] hover:-translate-y-0.5 ml-2">
             CARI
           </button>
         </form>
@@ -152,7 +152,7 @@ export default function HeroSlider({ sliders }: { sliders: SliderData[] }) {
       </div>
 
       {/* Slide Info & Indicators - Bottom Right */}
-      <div className="absolute bottom-28 md:bottom-8 right-4 md:right-10 flex flex-col items-end gap-2 md:gap-3 z-30 text-right w-[85%] max-w-[220px] md:max-w-xs">
+      <div className="absolute bottom-10 md:bottom-8 right-4 md:right-10 flex flex-col items-end gap-2 md:gap-3 z-30 text-right w-[85%] max-w-[220px] md:max-w-xs">
         <div key={`info-${currentIndex}`} className="animate-slide-up flex flex-col items-end bg-black/50 backdrop-blur-md border border-white/20 p-3 md:p-4 rounded-[2px] shadow-2xl w-full">
           <h3 className="text-white font-display font-bold text-lg md:text-2xl lg:text-3xl drop-shadow-md mb-2">
             {sliders[currentIndex]?.title}
