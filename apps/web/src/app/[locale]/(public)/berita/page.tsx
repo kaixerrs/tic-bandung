@@ -34,7 +34,7 @@ export default async function BeritaPage({ params }: { params: Promise<{ locale:
         description="Dapatkan informasi terbaru mengenai destinasi wisata, acara menarik, dan tips perjalanan di Kota Bandung."
       />
 
-      <section className="py-6 md:py-24 px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto relative z-10">
+      <section className="py-6 md:py-12 px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {activeNews && activeNews.length > 0 ? (
             activeNews.map((item, i) => (

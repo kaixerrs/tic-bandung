@@ -91,7 +91,7 @@ export function ModernHero({
         }
       `}} />
 
-      <section className="relative w-full min-h-[250px] md:min-h-[550px] flex items-center justify-center pt-8 md:pt-0 pb-8 md:pb-12 lg:pb-16">
+      <section className="relative w-full min-h-[250px] md:min-h-[400px] flex items-center justify-center pt-8 md:pt-0 pb-8 md:pb-12 lg:pb-16">
         {/* Abstract Background Elements */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className={`absolute top-0 ${isRight ? 'left-0 -translate-x-1/3' : 'right-0 translate-x-1/3'} w-[600px] h-[600px] bg-[#C9971E]/10 rounded-full blur-[100px] opacity-70 animate-blob mix-blend-multiply -translate-y-1/3`}></div>
