@@ -21,7 +21,7 @@ interface SliderData {
 
 export default function HeroSlider({ sliders }: { sliders: SliderData[] }) { 
   const t = useTranslations('Hero');
-  const t = useTranslations('Components');
+  const tComp = useTranslations('Components');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
