@@ -78,6 +78,26 @@ export default function Navbar() {
             const isActive = normalizedPathname === link.href || (link.href !== '/' && normalizedPathname.startsWith(link.href));
             const isTransparent = normalizedPathname === '/' && !scrolled;
             
+            if (link.id === 'event') {
+              return (
+                <div key={link.id} className="relative group">
+                  <button className={`font-label-caps text-[12px] font-bold uppercase tracking-widest transition-colors duration-300 flex items-center gap-1 ${
+                    isTransparent 
+                      ? (isActive ? 'text-white' : 'text-white/80 hover:text-[#FFCC00]')
+                      : (isActive ? 'text-[#00C853]' : 'text-slate-600 hover:text-[#00C853]')
+                  }`}>
+                    {link.name}
+                    <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </button>
+                  <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                    <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-2 min-w-[200px] flex flex-col gap-1">
+                      <Link href={getHref('/event')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">Kalender Event</Link>
+                      <Link href={getHref('/event/pendaftaran')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">Daftar Event Baru</Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
             return (
               <Link 
                 key={link.id}
