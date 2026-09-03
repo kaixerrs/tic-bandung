@@ -145,7 +145,7 @@ export default function DestinationForm({
               <CustomSelect
                 options={categories.map(c => ({ value: c.id, label: c.name }))}
                 value={watch("category_id")}
-                onChange={(val) => setValue("category_id", val, { shouldValidate: true })}
+                onChange={(e) => setValue("category_id", e.target.value, { shouldValidate: true })}
                 placeholder="Pilih Kategori"
               />
               <input type="hidden" {...register("category_id", { required: "Kategori wajib dipilih" })} />
