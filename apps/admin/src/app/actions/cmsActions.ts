@@ -3,10 +3,12 @@
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { logAdminAction } from './log';
+import { requireAdminAuth } from './admin';
 
 // --- HERO SLIDER ACTIONS ---
 
 export async function createHeroSlider(formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { error } = await supabase.from('hero_sliders').insert([{
     title: formData.get('title'),
@@ -25,6 +27,7 @@ export async function createHeroSlider(formData: FormData) {
 }
 
 export async function updateHeroSlider(id: string, formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { error } = await supabase.from('hero_sliders').update({
     title: formData.get('title'),
@@ -43,6 +46,7 @@ export async function updateHeroSlider(id: string, formData: FormData) {
 }
 
 export async function deleteHeroSlider(id: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { error } = await supabase.from('hero_sliders').delete().eq('id', id);
   if (error) return { error: error.message };
@@ -55,6 +59,7 @@ export async function deleteHeroSlider(id: string) {
 // --- NEWS ARTICLES ACTIONS ---
 
 export async function createNewsArticle(formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const title = formData.get('title') as string;
   let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -82,6 +87,7 @@ export async function createNewsArticle(formData: FormData) {
 }
 
 export async function updateNewsArticle(id: string, formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const title = formData.get('title') as string;
 
@@ -104,6 +110,7 @@ export async function updateNewsArticle(id: string, formData: FormData) {
 }
 
 export async function deleteNewsArticle(id: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { error } = await supabase.from('news_articles').delete().eq('id', id);
   if (error) return { error: error.message };
@@ -116,6 +123,7 @@ export async function deleteNewsArticle(id: string) {
 // --- GALLERIES ACTIONS ---
 
 export async function createGallery(formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { error } = await supabase.from('galleries').insert([{
     title: formData.get('title'),
@@ -133,6 +141,7 @@ export async function createGallery(formData: FormData) {
 }
 
 export async function updateGallery(id: string, formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { error } = await supabase.from('galleries').update({
     title: formData.get('title'),
@@ -150,6 +159,7 @@ export async function updateGallery(id: string, formData: FormData) {
 }
 
 export async function deleteGallery(id: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { error } = await supabase.from('galleries').delete().eq('id', id);
   if (error) return { error: error.message };
@@ -162,6 +172,7 @@ export async function deleteGallery(id: string) {
 // --- SITE SETTINGS ---
 
 export async function getSiteSettings() {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('site_settings')
@@ -177,6 +188,7 @@ export async function getSiteSettings() {
 }
 
 export async function updateSiteSettings(formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const updates = {
@@ -210,6 +222,7 @@ export async function updateSiteSettings(formData: FormData) {
 }
 
 export async function toggleNewsStatus(id: string, currentStatus: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const newStatus = currentStatus === 'published' ? 'draft' : 'published';
   const { error } = await supabase.from('news_articles').update({ status: newStatus }).eq('id', id);
@@ -221,6 +234,7 @@ export async function toggleNewsStatus(id: string, currentStatus: string) {
 }
 
 export async function toggleGalleryStatus(id: string, currentStatus: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const newStatus = currentStatus === 'published' ? 'draft' : 'published';
   const { error } = await supabase.from('galleries').update({ status: newStatus }).eq('id', id);
@@ -232,6 +246,7 @@ export async function toggleGalleryStatus(id: string, currentStatus: string) {
 }
 
 export async function updateSystemInfo(formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const cms_version = formData.get('cms_version') as string;

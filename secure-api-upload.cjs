@@ -1,4 +1,6 @@
-import { NextResponse } from 'next/server';
+﻿const fs = require("fs");
+let p = "apps/web/src/app/api/upload/route.ts";
+let c = `import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { createClient as createServerClient } from '@/utils/supabase/server';
 
@@ -44,8 +46,8 @@ export async function POST(request: Request) {
     }
 
     const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-    const filePath = `${folder}/${fileName}`;
+    const fileName = \`\${Date.now()}-\${Math.random().toString(36).substring(7)}.\${fileExt}\`;
+    const filePath = \`\${folder}/\${fileName}\`;
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -72,3 +74,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message || 'Failed to upload' }, { status: 500 });
   }
 }
+`;
+fs.writeFileSync(p, c, "utf8");
+console.log("Upload API secured");

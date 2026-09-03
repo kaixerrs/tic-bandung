@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export async function createCategoryAction(formData: FormData) {
+  await requireAdminAuth();
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -63,6 +64,7 @@ export async function createCategoryAction(formData: FormData) {
 }
 
 export async function updateCategoryAction(id: string, formData: FormData) {
+  await requireAdminAuth();
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -120,6 +122,7 @@ export async function updateCategoryAction(id: string, formData: FormData) {
 }
 
 export async function deleteCategoryAction(id: string) {
+  await requireAdminAuth();
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();

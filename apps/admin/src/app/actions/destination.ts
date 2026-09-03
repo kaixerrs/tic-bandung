@@ -6,6 +6,7 @@ import { logAdminAction } from "./log";
 
 // CREATE DESTINATION
 export async function createDestinationAction(formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();
@@ -91,6 +92,7 @@ export async function createDestinationAction(formData: FormData) {
 
 // UPDATE DESTINATION
 export async function updateDestinationAction(id: string, formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();
@@ -205,6 +207,7 @@ export async function updateDestinationAction(id: string, formData: FormData) {
 
 // DELETE DESTINATION
 export async function deleteDestinationAction(id: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();

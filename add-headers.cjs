@@ -1,10 +1,6 @@
-import type { NextConfig } from "next";
-import createNextIntlPlugin from "next-intl/plugin";
+﻿const fs = require("fs");
 
-const withNextIntl = createNextIntlPlugin("./src/i18n.ts");
-
-const nextConfig: NextConfig = {
-  
+const securityHeaders = `
   async headers() {
     return [
       {
@@ -33,26 +29,16 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'ntiouktlfnttwkkoclrr.supabase.co',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.supabase.co',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '/**',
-      }
-    ],
-  },
-};
+  },`;
 
-export default withNextIntl(nextConfig);
+function addHeaders(p) {
+  let c = fs.readFileSync(p, "utf8");
+  if (!c.includes("async headers()")) {
+    c = c.replace("images: {", securityHeaders + "\n  images: {");
+    fs.writeFileSync(p, c, "utf8");
+    console.log("Headers added to " + p);
+  }
+}
+
+addHeaders("apps/admin/next.config.ts");
+addHeaders("apps/web/next.config.ts");

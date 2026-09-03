@@ -1,3 +1,4 @@
+import { requireAdminAuth } from './admin';
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
@@ -6,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 export async function submitEventFormAction(formData: FormData) {
+  await requireAdminAuth();
   // Use service role for public submission to bypass RLS issues if user is logged in as an admin testing the public page
   const supabase = createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -102,6 +104,7 @@ export async function submitEventFormAction(formData: FormData) {
 }
 
 export async function updateSubmissionStatusAction(id: string, status: "APPROVED" | "REJECTED") {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();
@@ -169,6 +172,7 @@ export async function updateSubmissionStatusAction(id: string, status: "APPROVED
 
 
 export async function deleteSubmissionAction(id: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Unauthorized." };

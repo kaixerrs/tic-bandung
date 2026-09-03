@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { logAdminAction } from "./log";
 
 export async function createEventAction(formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();
@@ -86,6 +87,7 @@ export async function createEventAction(formData: FormData) {
 }
 
 export async function updateEventAction(id: string, formData: FormData) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();
@@ -172,6 +174,7 @@ export async function updateEventAction(id: string, formData: FormData) {
 }
 
 export async function deleteEventAction(id: string, title: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();
@@ -196,6 +199,7 @@ export async function deleteEventAction(id: string, title: string) {
 }
 
 export async function toggleEventStatusAction(id: string, currentStatus: string) {
+  await requireAdminAuth();
   const supabase = await createClient();
   const newStatus = currentStatus === 'published' ? 'draft' : 'published';
 
