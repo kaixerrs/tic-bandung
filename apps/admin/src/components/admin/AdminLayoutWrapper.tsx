@@ -29,7 +29,7 @@ export default function AdminLayoutWrapper({
     }, 60000);
     
     return () => clearInterval(interval);
-  }, [pathname]);
+  }, []); // Remove pathname dependency so it doesn't ping on every page transition
 
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     home: true,
