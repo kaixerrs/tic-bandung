@@ -1,4 +1,9 @@
+﻿const fs = require("fs");
+let p = "apps/admin/src/components/admin/DestinationForm.tsx";
+let c = fs.readFileSync(p, "utf8");
 
+// We will overwrite DestinationForm entirely for this simplification
+const newContent = `
 "use client";
 import { toast } from 'react-hot-toast';
 import { useState, useEffect } from "react";
@@ -223,3 +228,7 @@ export default function DestinationForm({
     </div>
   );
 }
+`;
+
+fs.writeFileSync(p, newContent, "utf8");
+console.log("DestinationForm simplified successfully");
