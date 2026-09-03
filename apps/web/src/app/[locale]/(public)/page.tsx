@@ -147,6 +147,29 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       
 
       <PromoPopup />
+      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "GovernmentOrganization",
+  "name": "TIC Kota Bandung",
+  "alternateName": "Tourist Information Center Kota Bandung",
+  "url": "https://ticbandung.com",
+  "logo": "https://ticbandung.com/logo/tictransparan.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+62-22-1234567",
+    "contactType": "customer service",
+    "areaServed": "ID",
+    "availableLanguage": ["id", "en"]
+  },
+  "sameAs": [
+    "https://twitter.com/DisbudparBdg",
+    "https://instagram.com/disbudpar.bdg"
+  ]
+}) }}
+      />
       <HeroSlider sliders={activeSliders} />
       <CoECountdownBanner />
 
