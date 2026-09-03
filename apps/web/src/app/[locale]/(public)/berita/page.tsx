@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function BeritaPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations('Home');
+  const t = await getTranslations('Berita');
   const supabase = await createClient();
 
   const { data: activeNews } = await supabase
@@ -31,7 +31,7 @@ export default async function BeritaPage({ params }: { params: Promise<{ locale:
   return (
     <main className="w-full bg-[#fcf9f5] min-h-screen overflow-x-hidden">
       <ModernHero 
-        breadcrumbText={t('artikel') || 'Berita'}
+        breadcrumbText={t('metaTitle')}
         title={t('heroTitle')}
         highlightText={t('heroHighlight')}
         highlightGradient="from-green-600 to-green-400"
