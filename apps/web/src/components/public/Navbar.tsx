@@ -91,8 +91,8 @@ export default function Navbar() {
                   </button>
                   <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                     <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-2 min-w-[200px] flex flex-col gap-1">
-                      <Link href={getHref('/event')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">Kalender Event</Link>
-                      <Link href={getHref('/event/pendaftaran')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">Daftar Event Baru</Link>
+                      <Link href={getHref('/event')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">EVENT 2027</Link>
+                      <Link href={getHref('/event/pendaftaran')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">Form COE 2027</Link>
                     </div>
                   </div>
                 </div>
