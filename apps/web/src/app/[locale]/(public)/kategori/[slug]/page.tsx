@@ -67,7 +67,8 @@ export default async function CategoryPage({
       address,
       price_info,
       opening_hours,
-      images
+      images,
+      leaflet_url
     `)
     .eq('category_id', category.id)
     .eq('status', 'published');
@@ -92,7 +93,8 @@ export default async function CategoryPage({
         ticket_type: ticket_type,
         ticket_nominal: ticket_nominal,
         operating_hours: d.opening_hours ? JSON.stringify(d.opening_hours) : null,
-        destination_images: d.images && Array.isArray(d.images) ? d.images.map((img: string) => ({ image_url: img })) : []
+        destination_images: d.images && Array.isArray(d.images) ? d.images.map((img: string) => ({ image_url: img })) : [],
+        leaflet_url: d.leaflet_url || null
       };
     });
   }

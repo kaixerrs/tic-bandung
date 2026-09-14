@@ -139,9 +139,9 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`lg:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`lg:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
-        <div className="px-6 py-6 flex flex-col gap-2">
+        <div className="px-6 py-6 flex flex-col gap-2 max-h-[80vh] overflow-y-auto">
           {navLinks.map((link) => {
             const isActive = normalizedPathname === link.href || (link.href !== '/' && normalizedPathname.startsWith(link.href));
             

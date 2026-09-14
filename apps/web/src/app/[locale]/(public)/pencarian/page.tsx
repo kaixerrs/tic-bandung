@@ -51,7 +51,8 @@ export default async function PencarianPage({
     ticket_type: dest.ticket_type,
     ticket_nominal: dest.ticket_nominal,
     operating_hours: dest.operating_hours,
-    destination_images: (dest.images || []).map((url: string) => ({ image_url: url }))
+    destination_images: (dest.images || []).map((url: string) => ({ image_url: url })),
+    leaflet_url: dest.leaflet_url || null
   }));
 
   const searchCategory = {

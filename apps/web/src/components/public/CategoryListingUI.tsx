@@ -150,7 +150,8 @@ export default function CategoryListingUI({
                   image_url: dest.destination_images?.[0]?.image_url || null,
                   ticket_type: dest.ticket_type,
                   ticket_nominal: dest.ticket_nominal,
-                  operating_hours: dest.operating_hours
+                  operating_hours: dest.operating_hours,
+                  leaflet_url: dest.leaflet_url
                 }} 
               />
             ))}
