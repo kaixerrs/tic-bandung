@@ -17,6 +17,7 @@ interface Destination {
   ticket_nominal: number | null;
   operating_hours: string | null;
   destination_images: { image_url: string }[];
+  leaflet_url?: string | null;
 }
 
 interface Category {
