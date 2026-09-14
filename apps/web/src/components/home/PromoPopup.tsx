@@ -69,11 +69,11 @@ export default function PromoPopup() {
           </p>
 
           <Link
-            href="/event"
+            href="/event/pendaftaran"
             onClick={handleClose}
             className="group flex items-center justify-center gap-2 w-full bg-[#1A1A1A] hover:bg-[#00C853] text-white py-3.5 rounded-sm font-bold text-sm tracking-wide transition-colors duration-200"
           >
-            Lihat Detail
+            Daftar Sekarang
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
 

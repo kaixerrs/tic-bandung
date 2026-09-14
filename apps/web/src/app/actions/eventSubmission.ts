@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 export async function submitEventFormAction(formData: FormData) {
-  // Use service role for public submission to bypass RLS issues if user is logged in as an admin testing the public page
   const supabase = createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -14,75 +13,92 @@ export async function submitEventFormAction(formData: FormData) {
 
   try {
     const title = formData.get("title") as string;
-    const start_date = formData.get("start_date") as string;
-    const end_date = formData.get("end_date") as string;
+    const start_date_str = formData.get("start_date") as string;
+    const start_time_str = formData.get("start_time") as string;
+    const end_date_str = formData.get("end_date") as string;
+    const end_time_str = formData.get("end_time") as string;
+    const timezone = formData.get("timezone") as string;
+    
+    // Combine Date and Time
+    const start_date = (start_date_str && start_time_str) ? new Date(`${start_date_str}T${start_time_str}:00`).toISOString() : null;
+    const end_date = (end_date_str && end_time_str) ? new Date(`${end_date_str}T${end_time_str}:00`).toISOString() : null;
+
+    const has_registration = formData.get("has_registration") === "true";
+    
     const eo_name = formData.get("eo_name") as string;
     const location = formData.get("location") as string;
+    const event_type = formData.get("event_type") as string;
     const description = formData.get("description") as string;
     const pic_name = formData.get("pic_name") as string;
     const whatsapp = formData.get("whatsapp") as string;
     const email = formData.get("email") as string;
     const instagram = formData.get("instagram") as string;
+    const additional_info_link = formData.get("additional_info_link") as string;
+    const payment_type = formData.get("payment_type") as string;
+    const event_scale = formData.get("event_scale") as string;
+    const event_category = formData.get("event_category") as string;
+    const latitude = formData.get("latitude") ? parseFloat(formData.get("latitude") as string) : null;
+    const longitude = formData.get("longitude") ? parseFloat(formData.get("longitude") as string) : null;
+    const country = formData.get("country") as string;
+    const province = formData.get("province") as string;
+    const city = formData.get("city") as string;
+    const district = formData.get("district") as string;
+    const village = formData.get("village") as string;
+    
+    const ticketLinksRaw = formData.get("ticket_links") as string;
+    const ticket_links = ticketLinksRaw ? JSON.parse(ticketLinksRaw) : [];
+
     const kol_partner = formData.get("kol_partner") as string;
     const artist_performance = formData.get("artist_performance") as string;
     const usp = formData.get("usp") as string;
     const target_visitors = formData.get("target_visitors") ? parseInt(formData.get("target_visitors") as string) : null;
     const execution_count = formData.get("execution_count") ? parseInt(formData.get("execution_count") as string) : null;
     const promotion_media = formData.get("promotion_media") as string;
-
     const attachment_link = formData.get("attachment_link") as string;
-    
-    let commitment_letter_link = "";
-    const commitmentLetterFile = formData.get("commitment_letter_file") as File;
-    
-    if (commitmentLetterFile && commitmentLetterFile.size > 0) {
-      const fileExt = commitmentLetterFile.name.split('.').pop();
-      const fileName = `surat_kesediaan_${Date.now()}.${fileExt}`;
-      
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('event_submissions')
-        .upload(fileName, commitmentLetterFile);
-        
-      if (uploadError) {
-        console.error("Storage upload error:", uploadError);
-        return { error: "Gagal mengunggah file surat kesediaan." };
-      }
-      
-      const { data: { publicUrl } } = supabase.storage
-        .from('event_submissions')
-        .getPublicUrl(fileName);
-        
-      commitment_letter_link = publicUrl;
-    } else {
-      // Fallback in case old form is still cached
-      const fallbackLink = formData.get("commitment_letter_link") as string;
-      if (fallbackLink) {
-        commitment_letter_link = fallbackLink;
-      }
+
+    // File Uploads
+    const uploadFile = async (file: File | null, prefix: string): Promise<string> => {
+      if (!file || file.size === 0) return "";
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${prefix}_${Date.now()}.${fileExt}`;
+      const { error } = await supabase.storage.from('event_submissions').upload(fileName, file);
+      if (error) { console.error(`Upload error (${prefix}):`, error); return ""; }
+      const { data } = supabase.storage.from('event_submissions').getPublicUrl(fileName);
+      return data.publicUrl;
+    };
+
+    // 1. Commitment Letter
+    let commitment_letter_link = await uploadFile(formData.get("commitment_letter_file") as File, "surat_kesediaan");
+    if (!commitment_letter_link) commitment_letter_link = (formData.get("commitment_letter_link") as string) || "";
+
+    // 2. Thumbnail
+    const thumbnail_link = await uploadFile(formData.get("thumbnail_file") as File, "thumbnail");
+
+    // 3. Gallery
+    const galleryCount = parseInt((formData.get("gallery_count") as string) || "0");
+    const gallery_links: string[] = [];
+    for (let i = 0; i < galleryCount; i++) {
+      const url = await uploadFile(formData.get(`gallery_file_${i}`) as File, `gallery_${i}`);
+      if (url) gallery_links.push(url);
     }
 
+    // 4. Sponsors
+    const sponsorsRaw = formData.get("sponsors_data") as string;
+    const parsedSponsors = sponsorsRaw ? JSON.parse(sponsorsRaw) : [];
+    const sponsors = [];
+    for (let i = 0; i < parsedSponsors.length; i++) {
+      const url = await uploadFile(formData.get(`sponsor_file_${i}`) as File, `sponsor_${i}`);
+      sponsors.push({ name: parsedSponsors[i].name, logo_url: url });
+    }
 
     const { error } = await supabase
       .from("event_submissions")
       .insert({
-        title,
-        start_date: start_date ? new Date(start_date).toISOString() : null,
-        end_date: end_date ? new Date(end_date).toISOString() : null,
-        eo_name,
-        location,
-        description,
-        pic_name,
-        whatsapp,
-        email,
-        instagram,
-        kol_partner,
-        artist_performance,
-        usp,
-        target_visitors,
-        execution_count,
-        promotion_media,
-        attachment_link,
-        commitment_letter_link,
+        title, start_date, end_date, timezone, has_registration, eo_name, location, event_type,
+        description, pic_name, whatsapp, email, instagram, additional_info_link, payment_type, ticket_links,
+        kol_partner, artist_performance, usp, target_visitors, execution_count, promotion_media,
+        attachment_link, commitment_letter_link, thumbnail_link, gallery_links, sponsors,
+        event_scale, event_category, latitude, longitude, country, province, city, district, village,
         status: "PENDING"
       });
 
@@ -93,7 +109,6 @@ export async function submitEventFormAction(formData: FormData) {
 
     revalidatePath('/admin/event-submissions');
     revalidatePath('/admin/dashboard');
-
     return { success: true };
   } catch (error) {
     console.error("Submit error:", error);
@@ -129,6 +144,7 @@ export async function updateSubmissionStatusAction(id: string, status: "APPROVED
           start_date: submission.start_date,
           end_date: submission.end_date,
           organizer: submission.eo_name,
+          event_type: submission.event_type,
           location: submission.location,
           pic_name: submission.pic_name,
           whatsapp: submission.whatsapp,

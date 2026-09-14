@@ -114,9 +114,9 @@ export default async function EventPage({ params }: { params: Promise<{ locale: 
           </div>
           {/* Bottom Row: Registration Form */}
           <div className="w-full">
-            <div className="bg-[#1b1c1a] rounded-sm p-8  shadow-xl">
-              <h3 className={`${montserrat.className} text-3xl font-bold text-white mb-2`}>{t('registerTitle')}</h3>
-              <p className="text-slate-300 mb-8 text-sm leading-relaxed">{t('registerDesc')}</p>
+            <div className="bg-white rounded-sm p-8 border border-[#d3c5af]/50 shadow-sm">
+              <h3 className={`${montserrat.className} text-3xl font-bold text-slate-900 mb-2`}>{t('registerTitle')}</h3>
+              <p className="text-slate-600 mb-8 text-sm leading-relaxed">{t('registerDesc')}</p>
               
               <EventSubmissionForm />
               

@@ -29,6 +29,15 @@ type SubmissionData = {
   commitment_letter_link: string;
   status: string;
   created_at: string;
+  event_scale: string;
+  event_category: string;
+  country: string;
+  province: string;
+  city: string;
+  district: string;
+  village: string;
+  latitude: number;
+  longitude: number;
 };
 
 export default function EventSubmissionTable({ initialData }: { initialData: SubmissionData[] }) {
@@ -101,10 +110,21 @@ export default function EventSubmissionTable({ initialData }: { initialData: Sub
             <div style="display: grid; grid-template-columns: 1fr; gap: 8px;">
               <div><span style="color: #64748b; font-size: 12px; display: block;">Judul</span><strong style="color: #0f172a;">${item.title || '-'}</strong></div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <div><span style="color: #64748b; font-size: 12px; display: block;">Kategori Event</span><strong style="color: #0f172a;">${item.event_category || '-'}</strong></div>
+                <div><span style="color: #64748b; font-size: 12px; display: block;">Skala Event</span><strong style="color: #0f172a;">${item.event_scale || '-'}</strong></div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                 <div><span style="color: #64748b; font-size: 12px; display: block;">Tanggal Mulai</span><strong style="color: #0f172a;">${item.start_date ? new Date(item.start_date).toLocaleDateString('id-ID') : '-'}</strong></div>
                 <div><span style="color: #64748b; font-size: 12px; display: block;">Tanggal Selesai</span><strong style="color: #0f172a;">${item.end_date ? new Date(item.end_date).toLocaleDateString('id-ID') : '-'}</strong></div>
               </div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Lokasi</span><strong style="color: #0f172a;">${item.location || '-'}</strong></div>
+              <div>
+                <span style="color: #64748b; font-size: 12px; display: block;">Lokasi Detail</span>
+                <strong style="color: #0f172a; display: block;">${item.location || '-'}</strong>
+                <span style="color: #475569; font-size: 12px; display: block; margin-top: 4px;">
+                  ${[item.district, item.city, item.province].filter(Boolean).join(', ')}
+                </span>
+                ${item.latitude && item.longitude ? `<a href="https://www.google.com/maps/search/?api=1&query=${item.latitude},${item.longitude}" target="_blank" style="color: #2563eb; font-size: 12px; text-decoration: underline; display: inline-block; margin-top: 4px;">Lihat di Google Maps &rarr;</a>` : ''}
+              </div>
               <div><span style="color: #64748b; font-size: 12px; display: block;">Deskripsi</span><span style="color: #334155; line-height: 1.5; display: block; margin-top: 4px;">${item.description || '-'}</span></div>
             </div>
           </div>
@@ -185,9 +205,16 @@ export default function EventSubmissionTable({ initialData }: { initialData: Sub
     const ws = XLSX.utils.json_to_sheet(data.map(item => ({
       'Tanggal Masuk': new Date(item.created_at).toLocaleDateString('id-ID'),
       'Judul Acara': item.title,
+      'Kategori': item.event_category,
+      'Skala': item.event_scale,
       'Tanggal Mulai': item.start_date,
       'Tanggal Selesai': item.end_date,
-      'Lokasi': item.location,
+      'Lokasi (Patokan)': item.location,
+      'Kecamatan': item.district,
+      'Kabupaten/Kota': item.city,
+      'Provinsi': item.province,
+      'Latitude': item.latitude,
+      'Longitude': item.longitude,
       'EO / Komunitas': item.eo_name,
       'Nama PIC': item.pic_name,
       'Email': item.email,

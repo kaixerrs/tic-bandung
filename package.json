@@ -7,5 +7,8 @@
   "scripts": {
     "dev:web": "npm run dev --workspace=tic-bandung-web",
     "dev:admin": "npm run dev --workspace=tic-bandung-admin"
+  },
+  "dependencies": {
+    "pg": "^8.23.0"
   }
 }
