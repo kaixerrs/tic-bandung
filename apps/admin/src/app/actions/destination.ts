@@ -62,7 +62,7 @@ export async function createDestinationAction(formData: FormData) {
         opening_hours: opening_hours ? JSON.parse(opening_hours) : null,
         content,
         founded_year,
-        status,
+        status: status || "published",
         images: imagesArray,
         source_photo_credit,
         leaflet_url: leafletUrl || null
@@ -133,7 +133,7 @@ export async function updateDestinationAction(id: string, formData: FormData) {
       opening_hours: opening_hours ? JSON.parse(opening_hours) : null,
       content,
       founded_year,
-      status,
+      status: status || "published",
       source_photo_credit,
       leaflet_url: leafletUrl || null,
       updated_at: new Date().toISOString()

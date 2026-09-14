@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -30,6 +30,7 @@ export default function Navbar() {
     { id: 'pusatBantuan', name: t('pusatBantuan'), href: getHref('/pusat-bantuan') },
   ];
   const [isOpen, setIsOpen] = useState(false);
+  const [isEventMobileOpen, setIsEventMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
   const pathname = usePathname();
@@ -91,9 +92,9 @@ export default function Navbar() {
                   </button>
                   <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                     <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-2 min-w-[200px] flex flex-col gap-1">
-                      <Link href={getHref('/event')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">EVENT 2027</Link>
+                      <a href="https://drive.google.com/file/d/1QEzKICi45dPbrHemEN6uBS-5vKVTG0O7/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">COE 2026</a>
                       <Link href={getHref('/event/pendaftaran')} className="px-4 py-2 text-sm font-bold text-gray-700 hover:text-[#00C853] hover:bg-green-50 rounded-lg transition-colors">Form COE 2027</Link>
-                    </div>
+                      </div>
                   </div>
                 </div>
               );
@@ -143,9 +144,42 @@ export default function Navbar() {
         <div className="px-6 py-6 flex flex-col gap-2">
           {navLinks.map((link) => {
             const isActive = normalizedPathname === link.href || (link.href !== '/' && normalizedPathname.startsWith(link.href));
+            
+            if (link.id === 'event') {
+              return (
+                <div key={link.id} className="flex flex-col">
+                  <button 
+                    onClick={() => setIsEventMobileOpen(!isEventMobileOpen)}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl font-bold transition-colors ${isActive ? 'bg-amber-50 text-amber-700' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    {link.name}
+                    <svg className={`w-4 h-4 transition-transform ${isEventMobileOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </button>
+                  <div className={`flex flex-col gap-1 pl-4 pr-2 overflow-hidden transition-all duration-300 ${isEventMobileOpen ? 'max-h-40 py-2 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <a 
+                      href="https://drive.google.com/file/d/1QEzKICi45dPbrHemEN6uBS-5vKVTG0O7/view?usp=drivesdk" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-2 text-sm font-bold text-slate-600 hover:text-amber-600 rounded-lg transition-colors"
+                    >
+                      COE 2026
+                    </a>
+                    <Link 
+                      href={getHref('/event/pendaftaran')} 
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-2 text-sm font-bold text-slate-600 hover:text-amber-600 rounded-lg transition-colors"
+                    >
+                      Form COE 2027
+                    </Link>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link 
-                key={link.name}
+                key={link.id || link.name}
                 onClick={() => setIsOpen(false)} 
                 className={`block px-4 py-3 rounded-xl font-bold transition-colors ${
                   isActive 
