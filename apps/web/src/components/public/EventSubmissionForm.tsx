@@ -549,7 +549,7 @@ export default function EventSubmissionForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Tipe Acara <span className="text-red-500">*</span></label>
-              <div className="relative mb-4 z-[9999]">
+              <div className="relative mb-4 z-[1000]">
                 <input type="hidden" name="event_type" value={eventType} required />
                 <button type="button" onClick={(e) => { e.stopPropagation(); setEventTypeDropdownOpen(!eventTypeDropdownOpen); setScaleDropdownOpen(false); setCategoryDropdownOpen(false); setPaymentDropdownOpen(false); setTimezoneDropdownOpen(false); }} className={`w-full px-4 py-3 bg-gray-50 border ${eventTypeDropdownOpen || eventType ? 'border-amber-500 bg-white' : 'border-gray-200'} rounded-sm text-left flex items-center justify-between text-gray-900 transition-colors`}>
                   <span className={eventType ? 'text-gray-900' : 'text-slate-500'}>{eventType === 'OFFLINE' ? 'Offline (Luring)' : eventType === 'ONLINE' ? 'Online (Daring)' : eventType === 'HYBRID' ? 'Hybrid' : 'Pilih Tipe Acara'}</span>
