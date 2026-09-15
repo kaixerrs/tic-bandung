@@ -80,7 +80,7 @@ export default function AdminLayoutWrapper({
       <aside className="w-64 bg-[#1b1c1a] text-white flex flex-col h-full shrink-0 shadow-2xl z-20">
         <div className="p-6 border-b border-white/10">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
-            <div className="w-12 h-12 relative flex items-center justify-center">
+            <div className="w-16 h-16 relative flex items-center justify-center">
               <img 
                 src="/logo/logo-final.png" 
                 alt="TIC Logo" 

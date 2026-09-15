@@ -27,7 +27,7 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] rounded-3xl p-8 md:p-10 w-full max-w-md">
       
       <div className="mb-8 text-center flex flex-col items-center">
-        <img src="/logo/logo-final.png" alt="TIC Kota Bandung" className="h-16 w-auto mb-4" />
+        <img src="/logo/logo-final.png" alt="TIC Kota Bandung" className="h-24 w-auto mb-4" />
         <h1 className="text-3xl font-bold font-display text-[#1b1c1a] mb-2 tracking-tight">Portal Admin</h1>
         <p className="text-slate-500 text-sm">Masuk untuk mengelola data TIC Kota Bandung</p>
       </div>
