@@ -1,5 +1,5 @@
-import { toast } from 'react-hot-toast';
 "use client";
+import { toast } from 'react-hot-toast';
 
 import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
@@ -93,6 +93,9 @@ function LocationMarker({ position, setPosition, setAddressInfo, isActive }: any
 }
 
 export default function LocationPickerMap({ onLocationChange, isActive }: LocationPickerProps) {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => { setIsMounted(true); }, []);
+
   const [position, setPosition] = useState<{lat: number, lng: number} | null>(null);
   const [addressInfo, setAddressInfo] = useState({ country: '', province: '', city: '', district: '', village: '' });
 
@@ -265,6 +268,7 @@ export default function LocationPickerMap({ onLocationChange, isActive }: Locati
             bottom: 20px !important;
           }
         `}} />
+        {isMounted && (
         <MapContainer center={[-6.9147, 107.6098]} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%', zIndex: 100 }}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -272,6 +276,7 @@ export default function LocationPickerMap({ onLocationChange, isActive }: Locati
           />
           <LocationMarker position={position} setPosition={setPosition} setAddressInfo={setAddressInfo} isActive={isActive} />
         </MapContainer>
+        )}
         
         {position && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[400] bg-white px-4 py-2 rounded-full shadow-md text-xs font-mono text-gray-700 flex items-center gap-2">
