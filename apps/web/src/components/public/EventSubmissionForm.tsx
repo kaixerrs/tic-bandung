@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { CheckCircle2, AlertCircle, Calendar, MapPin, User, Phone, Mail, AtSign, Star, FileText, Send, Building, Target, Download, ChevronRight, ChevronLeft, Upload, Plus, X, ImageIcon, Search, Clock, ChevronDown } from 'lucide-react';
 import { submitEventFormAction } from '@/app/actions/eventSubmission';
-import LocationPickerWrapper from './LocationPickerWrapper';
+const LocationPickerWrapper = dynamic(() => import('./LocationPickerWrapper'), { ssr: false, loading: () => <div className="h-[400px] w-full bg-slate-100 animate-pulse rounded-sm border border-slate-200 flex items-center justify-center text-slate-400 font-medium">Memuat Peta...</div> });
 
 const STEPS = [
   "INFORMASI EVENT",
@@ -108,14 +108,15 @@ export default function EventSubmissionForm() {
         
         // Give React a tick to render dynamic fields (like ticket links) before restoring native inputs
         setTimeout(() => {
-          if (!formRef.current || !draft.nativeData) return;
+          const currentForm = formRef.current;
+          if (!currentForm || !draft.nativeData) return;
           Object.entries(draft.nativeData).forEach(([name, value]) => {
             // Skip custom state fields that are already restored
             if (['event_scale', 'event_category', 'payment_type', 'event_type', 'timezone', 'latitude', 'longitude', 'has_registration_radio'].includes(name)) return;
             
-            const input = formRef.current.querySelector(`[name="${name}"]`);
+            const input = currentForm.querySelector(`[name="${name}"]`) as HTMLInputElement;
             if (input) {
-              input.value = value;
+              input.value = value as string;
               if (value) input.setAttribute('data-filled', 'true');
             }
           });
