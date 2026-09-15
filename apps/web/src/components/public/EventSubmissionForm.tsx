@@ -1,6 +1,7 @@
 "use client";
 import dynamic from 'next/dynamic';
 import { Toaster, toast } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
@@ -320,14 +321,20 @@ export default function EventSubmissionForm() {
     }
     
     if (incompleteSteps.length > 0) {
-      // Map step numbers to their titles
-      const stepNames = incompleteSteps.map(stepNum => `Langkah ${stepNum} (${STEPS[stepNum-1]})`);
-      toast.error(`Mohon lengkapi data wajib pada: ${stepNames.join(', ')}.`, { duration: 5000 });
-      
-      // Auto navigate to the first incomplete step
-      setCurrentStep(incompleteSteps[0]);
-      return false;
-    }
+        const stepNames = incompleteSteps.map(stepNum => `Langkah ${stepNum} (${STEPS[stepNum-1]})`);
+        
+        Swal.fire({
+          icon: 'warning',
+          title: 'Data Belum Lengkap!',
+          html: `Mohon lengkapi isian wajib pada tahap berikut:<br/><br/><b>${stepNames.join('<br/>')}</b>`,
+          confirmButtonText: 'Lengkapi Sekarang',
+          confirmButtonColor: '#f59e0b',
+        }).then(() => {
+          setCurrentStep(incompleteSteps[0]);
+        });
+        
+        return false;
+      }
     return true;
   };
 
