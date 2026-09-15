@@ -6,43 +6,27 @@ import { useState, useTransition } from 'react';
 import { updateSubmissionStatusAction, deleteSubmissionAction } from '@/app/actions/eventSubmission';
 import { ExternalLink, CheckCircle, XCircle, Clock, Eye, Download, Trash2 } from 'lucide-react';
 import * as XLSX from 'xlsx';
+import EventSubmissionDetailModal from './EventSubmissionDetailModal';
 
 type SubmissionData = {
-  id: string;
-  title: string;
-  start_date: string;
-  end_date: string;
-  pic_name: string;
-  eo_name: string;
-  email: string;
-  whatsapp: string;
-  location: string;
-  description: string;
-  instagram: string;
-  kol_partner: string;
-  artist_performance: string;
-  usp: string;
-  target_visitors: number;
-  execution_count: number;
-  promotion_media: string;
-  attachment_link: string;
-  commitment_letter_link: string;
-  status: string;
-  created_at: string;
-  event_scale: string;
-  event_category: string;
-  country: string;
-  province: string;
-  city: string;
-  district: string;
-  village: string;
-  latitude: number;
-  longitude: number;
+  id: string; title: string; start_date: string; end_date: string;
+  pic_name: string; eo_name: string; email: string; whatsapp: string;
+  location: string; description: string; instagram: string; kol_partner: string;
+  artist_performance: string; usp: string; target_visitors: number;
+  execution_count: number; promotion_media: string; attachment_link: string;
+  commitment_letter_link: string; status: string; created_at: string;
+  event_scale: string; event_category: string; country: string; province: string;
+  city: string; district: string; village: string; latitude: number; longitude: number;
+  timezone: string; has_registration: boolean; event_type: string;
+  payment_type: string; additional_info_link: string; ticket_links: string[];
+  thumbnail_link: string; gallery_links: string[]; sponsors: { name: string; logo_url: string }[];
 };
 
 export default function EventSubmissionTable({ initialData }: { initialData: SubmissionData[] }) {
   const [data, setData] = useState<SubmissionData[]>(initialData);
   const [isPending, startTransition] = useTransition();
+  const [selectedSubmission, setSelectedSubmission] = useState<SubmissionData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleUpdateStatus = async (id: string, status: "APPROVED" | "REJECTED") => {
     const confirmResult = await Swal.fire({
@@ -96,111 +80,12 @@ export default function EventSubmissionTable({ initialData }: { initialData: Sub
   };
 
   const showDetail = (item: SubmissionData) => {
-    Swal.fire({
-      title: '<span style="font-size: 1.25rem; font-weight: 700; color: #111827;">Detail Pengajuan Event</span>',
-      html: `
-        <div style="text-align: left; font-size: 14px; max-height: 65vh; overflow-y: auto; padding: 5px; color: #374151; display: flex; flex-direction: column; gap: 16px;">
-          
-          <!-- Section 1 -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
-            <h4 style="margin: 0 0 12px 0; color: #0f172a; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px;">
-              <span style="background: #e2e8f0; color: #475569; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px;">1</span>
-              Informasi Acara
-            </h4>
-            <div style="display: grid; grid-template-columns: 1fr; gap: 8px;">
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Judul</span><strong style="color: #0f172a;">${item.title || '-'}</strong></div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                <div><span style="color: #64748b; font-size: 12px; display: block;">Kategori Event</span><strong style="color: #0f172a;">${item.event_category || '-'}</strong></div>
-                <div><span style="color: #64748b; font-size: 12px; display: block;">Skala Event</span><strong style="color: #0f172a;">${item.event_scale || '-'}</strong></div>
-              </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                <div><span style="color: #64748b; font-size: 12px; display: block;">Tanggal Mulai</span><strong style="color: #0f172a;">${item.start_date ? new Date(item.start_date).toLocaleDateString('id-ID') : '-'}</strong></div>
-                <div><span style="color: #64748b; font-size: 12px; display: block;">Tanggal Selesai</span><strong style="color: #0f172a;">${item.end_date ? new Date(item.end_date).toLocaleDateString('id-ID') : '-'}</strong></div>
-              </div>
-              <div>
-                <span style="color: #64748b; font-size: 12px; display: block;">Lokasi Detail</span>
-                <strong style="color: #0f172a; display: block;">${item.location || '-'}</strong>
-                <span style="color: #475569; font-size: 12px; display: block; margin-top: 4px;">
-                  ${[item.district, item.city, item.province].filter(Boolean).join(', ')}
-                </span>
-                ${item.latitude && item.longitude ? `<a href="https://www.google.com/maps/search/?api=1&query=${item.latitude},${item.longitude}" target="_blank" style="color: #2563eb; font-size: 12px; text-decoration: underline; display: inline-block; margin-top: 4px;">Lihat di Google Maps &rarr;</a>` : ''}
-              </div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Deskripsi</span><span style="color: #334155; line-height: 1.5; display: block; margin-top: 4px;">${item.description || '-'}</span></div>
-            </div>
-          </div>
-
-          <!-- Section 2 -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
-            <h4 style="margin: 0 0 12px 0; color: #0f172a; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px;">
-              <span style="background: #e2e8f0; color: #475569; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px;">2</span>
-              Pelaksana & PIC
-            </h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-              <div><span style="color: #64748b; font-size: 12px; display: block;">EO/Komunitas</span><strong style="color: #0f172a;">${item.eo_name || '-'}</strong></div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Nama PIC</span><strong style="color: #0f172a;">${item.pic_name || '-'}</strong></div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Email</span>${item.email ? `<a href="mailto:${item.email}" style="color: #2563eb; font-weight: bold; text-decoration: underline;">${item.email}</a>` : `<strong style="color: #0f172a;">-</strong>`}</div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">WhatsApp</span>${item.whatsapp ? `<a href="https://wa.me/${item.whatsapp.replace(/[^0-9]/g, '').replace(/^0/, '62')}" target="_blank" style="color: #16a34a; font-weight: bold; text-decoration: underline;">${item.whatsapp}</a>` : `<strong style="color: #0f172a;">-</strong>`}</div>
-            </div>
-          </div>
-
-          <!-- Section 3 -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
-            <h4 style="margin: 0 0 12px 0; color: #0f172a; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px;">
-              <span style="background: #e2e8f0; color: #475569; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px;">3</span>
-              Detail Tambahan
-            </h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Instagram</span><strong style="color: #0f172a;">${item.instagram || '-'}</strong></div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">KOL</span><strong style="color: #0f172a;">${item.kol_partner || '-'}</strong></div>
-              <div style="grid-column: span 2;"><span style="color: #64748b; font-size: 12px; display: block;">Line Up Artis</span><strong style="color: #0f172a;">${item.artist_performance || '-'}</strong></div>
-              <div style="grid-column: span 2;"><span style="color: #64748b; font-size: 12px; display: block;">Nilai Jual Unik (USP)</span><span style="color: #334155; line-height: 1.5; display: block; margin-top: 4px;">${item.usp || '-'}</span></div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Target Pengunjung</span><strong style="color: #0f172a;">${item.target_visitors || '-'}</strong></div>
-              <div><span style="color: #64748b; font-size: 12px; display: block;">Pelaksanaan Ke-</span><strong style="color: #0f172a;">${item.execution_count || '-'}</strong></div>
-            </div>
-          </div>
-
-          <!-- Section 4 -->
-          <div style="background: #f0fdf4; border: 1px dashed #4ade80; border-radius: 12px; padding: 16px;">
-            <h4 style="margin: 0 0 12px 0; color: #166534; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px;">
-              <span style="background: #dcfce7; color: #166534; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px;">4</span>
-              Berkas Lampiran
-            </h4>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              <a href="${item.promotion_media || '#'}" target="_blank" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: white; border: 1px solid #bbf7d0; border-radius: 8px; color: #166534; text-decoration: none; font-weight: 600; font-size: 13px;">
-                <span>Media Promosi (Drive)</span>
-                <span>Buka &rarr;</span>
-              </a>
-              ${item.attachment_link ? `
-              <a href="${item.attachment_link}" target="_blank" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: white; border: 1px solid #bbf7d0; border-radius: 8px; color: #166534; text-decoration: none; font-weight: 600; font-size: 13px;">
-                <span>Proposal/Poster</span>
-                <span>Buka &rarr;</span>
-              </a>` : ''}
-              ${item.commitment_letter_link ? `
-              <a href="${item.commitment_letter_link}" target="_blank" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: white; border: 1px solid #bbf7d0; border-radius: 8px; color: #166534; text-decoration: none; font-weight: 600; font-size: 13px;">
-                <span>Surat Kesediaan</span>
-                <span>Unduh &darr;</span>
-              </a>` : ''}
-            </div>
-          </div>
-
-        </div>
-      `,
-      width: 650,
-      showCloseButton: true,
-      showConfirmButton: item.status === 'PENDING',
-      showDenyButton: item.status === 'PENDING',
-      confirmButtonText: 'Terima (Approve)',
-      confirmButtonColor: '#10b981',
-      denyButtonText: 'Tolak (Reject)',
-      cancelButtonText: 'Tutup'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleUpdateStatus(item.id, "APPROVED");
-      } else if (result.isDenied) {
-        handleUpdateStatus(item.id, "REJECTED");
-      }
-    });
+    setSelectedSubmission(item);
+    setIsModalOpen(true);
   };
+  
+  /* Removed old SweetAlert modal */
+  
   const exportToExcel = () => {
     const ws = XLSX.utils.json_to_sheet(data.map(item => ({
       'Tanggal Masuk': new Date(item.created_at).toLocaleDateString('id-ID'),
@@ -210,6 +95,13 @@ export default function EventSubmissionTable({ initialData }: { initialData: Sub
       'Tanggal Mulai': item.start_date,
       'Tanggal Selesai': item.end_date,
       'Lokasi (Patokan)': item.location,
+      'Tipe Acara': item.event_type || '-',
+      'Tipe Pembayaran': item.payment_type || '-',
+      'Ada Registrasi?': item.has_registration ? 'Ya' : 'Tidak',
+      'Zona Waktu': item.timezone || '-',
+      'Link Tiket': (item.ticket_links || []).join(', '),
+      'Link Thumbnail': item.thumbnail_link || '-',
+      'Jumlah Sponsor': (item.sponsors || []).length,
       'Kecamatan': item.district,
       'Kabupaten/Kota': item.city,
       'Provinsi': item.province,
@@ -332,6 +224,13 @@ export default function EventSubmissionTable({ initialData }: { initialData: Sub
                 </table>
       </div>
     </div>
+      <EventSubmissionDetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={selectedSubmission}
+        onApprove={(id) => handleUpdateStatus(id, "APPROVED")}
+        onReject={(id) => handleUpdateStatus(id, "REJECTED")}
+      />
     </div>
   );
 }
