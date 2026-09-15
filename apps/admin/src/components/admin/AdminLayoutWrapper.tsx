@@ -82,7 +82,7 @@ export default function AdminLayoutWrapper({
           <Link href="/admin/dashboard" className="flex items-center gap-3">
             <div className="w-12 h-12 relative flex items-center justify-center">
               <img 
-                src="/logo/tictransparan.png" 
+                src="/logo/logo-final.png" 
                 alt="TIC Logo" 
                 className="w-full h-full object-contain"
               />

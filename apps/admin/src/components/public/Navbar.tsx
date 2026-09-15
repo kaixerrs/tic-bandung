@@ -46,7 +46,7 @@ export default function Navbar() {
       <div className="flex justify-between items-center w-full px-4 md:px-8 lg:px-10 max-w-[1600px] mx-auto">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 transition-transform hover:scale-105 flex items-center gap-2 md:gap-3">
-          <img src="/logo/tictransparan.png" alt="TIC Kota Bandung" className="h-10 md:h-12 w-auto" />
+          <img src="/logo/logo-final.png" alt="TIC Kota Bandung" className="h-10 md:h-12 w-auto" />
           <div className="flex flex-col drop-shadow-md">
             <span className={`text-sm md:text-lg font-bold leading-tight ${scrolled || pathname !== '/' ? 'text-slate-900' : 'text-white'}`}>
               KOTA BANDUNG

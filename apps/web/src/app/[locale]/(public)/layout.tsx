@@ -30,7 +30,7 @@ export default async function PublicLayout({
       <footer className="bg-white border-t border-slate-200 w-full pt-16">
         <div className="w-full pb-12 px-6 md:px-12 lg:px-16 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-1">
-            <img src="/logo/tictransparan.png" alt="TIC Kota Bandung" className="h-12 w-auto mb-4" />
+            <img src="/logo/logo-final.png" alt="TIC Kota Bandung" className="h-12 w-auto mb-4" />
             <p className="text-slate-600 text-base mb-6 leading-relaxed whitespace-pre-line">
               {settings?.description || tFooter('slogan')}
             </p>

@@ -156,7 +156,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   "name": "TIC Kota Bandung",
   "alternateName": "Tourist Information Center Kota Bandung",
   "url": "https://ticbandung.com",
-  "logo": "https://ticbandung.com/logo/tictransparan.png",
+  "logo": "https://ticbandung.com/logo/logo-final.png",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+62-22-1234567",
