@@ -82,7 +82,56 @@ export default function EventSubmissionForm() {
   const [sponsors, setSponsors] = useState<{name: string, file: File | null}[]>([]);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
+  const [formUpdateTrigger, setFormUpdateTrigger] = useState(0);
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
   
+  // AUTO-SAVE: Load draft on mount
+  useEffect(() => {
+    const draftStr = localStorage.getItem('event_form_draft');
+    if (draftStr && formRef.current) {
+      try {
+        const draft = JSON.parse(draftStr);
+        if (draft.customState) {
+          if (draft.customState.currentStep) setCurrentStep(draft.customState.currentStep);
+          if (draft.customState.eventScale) setEventScale(draft.customState.eventScale);
+          if (draft.customState.eventCategory) setEventCategory(draft.customState.eventCategory);
+          if (draft.customState.paymentType) setPaymentType(draft.customState.paymentType);
+          if (draft.customState.eventType) setEventType(draft.customState.eventType);
+          if (draft.customState.timezone) setTimezone(draft.customState.timezone);
+          if (draft.customState.hasRegistration) setHasRegistration(draft.customState.hasRegistration);
+          if (draft.customState.mapLocation) setMapLocation(draft.customState.mapLocation);
+          if (draft.customState.ticketLinks) setTicketLinks(draft.customState.ticketLinks);
+          if (draft.customState.sponsors) {
+            setSponsors(draft.customState.sponsors.map((s: any) => ({ name: s.name, file: null })));
+          }
+        }
+        
+        // Give React a tick to render dynamic fields (like ticket links) before restoring native inputs
+        setTimeout(() => {
+          if (!formRef.current || !draft.nativeData) return;
+          Object.entries(draft.nativeData).forEach(([name, value]) => {
+            // Skip custom state fields that are already restored
+            if (['event_scale', 'event_category', 'payment_type', 'event_type', 'timezone', 'latitude', 'longitude', 'has_registration_radio'].includes(name)) return;
+            
+            const input = formRef.current.querySelector(`[name="${name}"]`);
+            if (input) {
+              input.value = value;
+              if (value) input.setAttribute('data-filled', 'true');
+            }
+          });
+          // Trigger a re-validation now that data is populated
+          setFormUpdateTrigger(prev => prev + 1);
+          setIsDraftLoaded(true);
+        }, 100);
+      } catch (e) {
+        console.error("Failed to parse draft", e);
+        setIsDraftLoaded(true);
+      }
+    } else {
+      setIsDraftLoaded(true);
+    }
+  }, []);
+
   useEffect(() => {
     if (!formRef.current) return;
     const newValidity: Record<number, boolean> = { ...stepValidity };
@@ -100,20 +149,53 @@ export default function EventSubmissionForm() {
         if (!eventScale || !eventCategory || !paymentType) return false;
         if (!thumbnailFile || galleryFiles.length === 0) return false;
       }
+      if (stepNum === 2) {
+        if (!eventType) return false;
+      }
       if (stepNum === 3) {
-        if (!eventType || !timezone) return false;
+        if (!timezone) return false;
       }
       
       return true;
     };
     
-    if (currentStep > 1) newValidity[1] = checkStep(1);
-    if (currentStep > 2) newValidity[2] = checkStep(2);
-    if (currentStep > 3) newValidity[3] = checkStep(3);
-    if (currentStep > 4) newValidity[4] = checkStep(4);
+    newValidity[1] = checkStep(1);
+    newValidity[2] = checkStep(2);
+    newValidity[3] = checkStep(3);
+    newValidity[4] = checkStep(4);
     
     setStepValidity(newValidity);
-  }, [currentStep, thumbnailFile, galleryFiles, eventScale, eventCategory, paymentType, eventType, timezone]);
+  }, [currentStep, thumbnailFile, galleryFiles, eventScale, eventCategory, paymentType, eventType, timezone, formUpdateTrigger]);
+  // AUTO-SAVE: Save draft on any change
+  useEffect(() => {
+    if (!formRef.current || !isDraftLoaded) return;
+    
+    // We don't save files as they can't be stored in localStorage easily
+    const formData = new FormData(formRef.current);
+    const nativeData: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      if (typeof value === 'string') nativeData[key] = value;
+    });
+
+    const draft = {
+      nativeData,
+      customState: {
+        currentStep,
+        eventScale,
+        eventCategory,
+        paymentType,
+        eventType,
+        timezone,
+        hasRegistration,
+        mapLocation,
+        ticketLinks,
+        sponsors: sponsors.map(s => ({ name: s.name }))
+      }
+    };
+    
+    localStorage.setItem('event_form_draft', JSON.stringify(draft));
+  }, [formUpdateTrigger, currentStep, eventScale, eventCategory, paymentType, eventType, timezone, hasRegistration, mapLocation, ticketLinks, sponsors]);
+
 
   const handleAddTicket = () => setTicketLinks([...ticketLinks, '']);
   const handleRemoveTicket = (index: number) => setTicketLinks(ticketLinks.filter((_, i) => i !== index));
@@ -143,6 +225,7 @@ export default function EventSubmissionForm() {
     } else {
       target.removeAttribute('data-filled');
     }
+    setFormUpdateTrigger(prev => prev + 1);
   };
 
   // Close dropdowns on outside click
@@ -287,6 +370,7 @@ export default function EventSubmissionForm() {
       toast.error(result.error);
     } else {
       setIsSuccess(true);
+      localStorage.removeItem('event_form_draft');
     }
   };
 
@@ -393,11 +477,11 @@ export default function EventSubmissionForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Nama Acara <span className="text-red-500">*</span></label>
-              <input type="text" name="title" required placeholder={t('eventNamePlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+              <input type="text" name="title" required placeholder={t('eventNamePlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Deskripsi Acara <span className="text-red-500">*</span></label>
-              <textarea name="description" required rows={4} placeholder={t('descPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors resize-none"></textarea>
+              <textarea name="description" required rows={4} placeholder={t('descPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors resize-none"></textarea>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Tipe Event (Skala) <span className="text-red-500">*</span></label>
@@ -441,18 +525,18 @@ export default function EventSubmissionForm() {
             
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Nilai Jual Unik (Unique Selling Point) <span className="text-red-500">*</span></label>
-              <textarea name="usp" required rows={3} placeholder={t('uspPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors resize-none"></textarea>
+              <textarea name="usp" required rows={3} placeholder={t('uspPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors resize-none"></textarea>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Target Jumlah Pengunjung <span className="text-red-500">*</span></label>
               <div className="relative">
                 <Target className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="number" name="target_visitors" required placeholder={t('targetPlaceholder')} className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+                <input type="number" name="target_visitors" required placeholder={t('targetPlaceholder')} className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Pelaksanaan Ke-berapa Tahun Ini? <span className="text-red-500">*</span></label>
-              <input type="number" name="execution_count" required placeholder={t('editionPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+              <input type="number" name="execution_count" required placeholder={t('editionPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
             </div>
             
             {/* New Step 1 Fields */}
@@ -460,14 +544,23 @@ export default function EventSubmissionForm() {
               <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                 <ImageIcon className="w-4 h-4" /> Thumbnail Event <span className="text-red-500">*</span>
               </label>
-              <p className="text-xs text-gray-500 mb-2">Gambar utama yang ditampilkan di card event pada landing page. Rekomendasi: 1200x800px (rasio 3:2). Format: JPG, PNG, WebP. Maks. 5MB</p>
+              <p className="text-xs text-gray-500 mb-2">Gambar utama yang ditampilkan di card event pada landing page. Rekomendasi: 1200x800px (rasio 3:2). Format: JPG, PNG, WebP. Maks. 2MB</p>
               <div className="border-2 border-dashed border-gray-300 rounded-sm p-8 text-center bg-gray-50 hover:bg-gray-100 transition-colors relative">
-                <input type="file" accept="image/png, image/jpeg, image/webp" required className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)} />
+                <input type="file" accept="image/png, image/jpeg, image/webp" required className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file && file.size > 2 * 1024 * 1024) {
+      toast.error('Ukuran thumbnail maksimal 2 MB');
+      e.target.value = '';
+      setThumbnailFile(null);
+    } else {
+      setThumbnailFile(file || null);
+    }
+  }} />
                 <div className="flex flex-col items-center gap-2 pointer-events-none">
                   <Upload className="w-8 h-8 text-gray-400" />
                   {thumbnailFile ? <p className="font-semibold text-amber-600">{thumbnailFile.name}</p> : <>
                     <p className="text-sm font-medium text-gray-700">Klik untuk upload atau drag and drop</p>
-                    <p className="text-xs text-gray-500">JPG, PNG, atau WebP (Maks. 5MB) - Rekomendasi 1200x800px</p>
+                    <p className="text-xs text-gray-500">JPG, PNG, atau WebP (Maks. 2MB) - Rekomendasi 1200x800px</p>
                   </>}
                 </div>
               </div>
@@ -477,9 +570,20 @@ export default function EventSubmissionForm() {
               <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                 <ImageIcon className="w-4 h-4" /> Galeri Event <span className="text-red-500">*</span> <span className="text-xs text-gray-400 font-normal">(Min. 1 gambar)</span>
               </label>
-              <p className="text-xs text-gray-500 mb-2">Rekomendasi minimal 1200x800px per gambar. Format: JPG, PNG, WebP, GIF. Maks. 10MB per file</p>
+              <p className="text-xs text-gray-500 mb-2">Rekomendasi minimal 1200x800px per gambar. Format: JPG, PNG, WebP, GIF. Maks. 1MB per file</p>
               <div className="border-2 border-dashed border-amber-200 rounded-sm p-8 text-center bg-amber-50/30 hover:bg-amber-50 transition-colors relative">
-                <input type="file" accept="image/*" multiple required className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => setGalleryFiles(Array.from(e.target.files || []).slice(0, 5))} />
+                <input type="file" accept="image/*" multiple required className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => {
+    const files = Array.from(e.target.files || []);
+    const validFiles = files.filter(f => f.size <= 1 * 1024 * 1024);
+    if (files.length > validFiles.length) {
+      toast.error('Beberapa gambar diabaikan karena lebih dari 1 MB');
+    }
+    if (validFiles.length > 5) {
+      toast.error('Maksimal 5 gambar diperbolehkan');
+    }
+    setGalleryFiles(validFiles.slice(0, 5));
+    if (validFiles.length === 0) e.target.value = '';
+  }} />
                 <div className="flex flex-col items-center gap-2 pointer-events-none">
                   <div className="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-white"><Upload className="w-6 h-6" /></div>
                   <p className="text-sm font-medium text-gray-700">Drag & drop gambar di sini, atau <span className="text-amber-500">pilih file</span></p>
@@ -599,7 +703,7 @@ export default function EventSubmissionForm() {
               <label className="block text-sm font-medium text-gray-700 mb-2">Detail Alamat / Patokan <span className="text-red-500">*</span></label>
               <div className="relative">
                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="text" name="location" required placeholder="Contoh: Gedung Sate, sebelah barat lapangan" className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+                <input type="text" name="location" required placeholder="Contoh: Gedung Sate, sebelah barat lapangan" className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
               </div>
             </div>
           </div>
@@ -736,10 +840,19 @@ export default function EventSubmissionForm() {
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Logo/Gambar</label>
                         <div className="border-2 border-dashed border-amber-200 rounded-sm p-6 text-center bg-amber-50/20 hover:bg-amber-50 transition-colors relative">
-                          <input type="file" accept="image/png, image/jpeg, image/webp" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleSponsorFileChange(idx, e.target.files?.[0] || null)} />
+                          <input type="file" accept="image/png, image/jpeg, image/webp" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file && file.size > 1 * 1024 * 1024) {
+      toast.error('Ukuran logo sponsor maksimal 1 MB');
+      e.target.value = '';
+      handleSponsorFileChange(idx, null);
+    } else {
+      handleSponsorFileChange(idx, file || null);
+    }
+  }} />
                           <div className="flex flex-col items-center gap-2 pointer-events-none">
                             <Upload className="w-6 h-6 text-gray-400" />
-                            {sponsor.file ? <p className="font-semibold text-amber-600">{sponsor.file.name}</p> : <p className="text-sm text-gray-600">Seret gambar ke sini atau klik untuk upload</p>}
+                            {sponsor.file ? <p className="font-semibold text-amber-600">{sponsor.file.name}</p> : <p className="text-sm text-gray-600">Maks. 1MB per logo</p>}
                           </div>
                         </div>
                       </div>
@@ -755,36 +868,36 @@ export default function EventSubmissionForm() {
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Nama Penanggung Jawab Acara <span className="text-red-500">*</span></label>
-              <input type="text" name="pic_name" required placeholder={t('picNamePlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+              <input type="text" name="pic_name" required placeholder={t('picNamePlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Nomor WhatsApp PIC <span className="text-red-500">*</span></label>
               <div className="relative">
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="tel" name="whatsapp" required placeholder={t('picPhonePlaceholder')} className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+                <input type="tel" name="whatsapp" required placeholder={t('picPhonePlaceholder')} className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email PIC <span className="text-red-500">*</span></label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="email" name="email" required placeholder="email@contoh.com" className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+                <input type="email" name="email" required placeholder="email@contoh.com" className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Akun Instagram Acara <span className="text-red-500">*</span></label>
               <div className="relative">
                 <AtSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="text" name="instagram" required placeholder="@namainstagram" className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+                <input type="text" name="instagram" required placeholder="@namainstagram" className="w-full pl-12 pr-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">{t('kol')}</label>
-              <input type="text" name="kol_partner" placeholder={t('kolPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+              <input type="text" name="kol_partner" placeholder={t('kolPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">{t('lineup')}</label>
-              <input type="text" name="artist_performance" placeholder={t('lineupPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+              <input type="text" name="artist_performance" placeholder={t('lineupPlaceholder')} className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
             </div>
           </div>
         </div>
@@ -799,17 +912,23 @@ export default function EventSubmissionForm() {
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Media Promosi (Google Drive Link) <span className="text-red-500">*</span></label>
               <p className="text-xs text-gray-500 mb-3">{t('mediaDesc')}</p>
-              <input type="url" name="promotion_media" required placeholder="https://drive.google.com/..." className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+              <input type="url" name="promotion_media" required placeholder="https://drive.google.com/..." className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
             </div>
             <div className="bg-gray-50 p-5 rounded-sm border border-gray-200 border-dashed hover:border-amber-500/50 transition-colors">
               <label className="block text-sm font-medium text-gray-700 mb-2">Proposal, Poster, atau Berkas Penunjang <span className="text-red-500">*</span></label>
               <p className="text-xs text-gray-500 mb-4">{t('proposalDesc')}</p>
-              <input type="url" name="attachment_link" required placeholder="https://..." className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
+              <input type="url" name="attachment_link" required placeholder="https://..." className="w-full px-4 py-3 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors" />
             </div>
             <div className="bg-gray-50 p-5 rounded-sm border border-gray-200 border-dashed hover:border-amber-500/50 transition-colors">
               <label className="block text-sm font-medium text-gray-700 mb-2">Surat Kesediaan Laporan Pasca Event <span className="text-red-500">*</span></label>
               <p className="text-xs text-gray-500 mb-4">{t('letterDesc')}</p>
-              <input type="file" name="commitment_letter_file" accept=".pdf,.doc,.docx" required className="w-full px-4 py-2.5 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:border-amber-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-white hover:file:bg-amber-600 cursor-pointer" />
+              <input type="file" name="commitment_letter_file" accept=".pdf,.doc,.docx" required onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file && file.size > 2 * 1024 * 1024) {
+      toast.error('Ukuran surat maksimal 2 MB');
+      e.target.value = '';
+    }
+  }} className="w-full px-4 py-2.5 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-white hover:file:bg-amber-600 cursor-pointer" />
               <a href="/ASET%20VISUAL/surat/FORMAT%20SURAT%20PERNYATAAN%20KESANGGUPAN%20COE.docx" download className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 rounded-sm text-xs text-white font-bold transition-colors shadow-sm w-fit">
                 <Download className="w-4 h-4" /> Unduh Template Surat
               </a>
