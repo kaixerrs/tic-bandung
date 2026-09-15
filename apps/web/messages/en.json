@@ -300,7 +300,15 @@
     "letter": "16. Post-Event Report Commitment Letter",
     "letterDesc": "Please upload the commitment letter (PDF/DOCX).",
     "downloadTemplate": "Download Report Template",
-    "submit": "Submit Event Application"
+    "submit": "Submit Event Application",
+    "timeline1Date": "Sept 15 - Oct 16",
+    "timeline1Title": "Opening",
+    "timeline2Date": "Oct 19 - 23",
+    "timeline2Title": "Curation",
+    "timeline3Date": "Oct 26 - Nov 16",
+    "timeline3Title": "Launching Preparation",
+    "timeline4Date": "November 19",
+    "timeline4Title": "Launching"
   },
   "FAQ": {
     "tag": "INFORMATION CENTER",

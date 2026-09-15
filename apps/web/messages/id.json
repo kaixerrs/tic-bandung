@@ -300,7 +300,15 @@
     "letter": "16. Surat Kesediaan Laporan Pasca Event",
     "letterDesc": "Mohon unggah file surat kesediaan (PDF/DOCX).",
     "downloadTemplate": "Unduh Template Surat Laporan",
-    "submit": "Kirim Pengajuan Event"
+    "submit": "Kirim Pengajuan Event",
+    "timeline1Date": "15 September - 16 Oktober",
+    "timeline1Title": "Opening",
+    "timeline2Date": "19 - 23 Oktober",
+    "timeline2Title": "Kurasi",
+    "timeline3Date": "26 Oktober - 16 November",
+    "timeline3Title": "Persiapan Launching",
+    "timeline4Date": "19 November",
+    "timeline4Title": "Launching"
   },
   "FAQ": {
     "tag": "PUSAT INFORMASI",
