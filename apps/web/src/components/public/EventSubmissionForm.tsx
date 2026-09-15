@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic';
 "use client";
+import dynamic from 'next/dynamic';
 import { Toaster, toast } from 'react-hot-toast';
 
 import React, { useState, useRef, useEffect } from 'react';
