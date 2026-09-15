@@ -20,9 +20,9 @@ export default function CoECountdownBanner() {
 
   useEffect(() => {
     setIsMounted(true);
-    // Target date: September 15, 2026, 23:59:59 (End of day)
+    // Target date: October 16, 2026, 23:59:59 (End of day)
     // Use the user's current year/month based on the context: 2026-09-15
-    const targetDate = new Date("2026-09-15T23:59:59").getTime();
+    const targetDate = new Date("2026-10-16T23:59:59").getTime();
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -125,7 +125,7 @@ export default function CoECountdownBanner() {
           </div>
           
           <div className="mt-6 text-center text-xs text-slate-600 font-bold bg-slate-200/50 py-2 rounded-sm">
-            Ditutup: 15 September 2026, 23:59 WIB
+            Ditutup: 16 Oktober 2026, 23:59 WIB
           </div>
         </div>
         
