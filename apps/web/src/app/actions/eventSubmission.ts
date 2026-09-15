@@ -1,4 +1,4 @@
-"use server";
+﻿"use server";
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -61,25 +61,6 @@ export async function submitEventFormAction(formData: FormData) {
       if (!file || file.size === 0) return "";
       const fileExt = file.name.split('.').pop();
       const fileName = `${prefix}_${Date.now()}.${fileExt}`;
-  } else if (status === "REJECTED") {
-    const { data: oldSub } = await supabase
-      .from("event_submissions")
-      .select("title, status")
-      .eq("id", id)
-      .single();
-      
-    if (oldSub?.status === "APPROVED") {
-      const slug = oldSub.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
-      const { error: deleteError } = await supabase
-        .from("events")
-        .delete()
-        .eq("slug", slug);
-        
-      if (deleteError) {
-        console.error("Failed to remove from events on rejection:", deleteError);
-      }
-    }
-  }
       const { error } = await supabase.storage.from('event_submissions').upload(fileName, file);
       if (error) { console.error(`Upload error (${prefix}):`, error); return ""; }
       const { data } = supabase.storage.from('event_submissions').getPublicUrl(fileName);
@@ -187,6 +168,24 @@ export async function updateSubmissionStatusAction(id: string, status: "APPROVED
         
       if (insertError) {
         console.error("Failed to copy to events:", insertError);
+      }
+    }
+  } else if (status === "REJECTED") {
+    const { data: oldSub } = await supabase
+      .from("event_submissions")
+      .select("title, status")
+      .eq("id", id)
+      .single();
+      
+    if (oldSub?.status === "APPROVED") {
+      const slug = oldSub.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+      const { error: deleteError } = await supabase
+        .from("events")
+        .delete()
+        .eq("slug", slug);
+        
+      if (deleteError) {
+        console.error("Failed to remove from events on rejection:", deleteError);
       }
     }
   }
