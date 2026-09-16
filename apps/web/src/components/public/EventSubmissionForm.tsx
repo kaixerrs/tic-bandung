@@ -385,7 +385,7 @@ export default function EventSubmissionForm() {
 
   if (isSuccess) {
     return (
-      <div className="bg-white/80 backdrop-blur-xl rounded-sm p-10 border border-gray-200 shadow-2xl text-center flex flex-col items-center animate-in fade-in zoom-in duration-500">
+      <div className="py-12 px-4 text-center flex flex-col items-center animate-in fade-in zoom-in duration-500">
         <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6">
           <CheckCircle2 className="w-10 h-10 text-emerald-400" />
         </div>
