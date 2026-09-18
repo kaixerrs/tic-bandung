@@ -172,7 +172,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
 
           <ScrollReveal delay={0.2}>
             <article 
-              lang="ms" className="prose prose-base md:prose-lg prose-slate max-w-none break-words hyphens-auto overflow-x-hidden w-full [&_p]:whitespace-pre-wrap [&_*]:!max-w-full prose-headings:font-display prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-[#3D7A5E] prose-img:rounded-sm prose-img:shadow-md prose-p:leading-relaxed prose-p:mb-6 first-letter:text-4xl md:first-letter:text-6xl first-letter:font-black first-letter:text-[#3D7A5E] first-letter:mr-2 first-letter:float-left first-letter:leading-none [&_p:empty]:min-h-[1.5rem] [&_p:empty]:block [&_p:has(>br)]:min-h-[1.5rem] [&_.ql-indent-1]:pl-[3rem] [&_.ql-indent-2]:pl-[6rem] [&_.ql-indent-3]:pl-[9rem] [&_.ql-indent-4]:pl-[12rem]"
+              lang="ms" className="prose prose-base md:prose-lg prose-slate max-w-none break-words hyphens-auto overflow-x-hidden w-full [&_p]:whitespace-pre-wrap [&_*]:!max-w-full [&_*]:!bg-transparent prose-headings:font-display prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-[#3D7A5E] prose-img:rounded-sm prose-img:shadow-md prose-p:leading-relaxed prose-p:mb-6 first-letter:text-4xl md:first-letter:text-6xl first-letter:font-black first-letter:text-[#3D7A5E] first-letter:mr-2 first-letter:float-left first-letter:leading-none [&_p:empty]:min-h-[1.5rem] [&_p:empty]:block [&_p:has(>br)]:min-h-[1.5rem] [&_.ql-indent-1]:pl-[3rem] [&_.ql-indent-2]:pl-[6rem] [&_.ql-indent-3]:pl-[9rem] [&_.ql-indent-4]:pl-[12rem]"
               dangerouslySetInnerHTML={{ __html: cleanHTML }}
             />
           </ScrollReveal>
