@@ -257,8 +257,13 @@ export default function BeritaForm({
         let finalThumbnailUrl = initialData?.thumbnail_url || '';
         
         if (selectedFile) {
-                  const webpFile = await compressImageToWebp(selectedFile);
-                  finalImageUrl = await uploadToSupabase(webpFile, 'news');
+          const webpFile = await compressImageToWebp(selectedFile);
+          finalImageUrl = await uploadToSupabase(webpFile, 'news');
+          
+          if (thumbnailFile) {
+            const thumbWebp = await compressImageToWebp(thumbnailFile);
+            finalThumbnailUrl = await uploadToSupabase(thumbWebp, 'news');
+          }
         } else if (!initialData) {
           throw new Error('Gambar cover wajib diunggah');
         }
