@@ -5,6 +5,23 @@ import { revalidatePath } from 'next/cache';
 import { logAdminAction } from './log';
 import { requireAdminAuth } from './admin';
 
+async function revalidateFrontend(path = '/') {
+  try {
+    const frontendUrl = process.env.FRONTEND_URL || 'https://ticbandung.com';
+    await fetch(`${frontendUrl}/api/revalidate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        path,
+        token: process.env.REVALIDATION_TOKEN
+      })
+    });
+  } catch (error) {
+    console.error('Failed to revalidate frontend:', error);
+  }
+}
+
+
 // --- HERO SLIDER ACTIONS ---
 
 export async function createHeroSlider(formData: FormData) {
@@ -22,6 +39,7 @@ export async function createHeroSlider(formData: FormData) {
   if (error) return { error: error.message };
   revalidatePath('/admin/hero-slider');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('CREATE', 'HERO_SLIDER', formData.get('title') as string);
   return { success: true };
 }
@@ -41,6 +59,7 @@ export async function updateHeroSlider(id: string, formData: FormData) {
   if (error) return { error: error.message };
   revalidatePath('/admin/hero-slider');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('UPDATE', 'HERO_SLIDER', formData.get('title') as string);
   return { success: true };
 }
@@ -52,6 +71,7 @@ export async function deleteHeroSlider(id: string) {
   if (error) return { error: error.message };
   revalidatePath('/admin/hero-slider');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('DELETE', 'HERO_SLIDER', `ID: ${id}`);
   return { success: true };
 }
@@ -82,6 +102,7 @@ export async function createNewsArticle(formData: FormData) {
   if (error) return { error: error.message };
   revalidatePath('/admin/berita');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('CREATE', 'NEWS', formData.get('title') as string);
   return { success: true };
 }
@@ -105,6 +126,7 @@ export async function updateNewsArticle(id: string, formData: FormData) {
   if (error) return { error: error.message };
   revalidatePath('/admin/berita');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('UPDATE', 'NEWS', formData.get('title') as string);
   return { success: true };
 }
@@ -116,6 +138,7 @@ export async function deleteNewsArticle(id: string) {
   if (error) return { error: error.message };
   revalidatePath('/admin/berita');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('DELETE', 'NEWS', `ID: ${id}`);
   return { success: true };
 }
@@ -136,6 +159,7 @@ export async function createGallery(formData: FormData) {
   if (error) return { error: error.message };
   revalidatePath('/admin/galeri');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('CREATE', 'GALLERY', formData.get('title') as string);
   return { success: true };
 }
@@ -154,6 +178,7 @@ export async function updateGallery(id: string, formData: FormData) {
   if (error) return { error: error.message };
   revalidatePath('/admin/galeri');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('UPDATE', 'GALLERY', formData.get('title') as string);
   return { success: true };
 }
@@ -165,6 +190,7 @@ export async function deleteGallery(id: string) {
   if (error) return { error: error.message };
   revalidatePath('/admin/galeri');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('DELETE', 'GALLERY', `ID: ${id}`);
   return { success: true };
 }
@@ -216,6 +242,7 @@ export async function updateSiteSettings(formData: FormData) {
   }
 
   revalidatePath('/', 'layout');
+  await revalidateFrontend('/');
   revalidatePath('/admin/pengaturan');
   await logAdminAction('UPDATE', 'SETTINGS', 'Pengaturan Website');
   return { success: true };
@@ -229,6 +256,7 @@ export async function toggleNewsStatus(id: string, currentStatus: string) {
   if (error) return { error: error.message };
   revalidatePath('/admin/berita');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('UPDATE', 'NEWS_STATUS', "ID:  to ");
   return { success: true, newStatus };
 }
@@ -241,6 +269,7 @@ export async function toggleGalleryStatus(id: string, currentStatus: string) {
   if (error) return { error: error.message };
   revalidatePath('/admin/galeri');
   revalidatePath('/');
+  await revalidateFrontend('/');
   await logAdminAction('UPDATE', 'GALLERY_STATUS', "ID:  to ");
   return { success: true, newStatus };
 }
