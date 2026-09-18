@@ -42,7 +42,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
     .select('*')
     .eq('status', 'published')
     .order('date_published', { ascending: false })
-    .limit(3);
+    .limit(4);
 
   // Fetch Galleries
   const { data: rawGalleries } = await supabase
@@ -247,7 +247,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             {t('lihatSemua')} <ArrowRight className="ml-4 w-5 h-5" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {activeNews && activeNews.length > 0 ? (
             activeNews.map((item, i) => (
               <Link key={item.id} href={`/berita/${item.slug || '#'}`} className="group cursor-pointer bg-white p-6 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-electric-green transition-all duration-300 border border-gray-100 hover:-translate-y-2">
