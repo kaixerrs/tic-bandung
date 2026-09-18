@@ -395,7 +395,7 @@ export default function BeritaForm({
                     </div>
                     <div className="relative w-full aspect-video border border-gray-200 rounded-xl overflow-hidden group bg-gray-100">
                       <img src={previewImage} alt="Cover Preview" className="w-full h-full object-cover" />
-                      {mainOriginalFile && (
+                      {(mainOriginalFile || previewImage) && (
                         <div 
                           onClick={handleEditMainImage}
                           className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer backdrop-blur-sm"
@@ -414,7 +414,7 @@ export default function BeritaForm({
                     </div>
                     <div className="relative w-full aspect-[4/3] max-w-[300px] border border-gray-200 rounded-xl overflow-hidden group bg-gray-100">
                       <img src={previewThumbnail || previewImage} alt="Thumbnail Preview" className="w-full h-full object-cover" />
-                      {mainOriginalFile && (
+                      {(mainOriginalFile || previewImage) && (
                         <div 
                           onClick={handleEditMainImage}
                           className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer backdrop-blur-sm"

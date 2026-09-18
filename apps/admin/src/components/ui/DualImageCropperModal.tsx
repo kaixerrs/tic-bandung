@@ -8,6 +8,7 @@ import { getCroppedImg } from './ImageCropperModal';
 interface DualImageCropperModalProps {
   isOpen: boolean;
   imageFile: File | null;
+  imageUrl?: string | null;
   onClose: () => void;
   onCropComplete: (coverBlob: Blob, thumbnailBlob: Blob) => void;
 }
@@ -15,6 +16,7 @@ interface DualImageCropperModalProps {
 export default function DualImageCropperModal({
   isOpen,
   imageFile,
+  imageUrl,
   onClose,
   onCropComplete
 }: DualImageCropperModalProps) {
@@ -41,10 +43,12 @@ export default function DualImageCropperModal({
         setImageSrc(e.target?.result as string);
       };
       reader.readAsDataURL(imageFile);
+    } else if (imageUrl) {
+      setImageSrc(imageUrl);
     } else {
       setImageSrc('');
     }
-  }, [imageFile]);
+  }, [imageFile, imageUrl]);
 
   const onCropComplete1 = useCallback((_: any, croppedPixels: any) => setCroppedAreaPixels1(croppedPixels), []);
   const onCropComplete2 = useCallback((_: any, croppedPixels: any) => setCroppedAreaPixels2(croppedPixels), []);

@@ -14,7 +14,7 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ticbandung.com'),
   title: {
-    default: "TIC Kota Bandung | Tourist Information Center",
+    default: "Tourist Information Center Kota Bandung",
     template: "%s | TIC Kota Bandung"
   },
   description: "Portal wisata resmi Dinas Kebudayaan dan Pariwisata Kota Bandung. Temukan destinasi wisata, kalender event, panduan kuliner, dan informasi transportasi terlengkap di Kota Bandung.",
