@@ -357,46 +357,78 @@ export default function BeritaForm({
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Gambar Cover (Wajib)</label>
+              <div className="flex justify-between items-end mb-2">
+                <label className="block text-sm font-medium text-gray-700">Gambar Cover & Thumbnail (Wajib)</label>
+                {previewImage && (
+                  <button 
+                    type="button" 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-xs font-bold text-[#3D7A5E] hover:text-[#2c5c45] bg-green-50 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"
+                  >
+                    <UploadCloud className="w-3.5 h-3.5" /> Ganti Gambar Baru
+                  </button>
+                )}
+              </div>
               
-              <div 
-                onClick={() => fileInputRef.current?.click()}
-                className={`relative w-full h-48 border-2 border-dashed rounded-xl overflow-hidden cursor-pointer flex flex-col items-center justify-center transition-colors hover:bg-gray-50 ${previewImage ? 'border-gray-200' : 'border-[#3D7A5E]/30 bg-green-50/30'}`}
-              >
-                {previewImage ? (
-                  <>
-                    <img src={previewImage} alt="Preview" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                      <span className="text-white font-medium flex items-center gap-2">
-                        <UploadCloud className="w-5 h-5" /> Ganti
-                      </span>
-                      {mainOriginalFile && (
-                        <button 
-                          type="button"
-                          onClick={handleEditMainImage}
-                          className="absolute top-2 right-2 bg-white/20 hover:bg-white/40 p-2 rounded-full backdrop-blur-sm transition-colors text-white"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                        </button>
-                      )}
-                    </div>
-              
-    </>
-                ) : (
+              {!previewImage ? (
+                <div 
+                  onClick={() => fileInputRef.current?.click()}
+                  className="relative w-full h-48 border-2 border-dashed rounded-xl overflow-hidden cursor-pointer flex flex-col items-center justify-center transition-colors hover:bg-gray-50 border-[#3D7A5E]/30 bg-green-50/30"
+                >
                   <div className="text-center p-4">
                     <UploadCloud className="w-8 h-8 text-[#3D7A5E] mx-auto mb-2" />
-                    <p className="text-sm font-medium text-gray-700">Klik untuk unggah gambar</p>
-                    <p className="text-xs text-gray-500 mt-1">Otomatis dikompresi ke WebP</p>
+                    <p className="text-sm font-medium text-gray-700">Klik untuk unggah gambar baru</p>
+                    <p className="text-xs text-gray-500 mt-1">Anda akan diminta memotong ukuran Cover (16:9) & Thumbnail (4:3)</p>
                   </div>
-                )}
-                <input 
-                  ref={fileInputRef}
-                  type="file" 
-                  accept="image/*"
-                  onChange={handleMainImageChange}
-                  className="hidden" 
-                />
-              </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* LEFT: COVER (16:9) */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="block text-xs font-bold text-gray-500">Cover Utama (16:9)</span>
+                    </div>
+                    <div className="relative w-full aspect-video border border-gray-200 rounded-xl overflow-hidden group bg-gray-100">
+                      <img src={previewImage} alt="Cover Preview" className="w-full h-full object-cover" />
+                      {mainOriginalFile && (
+                        <div 
+                          onClick={handleEditMainImage}
+                          className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer backdrop-blur-sm"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                          <span className="text-white font-medium text-sm">Sesuaikan Potongan</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* RIGHT: THUMBNAIL (4:3) */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="block text-xs font-bold text-gray-500">Thumbnail Card (4:3)</span>
+                    </div>
+                    <div className="relative w-full aspect-[4/3] max-w-[300px] border border-gray-200 rounded-xl overflow-hidden group bg-gray-100">
+                      <img src={previewThumbnail || previewImage} alt="Thumbnail Preview" className="w-full h-full object-cover" />
+                      {mainOriginalFile && (
+                        <div 
+                          onClick={handleEditMainImage}
+                          className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer backdrop-blur-sm"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                          <span className="text-white font-medium text-sm">Sesuaikan Potongan</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+              <input 
+                ref={fileInputRef}
+                type="file" 
+                accept="image/*"
+                onChange={handleMainImageChange}
+                className="hidden" 
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
