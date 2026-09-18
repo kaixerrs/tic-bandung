@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MapPin, BookOpen, Image as ImageIcon, FileText, Settings, LogOut, Home, Camera, Plus, Calendar, Activity, Shield, User, FolderTree, Inbox } from 'lucide-react';
+import { LayoutDashboard, MapPin, BookOpen, Image as ImageIcon, FileText, Settings, LogOut, Home, Camera, Plus, Calendar, Activity, Shield, User, FolderTree, Inbox, HelpCircle } from 'lucide-react';
 import { signoutAction } from '@/app/actions/auth';
 import { updateLastSeen } from '@/app/actions/admin';
 import { useEffect } from 'react';
@@ -23,10 +23,10 @@ export default function AdminLayoutWrapper({
     // Initial ping
     updateLastSeen();
     
-    // Ping every 1 minute
+    // Ping every 10 menit
     const interval = setInterval(() => {
       updateLastSeen();
-    }, 60000);
+    }, 600000);
     
     return () => clearInterval(interval);
   }, []); // Remove pathname dependency so it doesn't ping on every page transition
