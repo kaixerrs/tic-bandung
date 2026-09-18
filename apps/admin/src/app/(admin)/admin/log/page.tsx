@@ -83,7 +83,15 @@ export default async function AdminLogsPage() {
                         <div className="flex items-center gap-2 text-gray-600">
                           <Clock className="w-4 h-4 text-gray-400" />
                           <span>
-                            {format(new Date(log.created_at), 'dd MMM yyyy, HH:mm', { locale: id }) + ' WIB'}
+                            {new Intl.DateTimeFormat('id-ID', {
+                              timeZone: 'Asia/Jakarta',
+                              day: '2-digit',
+                              month: 'short',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              hour12: false
+                            }).format(new Date(log.created_at)).replace(/\./g, ':') + ' WIB'}
                           </span>
                         </div>
                       </td>
