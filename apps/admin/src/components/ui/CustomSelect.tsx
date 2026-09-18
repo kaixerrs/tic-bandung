@@ -70,7 +70,7 @@ export const CustomSelect = forwardRef<HTMLSelectElement, CustomSelectProps>(
     };
 
     return (
-      <div className={`relative w-full ${wrapperClassName}`} ref={containerRef}>
+      <div className={`relative w-full ${isOpen ? 'z-[99]' : ''} ${wrapperClassName}`} ref={containerRef}>
         {/* Hidden native select for form submission and ref binding */}
         <select 
           ref={selectRef}
