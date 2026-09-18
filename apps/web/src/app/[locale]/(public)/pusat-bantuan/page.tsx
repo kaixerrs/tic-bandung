@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { Phone, MapPin, Mail, AlertTriangle, MessageCircle, Clock, Globe, ArrowUpRight, ShieldAlert, HeartPulse, Flame } from 'lucide-react';
 import FAQSection from '@/components/home/FAQSection';
+import { createClient } from '@/utils/supabase/server';
 import { getSiteSettings } from '@/app/actions/cmsActions';
 import Link from 'next/link';
 
@@ -14,6 +15,14 @@ import DestinationMapWrapper from '@/components/public/DestinationMapWrapper';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 export default async function PusatBantuanPage({ params }: { params: Promise<{ locale: string }> }) {
+  const supabase = await createClient();
+  const { data: activeFaqs } = await supabase
+    .from('faqs')
+    .select('*')
+    .eq('is_active', true)
+    .order('order_num', { ascending: true })
+    .order('created_at', { ascending: false });
+
   const settings = await getSiteSettings();
   const { locale } = await params;
   setRequestLocale(locale);
@@ -174,7 +183,7 @@ export default async function PusatBantuanPage({ params }: { params: Promise<{ l
       </section>
 
       {/* FAQ SECTION */}
-      <FAQSection />
+      <FAQSection dynamicFaqs={activeFaqs || []} />
 
     </main>
   );

@@ -1,35 +1,25 @@
-﻿"use client";
+
+"use client";
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Plus, Minus } from 'lucide-react';
 
-export default function FAQSection() {
-  const t = useTranslations('Components');
+export default function FAQSection({ dynamicFaqs = [] }: { dynamicFaqs?: any[] }) {
   const tFAQ = useTranslations('FAQ');
+  
+  // Use dynamic faqs if available, otherwise fallback to empty array or next-intl (for safety)
+  const faqs = dynamicFaqs.length > 0 ? dynamicFaqs.map(f => ({
+    question: f.question,
+    answer: f.answer
+  })) : [
+    { question: tFAQ('q1'), answer: tFAQ('a1') },
+    { question: tFAQ('q2'), answer: tFAQ('a2') },
+    { question: tFAQ('q3'), answer: tFAQ('a3') },
+    { question: tFAQ('q4'), answer: tFAQ('a4') },
+    { question: tFAQ('q5'), answer: tFAQ('a5') }
+  ];
 
-  const faqs = [
-  {
-    question: tFAQ('q1'),
-    answer: tFAQ('a1')
-  },
-  {
-    question: tFAQ('q2'),
-    answer: tFAQ('a2')
-  },
-  {
-    question: tFAQ('q3'),
-    answer: tFAQ('a3')
-  },
-  {
-    question: tFAQ('q4'),
-    answer: tFAQ('a4')
-  },
-  {
-    question: tFAQ('q5'),
-    answer: tFAQ('a5')
-  }
-];
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFAQ = (index: number) => {
@@ -71,7 +61,7 @@ export default function FAQSection() {
                 <div 
                   className={`px-6 md:px-8 overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] pb-8 opacity-100' : 'max-h-0 pb-0 opacity-0'}`}
                 >
-                  <p className="text-on-surface-variant font-body-md leading-relaxed">
+                  <p className="text-on-surface-variant font-body-md leading-relaxed whitespace-pre-wrap">
                     {faq.answer}
                   </p>
                 </div>

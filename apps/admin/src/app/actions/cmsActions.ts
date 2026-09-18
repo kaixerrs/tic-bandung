@@ -315,3 +315,56 @@ export async function updateSystemInfo(formData: FormData) {
   await logAdminAction('UPDATE', 'SETTINGS', 'System Information & Maintenance Schedule');
   return { success: true };
 }
+
+
+// --- FAQ ACTIONS ---
+
+export async function createFAQ(formData: FormData) {
+  await requireAdminAuth();
+  const supabase = await createClient();
+  const { error } = await supabase.from('faqs').insert([{
+    question: formData.get('question'),
+    answer: formData.get('answer'),
+    question_en: formData.get('question_en'),
+    answer_en: formData.get('answer_en'),
+    is_active: formData.get('is_active') === 'on',
+    order_num: parseInt(formData.get('order_num')?.toString() || '0')
+  }]);
+  if (error) return { error: error.message };
+  revalidatePath('/admin/faq');
+  revalidatePath('/', 'layout');
+  await revalidateFrontend('/');
+  await logAdminAction('CREATE', 'FAQ', formData.get('question') as string);
+  return { success: true };
+}
+
+export async function updateFAQ(id: string, formData: FormData) {
+  await requireAdminAuth();
+  const supabase = await createClient();
+  const { error } = await supabase.from('faqs').update({
+    question: formData.get('question'),
+    answer: formData.get('answer'),
+    question_en: formData.get('question_en'),
+    answer_en: formData.get('answer_en'),
+    is_active: formData.get('is_active') === 'on',
+    order_num: parseInt(formData.get('order_num')?.toString() || '0')
+  }).eq('id', id);
+  if (error) return { error: error.message };
+  revalidatePath('/admin/faq');
+  revalidatePath('/', 'layout');
+  await revalidateFrontend('/');
+  await logAdminAction('UPDATE', 'FAQ', formData.get('question') as string);
+  return { success: true };
+}
+
+export async function deleteFAQ(id: string) {
+  await requireAdminAuth();
+  const supabase = await createClient();
+  const { error } = await supabase.from('faqs').delete().eq('id', id);
+  if (error) return { error: error.message };
+  revalidatePath('/admin/faq');
+  revalidatePath('/', 'layout');
+  await revalidateFrontend('/');
+  await logAdminAction('DELETE', 'FAQ', `ID: ${id}`);
+  return { success: true };
+}

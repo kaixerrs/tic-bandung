@@ -21,6 +21,14 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   const t = await getTranslations('Home');
   const supabase = await createClient();
 
+  const { data: activeFaqs } = await supabase
+    .from('faqs')
+    .select('*')
+    .eq('is_active', true)
+    .order('order_num', { ascending: true })
+    .order('created_at', { ascending: false });
+
+
   // Fetch Hero Sliders
   const { data: heroSliders } = await supabase
     .from('hero_sliders')
@@ -303,7 +311,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       </section>
 
       {/* FAQ SECTION */}
-      <FAQSection />
+      <FAQSection dynamicFaqs={activeFaqs || []} />
     </main>
   );
 }
