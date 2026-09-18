@@ -23,11 +23,11 @@ export default function ImageCropperModal({
 
   React.useEffect(() => {
     if (imageFile) {
-      const url = URL.createObjectURL(imageFile);
-      setImageSrc(url);
-      return () => {
-        URL.revokeObjectURL(url);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImageSrc(e.target?.result as string);
       };
+      reader.readAsDataURL(imageFile);
     } else {
       setImageSrc('');
     }

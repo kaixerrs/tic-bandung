@@ -144,7 +144,9 @@ export default function BeritaForm({
     
     if (cropTargetType === 'main') {
       setSelectedFile(file);
-      setPreviewImage(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onload = (e) => setPreviewImage(e.target?.result as string);
+      reader.readAsDataURL(file);
       setCropModalOpen(false);
       setCropTargetFile(null);
     } else if (cropTargetType === 'gallery') {
