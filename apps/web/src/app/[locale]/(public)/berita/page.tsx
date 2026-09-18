@@ -45,7 +45,7 @@ export default async function BeritaPage({ params }: { params: Promise<{ locale:
               <Link key={item.id} href={`/berita/${item.slug || '#'}`} className="group cursor-pointer bg-white p-6 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-electric-green transition-all duration-300 border border-gray-100 hover:-translate-y-2 flex flex-col h-full">
                 <div className="relative w-full h-[250px] md:h-80 overflow-hidden mb-6 rounded-sm bg-surface-container-high shrink-0">
                   {item.image_url ? (
-                    <Image fill sizes="(max-width: 768px) 100vw, 33vw" src={item.image_url} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" alt={item.title} />
+                    <Image fill sizes="(max-width: 768px) 100vw, 33vw" src={item.thumbnail_url || item.image_url} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" alt={item.title} />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center"><ImageIcon className="w-12 h-12 text-outline opacity-50" /></div>
                   )}

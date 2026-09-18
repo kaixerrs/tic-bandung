@@ -7,6 +7,7 @@ import { createNewsArticle, updateNewsArticle } from '@/app/actions/cmsActions';
 import { compressImageToWebp, uploadToSupabase } from '@/utils/imageUpload';
 import { CustomSelect } from '@/components/ui/CustomSelect';
 import ImageCropperModal from '@/components/ui/ImageCropperModal';
+import DualImageCropperModal from '@/components/ui/DualImageCropperModal';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -24,6 +25,8 @@ export default function BeritaForm({
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(initialData?.image_url || null);
+  const [previewThumbnail, setPreviewThumbnail] = useState<string | null>(initialData?.thumbnail_url || null);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [mainOriginalFile, setMainOriginalFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +41,9 @@ export default function BeritaForm({
   const [cropTargetType, setCropTargetType] = useState<'main' | 'gallery' | string>('main');
   const [cropAspectRatio, setCropAspectRatio] = useState<number | undefined>(16/9);
   const [cropModalOpen, setCropModalOpen] = useState(false);
+  const [dualCropModalOpen, setDualCropModalOpen] = useState(false);
   const [cropTargetFile, setCropTargetFile] = useState<File | null>(null);
+  const [cropTitle, setCropTitle] = useState<string>('Sesuaikan Foto');
 
   // Modal for inline image source
   const [inlineImageModalOpen, setInlineImageModalOpen] = useState(false);
@@ -184,6 +189,27 @@ export default function BeritaForm({
     }
   };
 
+  const handleDualCropComplete = (coverBlob: Blob, thumbBlob: Blob) => {
+    const coverName = mainOriginalFile?.name || 'cover.jpg';
+    const thumbName = mainOriginalFile?.name ? mainOriginalFile.name.replace(/.[^/.]+$/, "") + "-thumb.jpg" : 'thumb.jpg';
+    
+    const cFile = new File([coverBlob], coverName, { type: 'image/jpeg' });
+    const tFile = new File([thumbBlob], thumbName, { type: 'image/jpeg' });
+    
+    setSelectedFile(cFile);
+    setThumbnailFile(tFile);
+    
+    const reader1 = new FileReader();
+    reader1.onload = (e) => setPreviewImage(e.target?.result as string);
+    reader1.readAsDataURL(cFile);
+    
+    const reader2 = new FileReader();
+    reader2.onload = (e) => setPreviewThumbnail(e.target?.result as string);
+    reader2.readAsDataURL(tFile);
+    
+    setDualCropModalOpen(false);
+  };
+
   const handleCropCancel = () => {
     if (cropTargetType === 'gallery') {
       const nextQueue = [...cropQueue];
@@ -234,6 +260,7 @@ export default function BeritaForm({
     startTransition(async () => {
       try {
         let finalImageUrl = initialData?.image_url || '';
+        let finalThumbnailUrl = initialData?.thumbnail_url || '';
         
         if (selectedFile) {
                   const webpFile = await compressImageToWebp(selectedFile);
@@ -243,6 +270,8 @@ export default function BeritaForm({
         }
 
         formData.set('image_url', finalImageUrl);
+        if (finalThumbnailUrl) formData.set('thumbnail_url', finalThumbnailUrl);
+        else if (finalImageUrl) formData.set('thumbnail_url', finalImageUrl);
         formData.append('content', contentHtml);
         formData.append('content_en', contentHtmlEn);
 
@@ -313,6 +342,12 @@ export default function BeritaForm({
 
   return (
     <>
+      <DualImageCropperModal 
+        isOpen={dualCropModalOpen}
+        imageFile={mainOriginalFile}
+        onClose={() => setDualCropModalOpen(false)}
+        onCropComplete={handleDualCropComplete}
+      />
       <ImageCropperModal 
         isOpen={cropModalOpen}
         imageFile={cropTargetFile}

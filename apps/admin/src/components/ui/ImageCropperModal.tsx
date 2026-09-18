@@ -5,6 +5,7 @@ import { X, Check, Image as ImageIcon, ZoomIn, RotateCw } from 'lucide-react';
 import Cropper from 'react-easy-crop';
 
 interface ImageCropperModalProps {
+  title?: string;
   isOpen: boolean;
   imageFile: File | null;
   aspectRatio?: number;
@@ -73,6 +74,7 @@ export async function getCroppedImg(
 }
 
 export default function ImageCropperModal({
+  title,
   isOpen,
   imageFile,
   aspectRatio,
@@ -135,7 +137,7 @@ export default function ImageCropperModal({
             <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
               <ImageIcon className="w-5 h-5 text-amber-600" />
             </div>
-            <h3 className="font-bold text-lg">Sesuaikan & Potong Foto</h3>
+            <h3 className="font-bold text-lg">{title || 'Sesuaikan & Potong Foto'}</h3>
           </div>
           <button 
             onClick={onClose}
