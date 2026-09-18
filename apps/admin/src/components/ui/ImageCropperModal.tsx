@@ -1,63 +1,7 @@
 ﻿"use client";
 
-import React, { useState, useCallback } from 'react';
-import Cropper from 'react-easy-crop';
-import { X, ZoomIn, ZoomOut, Check, Crop } from 'lucide-react';
-
-interface Point {
-  x: number;
-  y: number;
-}
-
-interface Area {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-}
-
-export const getCroppedImg = async (
-  imageSrc: string,
-  pixelCrop: Area,
-  rotation = 0,
-  flip = { horizontal: false, vertical: false }
-): Promise<Blob | null> => {
-  const image = await new Promise<HTMLImageElement>((resolve, reject) => {
-    const img = new Image();
-    img.addEventListener('load', () => resolve(img));
-    img.addEventListener('error', (error) => reject(error));
-    img.setAttribute('crossOrigin', 'anonymous');
-    img.src = imageSrc;
-  });
-
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-
-  if (!ctx) {
-    return null;
-  }
-
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
-
-  ctx.drawImage(
-    image,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    pixelCrop.width,
-    pixelCrop.height
-  );
-
-  return new Promise((resolve) => {
-    canvas.toBlob((file) => {
-      resolve(file);
-    }, 'image/jpeg', 0.9);
-  });
-};
+import React, { useState } from 'react';
+import { X, Check, Image as ImageIcon } from 'lucide-react';
 
 interface ImageCropperModalProps {
   isOpen: boolean;
@@ -74,12 +18,8 @@ export default function ImageCropperModal({
   onClose,
   onCropComplete
 }: ImageCropperModalProps) {
-  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-
   const [imageSrc, setImageSrc] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   React.useEffect(() => {
     if (imageFile) {
@@ -93,26 +33,12 @@ export default function ImageCropperModal({
     }
   }, [imageFile]);
 
-  const onCropChange = (crop: Point) => {
-    setCrop(crop);
-  };
-
-  const onZoomChange = (zoom: number) => {
-    setZoom(zoom);
-  };
-
-  const onCropCompleteHandler = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
-
   const handleApplyCrop = async () => {
-    if (!imageSrc || !croppedAreaPixels) return;
+    if (!imageFile) return;
     try {
       setIsProcessing(true);
-      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
-      if (croppedImage) {
-        onCropComplete(croppedImage);
-      }
+      // BYPASS CROPPER: return original file
+      onCropComplete(imageFile);
     } catch (e) {
       console.error(e);
     } finally {
@@ -129,9 +55,9 @@ export default function ImageCropperModal({
         <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-white">
           <div className="flex items-center gap-3 text-slate-800">
             <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
-              <Crop className="w-5 h-5 text-amber-600" />
+              <ImageIcon className="w-5 h-5 text-amber-600" />
             </div>
-            <h3 className="font-bold text-lg">Sesuaikan Foto</h3>
+            <h3 className="font-bold text-lg">Pratinjau Foto</h3>
           </div>
           <button 
             onClick={onClose}
@@ -141,36 +67,11 @@ export default function ImageCropperModal({
           </button>
         </div>
 
-        <div className="relative w-full h-[50vh] md:h-[60vh] bg-slate-900">
-          <Cropper
-            image={imageSrc}
-            crop={crop}
-            zoom={zoom}
-            aspect={aspectRatio}
-            onCropChange={onCropChange}
-            onCropComplete={onCropCompleteHandler}
-            onZoomChange={onZoomChange}
-          />
+        <div className="relative w-full h-[50vh] md:h-[60vh] bg-slate-900 flex items-center justify-center p-4">
+          <img src={imageSrc} alt="Preview" className="max-w-full max-h-full object-contain" />
         </div>
 
         <div className="p-6 bg-white border-t border-gray-100 flex flex-col gap-6">
-          <div className="flex items-center gap-4 px-2">
-            <ZoomOut className="w-5 h-5 text-slate-400" />
-            <input
-              type="range"
-              value={zoom}
-              min={1}
-              max={3}
-              step={0.1}
-              aria-labelledby="Zoom"
-              onChange={(e) => {
-                setZoom(Number(e.target.value));
-              }}
-              className="w-full h-2 bg-slate-200 rounded-sm appearance-none cursor-pointer accent-amber-500"
-            />
-            <ZoomIn className="w-5 h-5 text-slate-400" />
-          </div>
-
           <div className="flex items-center justify-end gap-3 pt-2">
             <button
               onClick={onClose}
@@ -189,7 +90,7 @@ export default function ImageCropperModal({
               ) : (
                 <>
                   <Check className="w-4 h-4" />
-                  Terapkan Crop
+                  Gunakan Foto Ini
                 </>
               )}
             </button>
