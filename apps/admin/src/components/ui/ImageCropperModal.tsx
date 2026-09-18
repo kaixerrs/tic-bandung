@@ -79,20 +79,19 @@ export default function ImageCropperModal({
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const imageSrc = React.useMemo(() => {
-    if (imageFile) {
-      return URL.createObjectURL(imageFile);
-    }
-    return '';
-  }, [imageFile]);
+  const [imageSrc, setImageSrc] = useState('');
 
   React.useEffect(() => {
-    return () => {
-      if (imageSrc) {
-        URL.revokeObjectURL(imageSrc);
-      }
-    };
-  }, [imageSrc]);
+    if (imageFile) {
+      const url = URL.createObjectURL(imageFile);
+      setImageSrc(url);
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    } else {
+      setImageSrc('');
+    }
+  }, [imageFile]);
 
   const onCropChange = (crop: Point) => {
     setCrop(crop);
