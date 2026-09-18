@@ -106,10 +106,7 @@ export default function BeritaForm({
     const file = e.target.files?.[0];
     if (file) {
       setMainOriginalFile(file);
-      setCropTargetFile(file);
-      setCropTargetType('main');
-      setCropAspectRatio(16/9);
-      setCropModalOpen(true);
+      setDualCropModalOpen(true);
       e.target.value = ''; // reset
     }
   };
@@ -117,10 +114,7 @@ export default function BeritaForm({
   const handleEditMainImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (mainOriginalFile) {
-      setCropTargetFile(mainOriginalFile);
-      setCropTargetType('main');
-      setCropAspectRatio(16/9);
-      setCropModalOpen(true);
+      setDualCropModalOpen(true);
     }
   };
 
