@@ -251,7 +251,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           {activeNews && activeNews.length > 0 ? (
             activeNews.map((item, i) => (
               <Link key={item.id} href={`/berita/${item.slug || '#'}`} className="group cursor-pointer bg-white p-6 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-electric-green transition-all duration-300 border border-gray-100 hover:-translate-y-2">
-                <div className="relative w-full h-[250px] md:h-80 overflow-hidden mb-6 rounded-sm bg-surface-container-high">
+                <div className="relative w-full aspect-[4/3] overflow-hidden mb-6 rounded-sm bg-surface-container-high">
                   {item.image_url ? (
                     <Image fill sizes="(max-width: 768px) 100vw, 33vw" src={item.thumbnail_url || item.image_url} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" alt={locale === 'en' ? (item.title_en || item.title) : item.title} />
                   ) : (
