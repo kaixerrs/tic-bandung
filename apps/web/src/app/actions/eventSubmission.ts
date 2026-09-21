@@ -67,29 +67,44 @@ export async function submitEventFormAction(formData: FormData) {
       return data.publicUrl;
     };
 
-    // 1. Commitment Letter
-    let commitment_letter_link = await uploadFile(formData.get("commitment_letter_file") as File, "surat_kesediaan");
-    if (!commitment_letter_link) commitment_letter_link = (formData.get("commitment_letter_link") as string) || "";
+    // 1. Commitment Letter Promise
+    const commitmentFile = formData.get("commitment_letter_file") as File;
+    const commitmentPromise = (commitmentFile && commitmentFile.size > 0)
+      ? uploadFile(commitmentFile, "surat_kesediaan")
+      : Promise.resolve((formData.get("commitment_letter_link") as string) || "");
 
-    // 2. Thumbnail
-    const thumbnail_link = await uploadFile(formData.get("thumbnail_file") as File, "thumbnail");
+    // 2. Thumbnail Promise
+    const thumbnailPromise = uploadFile(formData.get("thumbnail_file") as File, "thumbnail");
 
-    // 3. Gallery
+    // 3. Gallery Promises
     const galleryCount = parseInt((formData.get("gallery_count") as string) || "0");
-    const gallery_links: string[] = [];
+    const galleryPromises = [];
     for (let i = 0; i < galleryCount; i++) {
-      const url = await uploadFile(formData.get(`gallery_file_${i}`) as File, `gallery_${i}`);
-      if (url) gallery_links.push(url);
+      galleryPromises.push(uploadFile(formData.get(`gallery_file_${i}`) as File, `gallery_${i}`));
     }
 
-    // 4. Sponsors
+    // 4. Sponsor Promises
     const sponsorsRaw = formData.get("sponsors_data") as string;
     const parsedSponsors = sponsorsRaw ? JSON.parse(sponsorsRaw) : [];
-    const sponsors = [];
-    for (let i = 0; i < parsedSponsors.length; i++) {
+    const sponsorPromises = parsedSponsors.map(async (sponsor: any, i: number) => {
       const url = await uploadFile(formData.get(`sponsor_file_${i}`) as File, `sponsor_${i}`);
-      sponsors.push({ name: parsedSponsors[i].name, logo_url: url });
-    }
+      return { name: sponsor.name, logo_url: url };
+    });
+
+    // Await all uploads concurrently
+    const [
+      commitment_letter_link,
+      thumbnail_link,
+      galleryResults,
+      sponsors
+    ] = await Promise.all([
+      commitmentPromise,
+      thumbnailPromise,
+      Promise.all(galleryPromises),
+      Promise.all(sponsorPromises)
+    ]);
+
+    const gallery_links = galleryResults.filter(url => url !== "");
 
     const { error } = await supabase
       .from("event_submissions")
