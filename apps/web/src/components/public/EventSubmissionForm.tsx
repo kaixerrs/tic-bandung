@@ -283,6 +283,7 @@ export default function EventSubmissionForm() {
   };
 
   const handleNext = () => {
+    if (!validateStep(currentStep)) return;
     setCurrentStep(prev => Math.min(prev + 1, STEPS.length));
     setErrorMsg(""); // Clear errors when navigating
     document.getElementById('form-stepper-top')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
