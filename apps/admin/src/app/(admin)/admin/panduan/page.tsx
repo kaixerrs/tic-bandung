@@ -155,7 +155,7 @@ export default async function PanduanCMSPage() {
         <div>
           <h2 className="text-2xl font-bold text-slate-800 mb-2">Galeri Visual Kota Bandung</h2>
           <p className="text-slate-600 text-sm mb-4">
-            Menampilkan foto-foto estetik Kota Bandung di grid halaman utama. Sangat disarankan untuk mengunggah foto dengan orientasi beragam (lanskap dan potret) agar grid terlihat dinamis.
+            Menampilkan foto-foto estetik Kota Bandung di grid halaman utama. <strong>Kini Galeri di halaman utama dilengkapi fitur Auto-Slider</strong>, yang secara otomatis memutar seluruh koleksi foto Anda setiap 4 detik. Jadi, jangan ragu untuk mengunggah banyak foto terbaik!
           </p>
           <div className="flex items-center gap-2 text-sm text-purple-600 font-medium">
             <ChevronRight className="w-4 h-4" />
@@ -165,7 +165,30 @@ export default async function PanduanCMSPage() {
       </div>
 
 
-      {/* Super Admin & Hak Akses (Full Width) */}
+            {/* Profil & Keamanan */}
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition-shadow flex flex-col md:flex-row gap-8 items-center mt-6">
+        <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center shrink-0">
+          <Shield className="w-8 h-8 text-emerald-600" />
+        </div>
+        <div className="flex-1">
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">Profil & Keamanan Akun</h2>
+          <p className="text-slate-600 text-sm mb-4">
+            Kelola identitas admin Anda (Foto Profil, Nama Tampilan) serta tingkatkan keamanan akun Anda di menu Profil.
+          </p>
+          <ul className="space-y-2">
+            <li className="flex gap-2 text-sm text-slate-700">
+              <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+              <span><strong>Pelacakan Sesi Otomatis:</strong> Sistem secara otomatis melacak perangkat (OS & Browser) serta IP yang Anda gunakan saat login.</span>
+            </li>
+            <li className="flex gap-2 text-sm text-slate-700">
+              <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+              <span><strong>Manajemen Perangkat:</strong> Anda dapat melihat kapan perangkat terakhir aktif ("Aktif sekarang") dan memutuskan sesi (Log Out) secara paksa dari jarak jauh jika menemukan perangkat asing.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+{/* Super Admin & Hak Akses (Full Width) */}
       {isSuperAdmin && (
         <div className="bg-slate-900 rounded-3xl shadow-sm border border-slate-800 p-8 hover:shadow-md transition-shadow flex flex-col md:flex-row gap-8 items-center mt-6">
         <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center shrink-0">

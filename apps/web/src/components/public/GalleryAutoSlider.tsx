@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface GalleryItem {
   id: string;
@@ -53,25 +54,36 @@ export default function GalleryAutoSlider({
         else if (i === 1) gridClass = 'min-w-[70vw] md:min-w-0 md:col-span-2 h-[250px] md:h-auto snap-start';
         
         return (
-          <div key={`${item.id}-${i}`} className={`relative group overflow-hidden rounded-sm ${gridClass} cursor-pointer shadow-sm hover:shadow-electric-yellow transition-all duration-500`}>
-            <Image 
-              fill 
-              sizes="(max-width: 768px) 100vw, 50vw" 
-              src={item.image_url} 
-              alt={item.title || 'Galeri Bandung'} 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-            <div className="absolute bottom-0 left-0 p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-              <h3 className="font-headline-md text-2xl md:text-3xl text-white font-bold tracking-wider mb-2">
-                {locale === 'en' ? (item.title_en || item.title) : item.title}
-              </h3>
-              {item.description && (
-                <p className="text-white/80 font-body-md line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                  {locale === 'en' ? (item.description_en || item.description) : item.description}
-                </p>
-              )}
-            </div>
+          <div key={`slot-${i}`} className={`relative overflow-hidden rounded-sm ${gridClass} shadow-sm hover:shadow-electric-yellow transition-all duration-500 bg-slate-100`}>
+            <AnimatePresence>
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, filter: "blur(4px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, filter: "blur(4px)" }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                className="absolute inset-0 group cursor-pointer"
+              >
+                <Image 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, 50vw" 
+                  src={item.image_url} 
+                  alt={item.title || 'Galeri Bandung'} 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+                <div className="absolute bottom-0 left-0 p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <h3 className="font-headline-md text-2xl md:text-3xl text-white font-bold tracking-wider mb-2">
+                    {locale === 'en' ? (item.title_en || item.title) : item.title}
+                  </h3>
+                  {item.description && (
+                    <p className="text-white/80 font-body-md line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                      {locale === 'en' ? (item.description_en || item.description) : item.description}
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         );
       })}
