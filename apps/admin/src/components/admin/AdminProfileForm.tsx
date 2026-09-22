@@ -20,7 +20,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [selectedFileForCrop, setSelectedFileForCrop] = useState<File | null>(null);
-  const [imageError, setImageError] = useState(false);
+  
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -39,7 +39,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
     const file = new File([croppedBlob], 'avatar.jpg', { type: 'image/jpeg' });
     setAvatarFile(file);
     setAvatarUrl(URL.createObjectURL(croppedBlob));
-    setImageError(false);
+    
     setIsCropModalOpen(false);
   };
 
@@ -127,13 +127,12 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
             <div className="flex flex-col sm:flex-row gap-6 items-start">
               <div className="flex flex-col items-center gap-3">
                 <div className="relative w-28 h-28 rounded-full border-4 border-white shadow-lg bg-gray-100 overflow-hidden group">
-                  {avatarUrl && !imageError ? (
+                  {avatarUrl ? (
                     <img 
                       key={avatarUrl}
                       src={avatarUrl} 
                       alt="Avatar" 
                       className="w-full h-full object-cover relative z-0" 
-                      onError={() => setImageError(true)}
                     />
                   ) : (
                     <User className="w-12 h-12 text-gray-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
