@@ -26,10 +26,10 @@ export default function GalleryAutoSlider({
   useEffect(() => {
     if (!galleries || galleries.length <= 4) return;
 
-    // Rotate every 5 seconds
+    // Rotate every 4 seconds
     const interval = setInterval(() => {
       setStartIndex((prev) => (prev + 1) % galleries.length);
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [galleries]);
