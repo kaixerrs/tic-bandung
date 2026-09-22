@@ -37,13 +37,13 @@ export default function LanguageSwitcher({ isTransparent = false }: { isTranspar
             onClick={() => handleLocaleChange('id')}
             className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${currentLocale === 'id' ? 'text-primary font-bold bg-primary/5' : 'text-slate-600'}`}
           >
-            🇮🇩 Indonesia
+            ID - Indonesia
           </button>
           <button 
             onClick={() => handleLocaleChange('en')}
             className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${currentLocale === 'en' ? 'text-primary font-bold bg-primary/5' : 'text-slate-600'}`}
           >
-            🇬🇧 English
+            EN - English
           </button>
         </div>
       )}
