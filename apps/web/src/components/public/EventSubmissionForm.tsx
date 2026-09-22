@@ -7,6 +7,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { CheckCircle2, AlertCircle, Calendar, MapPin, User, Phone, Mail, AtSign, Star, FileText, Send, Building, Target, Download, ChevronRight, ChevronLeft, Upload, Plus, X, ImageIcon, Search, Clock, ChevronDown } from 'lucide-react';
 import { submitEventFormAction } from '@/app/actions/eventSubmission';
+import { compressImageToWebp } from '@/utils/imageCompression';
 const LocationPickerWrapper = dynamic(() => import('./LocationPickerWrapper'), { ssr: false, loading: () => <div className="h-[400px] w-full bg-slate-100 animate-pulse rounded-sm border border-slate-200 flex items-center justify-center text-slate-400 font-medium">Memuat Peta...</div> });
 
 const STEPS = [
@@ -33,6 +34,7 @@ export default function EventSubmissionForm() {
   const [stepValidity, setStepValidity] = useState<Record<number, boolean>>({});
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCompressing, setIsCompressing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -976,7 +978,7 @@ export default function EventSubmissionForm() {
               {isSubmitting ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  Memproses...
+                  {isCompressing ? 'Mengompresi aset...' : 'Memproses...'}
                 </>
               ) : (
                 <>
