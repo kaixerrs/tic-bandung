@@ -108,7 +108,8 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="flex flex-col gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
       <ImageCropperModal
         isOpen={isCropModalOpen}
         imageFile={selectedFileForCrop}
@@ -119,7 +120,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
       />
       {/* Profile Section */}
       <div className="md:col-span-2 space-y-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 h-full flex flex-col justify-center">
           <h2 className="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Informasi Dasar</h2>
           
           <form onSubmit={handleProfileSubmit} className="space-y-6">
@@ -200,7 +201,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
 
       {/* Password Section */}
       <div className="md:col-span-1">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative overflow-hidden h-full flex flex-col justify-center">
           <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-bl-full pointer-events-none" />
           
           <div className="flex items-center gap-3 mb-6 border-b border-gray-100 pb-4">
@@ -253,8 +254,9 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
             </div>
           </form>
         </div>
-        <DeviceSessions />
       </div>
+      </div>
+      <DeviceSessions />
     </div>
   );
 }
