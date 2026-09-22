@@ -259,7 +259,12 @@ export default function EventSubmissionForm() {
         if (field.type === 'hidden' && field.nextElementSibling?.tagName === 'BUTTON') {
           field.nextElementSibling.classList.add('!border-red-500');
         }
-        if (parent) parent.classList.add('field-has-error');
+        if (parent) {
+          parent.classList.add('field-has-error');
+          parent.classList.remove('animate-shake');
+          void parent.offsetWidth; // trigger reflow to restart animation
+          parent.classList.add('animate-shake');
+        }
         isValid = false;
         if (!firstInvalidField) firstInvalidField = field;
       } else {
@@ -267,7 +272,10 @@ export default function EventSubmissionForm() {
         if (field.type === 'hidden' && field.nextElementSibling?.tagName === 'BUTTON') {
           field.nextElementSibling.classList.remove('!border-red-500');
         }
-        if (parent) parent.classList.remove('field-has-error');
+        if (parent) {
+          parent.classList.remove('field-has-error');
+          parent.classList.remove('animate-shake');
+        }
       }
     });
 
@@ -505,6 +513,15 @@ export default function EventSubmissionForm() {
         @keyframes fade-in-up {
           from { opacity: 0; transform: translateY(-4px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shake {
+          10%, 90% { transform: translate3d(-1px, 0, 0); }
+          20%, 80% { transform: translate3d(2px, 0, 0); }
+          30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+          40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        .animate-shake {
+          animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
       `}} />
       <form ref={formRef} onClick={() => { setScaleDropdownOpen(false); setCategoryDropdownOpen(false); setPaymentDropdownOpen(false); setEventTypeDropdownOpen(false); setTimezoneDropdownOpen(false); }} onSubmit={handleSubmit} onChange={handleChange} className="space-y-10 relative mt-8">
