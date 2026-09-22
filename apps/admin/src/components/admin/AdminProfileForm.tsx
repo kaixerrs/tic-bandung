@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useRef } from 'react';
+import { useState, useTransition, useRef, useEffect } from 'react';
 import { updateAdminProfile, updateAdminPassword } from '@/app/actions/admin';
 import { User, Lock, Camera, Save, AlertTriangle, Eye, EyeOff } from 'lucide-react';
 import { compressImageToWebp } from '@/utils/imageUpload';
@@ -17,6 +17,12 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
   const [displayName, setDisplayName] = useState(initialProfile?.display_name || '');
   const [avatarUrl, setAvatarUrl] = useState(initialProfile?.avatar_url || '');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (initialProfile?.avatar_url && !avatarFile) {
+      setAvatarUrl(initialProfile.avatar_url);
+    }
+  }, [initialProfile?.avatar_url, avatarFile]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [selectedFileForCrop, setSelectedFileForCrop] = useState<File | null>(null);
@@ -69,6 +75,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
         toast.error(result.error);
       } else {
         toast.success('Profil berhasil diperbarui!');
+        setAvatarFile(null);
       }
       } catch (err: any) {
         toast.dismiss('compress');
