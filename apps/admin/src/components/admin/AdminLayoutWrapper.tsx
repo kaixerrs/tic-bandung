@@ -9,6 +9,7 @@ import { updateLastSeen } from '@/app/actions/admin';
 import { useEffect } from 'react';
 
 import ForceChangePasswordModal from './ForceChangePasswordModal';
+import DeviceTracker from './DeviceTracker';
 
 export default function AdminLayoutWrapper({
   children,

@@ -280,3 +280,54 @@ export async function updateAdminPassword(formData: FormData) {
     return { error: err.message || "Unknown error occurred" };
   }
 }
+
+export async function getAdminDevices() {
+  const supabase = createClient();
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { data: null, error: 'Unauthorized' };
+
+    const { data, error } = await supabase
+      .from('admin_devices')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('last_seen', { ascending: false });
+
+    if (error) throw error;
+    return { data, error: null };
+  } catch (error: any) {
+    return { data: null, error: error.message };
+  }
+}
+
+export async function upsertAdminDevice(deviceData: {
+  device_hash: string;
+  device_name: string;
+  browser: string;
+  os: string;
+  ip_address: string;
+}) {
+  const supabase = createClient();
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { success: false, error: 'Unauthorized' };
+
+    const { error } = await supabase
+      .from('admin_devices')
+      .upsert({
+        user_id: user.id,
+        device_hash: deviceData.device_hash,
+        device_name: deviceData.device_name,
+        browser: deviceData.browser,
+        os: deviceData.os,
+        ip_address: deviceData.ip_address,
+        last_seen: new Date().toISOString(),
+        is_online: true
+      }, { onConflict: 'user_id,device_hash' });
+
+    if (error) throw error;
+    return { success: true, error: null };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}

@@ -5,6 +5,7 @@ import { updateAdminProfile, updateAdminPassword } from '@/app/actions/admin';
 import { User, Lock, Camera, Save, AlertTriangle, Eye, EyeOff } from 'lucide-react';
 import { compressImageToWebp } from '@/utils/imageUpload';
 import ImageCropperModal from '@/components/ui/ImageCropperModal';
+import DeviceSessions from './DeviceSessions';
 import { toast } from 'react-hot-toast';
 
 export default function AdminProfileForm({ initialProfile }: { initialProfile: any }) {
@@ -195,6 +196,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
             </div>
           </form>
         </div>
+        <DeviceSessions />
       </div>
 
       {/* Password Section */}
@@ -252,6 +254,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
             </div>
           </form>
         </div>
+        <DeviceSessions />
       </div>
     </div>
   );
