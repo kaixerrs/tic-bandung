@@ -282,7 +282,7 @@ export async function updateAdminPassword(formData: FormData) {
 }
 
 export async function getAdminDevices() {
-  const supabase = createClient();
+  const supabase = await createServerClient();
   try {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { data: null, error: 'Unauthorized' };
@@ -307,7 +307,7 @@ export async function upsertAdminDevice(deviceData: {
   os: string;
   ip_address: string;
 }) {
-  const supabase = createClient();
+  const supabase = await createServerClient();
   try {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { success: false, error: 'Unauthorized' };
