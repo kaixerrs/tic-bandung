@@ -208,14 +208,14 @@ export default function LocationPickerMap({ onLocationChange, isActive }: Locati
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="relative w-full h-80 rounded-sm overflow-hidden border border-gray-200">
-        <div className="absolute top-4 left-4 right-4 z-[400] flex gap-2 pointer-events-none">
-          <div className="w-full max-w-[200px] sm:max-w-[256px] pointer-events-auto">
+        <div className="absolute top-4 left-4 right-4 z-[400] flex flex-col sm:flex-row justify-between gap-2 pointer-events-none items-start sm:items-center">
+          <div className="w-full sm:flex-1 max-w-[256px] pointer-events-auto">
           <div className="bg-white rounded-sm shadow-md flex items-center p-2 w-full">
-            <Search className="w-4 h-4 text-gray-400 mr-2 cursor-pointer" onClick={(e: any) => handleSearch(e)} />
+            <Search className="w-4 h-4 shrink-0 text-gray-400 mr-2 cursor-pointer" onClick={(e: any) => handleSearch(e)} />
             <input 
               type="text" 
               placeholder="Cari tempat atau alamat" 
-              className="flex-1 outline-none text-sm bg-transparent text-gray-800"
+              className="flex-1 w-full min-w-0 outline-none text-sm bg-transparent text-gray-800"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
