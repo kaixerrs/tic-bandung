@@ -127,6 +127,7 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
                 <div className="relative w-28 h-28 rounded-full border-4 border-white shadow-lg bg-gray-100 overflow-hidden group">
                   {avatarUrl && !imageError ? (
                     <img 
+                      key={avatarUrl}
                       src={avatarUrl} 
                       alt="Avatar" 
                       className="w-full h-full object-cover relative z-0" 
