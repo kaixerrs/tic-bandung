@@ -502,12 +502,15 @@ export default function EventSubmissionForm() {
           color: #ef4444;
           font-size: 0.75rem;
           margin-top: 0.375rem;
-          display: block;
+          display: flex;
+          align-items: center;
+          line-height: 1;
           font-weight: 500;
-          padding-left: 16px;
+          padding-left: 18px;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
           background-repeat: no-repeat;
           background-position: left center;
+          background-size: 14px;
           animation: fade-in-up 0.2s ease-out;
         }
         @keyframes fade-in-up {
@@ -1029,12 +1032,12 @@ export default function EventSubmissionForm() {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="pt-6 mt-6 border-t border-gray-200 flex justify-between items-center">
+        <div className="pt-6 mt-6 border-t border-gray-200 flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
           {currentStep > 1 ? (
             <button 
               type="button" 
               onClick={handlePrev}
-              className="px-6 py-3 bg-gray-100 hover:bg-gray-200 active:scale-95 text-gray-900 font-bold rounded-sm transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 py-3 bg-gray-100 hover:bg-gray-200 active:scale-95 text-gray-900 font-bold rounded-sm transition-all flex items-center justify-center gap-2"
             >
               <ChevronLeft className="w-5 h-5" />
               Kembali
@@ -1045,7 +1048,7 @@ export default function EventSubmissionForm() {
             <button 
               type="button" 
               onClick={handleNext}
-              className="px-8 py-3 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold rounded-sm transition-all shadow-lg flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold rounded-sm transition-all shadow-lg flex items-center justify-center gap-2"
             >
               Selanjutnya
               <ChevronRight className="w-5 h-5" />
@@ -1054,7 +1057,7 @@ export default function EventSubmissionForm() {
             <button 
               type="submit" 
               disabled={isSubmitting}
-              className="px-8 py-3 bg-[#00C853] hover:bg-[#00b047] active:scale-95 text-gray-900 font-bold rounded-sm transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto px-8 py-3 bg-[#00C853] hover:bg-[#00b047] active:scale-95 text-gray-900 font-bold rounded-sm transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
