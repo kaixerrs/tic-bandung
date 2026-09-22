@@ -4,6 +4,7 @@ import { useState, useTransition, useRef } from 'react';
 import { updateAdminProfile, updateAdminPassword } from '@/app/actions/admin';
 import { User, Lock, Camera, Save, AlertTriangle } from 'lucide-react';
 import { compressImageToWebp } from '@/utils/imageUpload';
+import ImageCropperModal from '@/components/ui/ImageCropperModal';
 import { toast } from 'react-hot-toast';
 
 export default function AdminProfileForm({ initialProfile }: { initialProfile: any }) {
@@ -14,6 +15,9 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
   const [avatarUrl, setAvatarUrl] = useState(initialProfile?.avatar_url || '');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isCropModalOpen, setIsCropModalOpen] = useState(false);
+  const [selectedFileForCrop, setSelectedFileForCrop] = useState<File | null>(null);
+  const [imageError, setImageError] = useState(false);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -22,10 +26,18 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
         toast.error('Ukuran foto maksimal 4MB');
         return;
       }
-      setAvatarFile(file);
-      const objectUrl = URL.createObjectURL(file);
-      setAvatarUrl(objectUrl);
+      setSelectedFileForCrop(file);
+      setIsCropModalOpen(true);
+      if (e.target) e.target.value = '';
     }
+  };
+
+  const handleCropComplete = (croppedBlob: Blob) => {
+    const file = new File([croppedBlob], 'avatar.jpg', { type: 'image/jpeg' });
+    setAvatarFile(file);
+    setAvatarUrl(URL.createObjectURL(croppedBlob));
+    setImageError(false);
+    setIsCropModalOpen(false);
   };
 
   const handleProfileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,6 +106,14 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <ImageCropperModal
+        isOpen={isCropModalOpen}
+        imageFile={selectedFileForCrop}
+        aspectRatio={1}
+        title="Sesuaikan Foto Profil"
+        onClose={() => setIsCropModalOpen(false)}
+        onCropComplete={handleCropComplete}
+      />
       {/* Profile Section */}
       <div className="md:col-span-2 space-y-8">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
@@ -103,8 +123,13 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
             <div className="flex flex-col sm:flex-row gap-6 items-start">
               <div className="flex flex-col items-center gap-3">
                 <div className="relative w-28 h-28 rounded-full border-4 border-white shadow-lg bg-gray-100 overflow-hidden group">
-                  {avatarUrl ? (
-                    <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                  {avatarUrl && !imageError ? (
+                    <img 
+                      src={avatarUrl} 
+                      alt="Avatar" 
+                      className="w-full h-full object-cover relative z-0" 
+                      onError={() => setImageError(true)}
+                    />
                   ) : (
                     <User className="w-12 h-12 text-gray-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                   )}
