@@ -83,8 +83,11 @@ export default async function PublicLayout({
             </div>
           </div>
         </div>
-        <div className="border-t border-slate-200 py-6 text-center bg-slate-50">
+        <div className="border-t border-slate-200 py-6 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 bg-slate-50 max-w-[1600px] mx-auto w-full">
           <p className="text-slate-500 text-sm">{tFooter('copyright')}</p>
+          <p className="text-slate-400 text-xs mt-2 md:mt-0 font-medium">
+            Designed & Developed by <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-[#00C853] transition-colors">Fayiz Apriwansyah Nugraha</a>
+          </p>
         </div>
       </footer>
       </FooterWrapper>

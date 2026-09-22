@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   },
   description: "Portal wisata resmi Dinas Kebudayaan dan Pariwisata Kota Bandung. Temukan destinasi wisata, kalender event, panduan kuliner, dan informasi transportasi terlengkap di Kota Bandung.",
   keywords: ["Wisata Bandung", "Bandung Tourism", "TIC Bandung", "Destinasi Bandung", "Event Bandung", "Kuliner Bandung", "Pariwisata Bandung"],
-  authors: [{ name: "Fayiz apriwansyah nugraha", url: "https://ticbandung.com" }, { name: "Dinas Kebudayaan dan Pariwisata Kota Bandung" }],
-  creator: "Fayiz apriwansyah nugraha",
+  authors: [{ name: "Fayiz Apriwansyah Nugraha", url: "https://ticbandung.com" }, { name: "Dinas Kebudayaan dan Pariwisata Kota Bandung" }],
+  creator: "Fayiz Apriwansyah Nugraha",
   publisher: "Dinas Kebudayaan dan Pariwisata Kota Bandung",
   robots: {
     index: true,
@@ -92,6 +92,31 @@ export default async function RootLayout({
     <html lang={locale} className="scroll-smooth">
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Tourist Information Center Kota Bandung",
+              "url": "https://ticbandung.com",
+              "description": "Portal wisata resmi Dinas Kebudayaan dan Pariwisata Kota Bandung.",
+              "creator": {
+                "@type": "Person",
+                "name": "Fayiz Apriwansyah Nugraha",
+                "jobTitle": "Software Developer"
+              },
+              "developer": {
+                "@type": "Person",
+                "name": "Fayiz Apriwansyah Nugraha"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Dinas Kebudayaan dan Pariwisata Kota Bandung"
+              }
+            })
+          }}
+        />
       </head>
       <body
         className={`${hankenGrotesk.variable} ${spaceGrotesk.variable} ${outfit.variable} ${outfit.className} bg-surface text-on-surface font-body-md text-body-md antialiased min-h-screen`}
