@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getAdminDevices, deleteAdminDevice, deleteAllOtherAdminDevices } from '@/app/actions/admin';
+import { getAdminDevices, deleteAdminDevice, deleteAllOtherAdminDevices, upsertAdminDevice } from '@/app/actions/admin';
 import { Laptop, Smartphone, Monitor } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
@@ -50,8 +50,32 @@ export default function DeviceSessions() {
     if (userAgent.indexOf("Edge") !== -1 || userAgent.indexOf("Edg") !== -1) browser = "Edge";
     if (userAgent.indexOf("OPR") !== -1 || userAgent.indexOf("Opera") !== -1) browser = "Opera";
 
-    setCurrentHash(btoa(`${os}-${browser}`).substring(0, 32));
-    fetchDevices();
+    const hash = btoa(`${os}-${browser}`).substring(0, 32);
+    setCurrentHash(hash);
+    
+    // Fallback tracker: Ensure current device is logged when viewing this page
+    const ensureTracked = async () => {
+      let ip_address = "Unknown IP";
+      try {
+        const res = await fetch('https://api.ipify.org?format=json');
+        const data = await res.json();
+        ip_address = data.ip;
+      } catch (e) {
+        // ignore
+      }
+      
+      await upsertAdminDevice({
+        device_hash: hash,
+        device_name: `${browser} on ${os}`,
+        browser,
+        os,
+        ip_address
+      });
+      
+      fetchDevices();
+    };
+    
+    ensureTracked();
   }, []);
 
   const handleDisconnect = (deviceId: string) => {

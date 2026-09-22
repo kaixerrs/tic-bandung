@@ -39,13 +39,18 @@ export default function DeviceTracker() {
           console.error("Could not fetch IP");
         }
 
-        await upsertAdminDevice({
+        const result = await upsertAdminDevice({
           device_hash: deviceHash,
           device_name: deviceName,
           browser,
           os,
           ip_address
         });
+        if (!result.success) {
+          console.error("DeviceTracker upsert failed:", result.error);
+        } else {
+          console.log("DeviceTracker upsert success!");
+        }
       } catch (err) {
         console.error("Failed to track device:", err);
       }
