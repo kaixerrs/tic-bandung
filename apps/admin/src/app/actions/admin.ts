@@ -331,3 +331,41 @@ export async function upsertAdminDevice(deviceData: {
     return { success: false, error: error.message };
   }
 }
+
+export async function deleteAdminDevice(deviceId: string) {
+  const supabase = await createServerClient();
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { success: false, error: 'Unauthorized' };
+
+    const { error } = await supabase
+      .from('admin_devices')
+      .delete()
+      .eq('id', deviceId)
+      .eq('user_id', user.id);
+
+    if (error) throw error;
+    return { success: true, error: null };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
+
+export async function deleteAllOtherAdminDevices(currentDeviceHash: string) {
+  const supabase = await createServerClient();
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { success: false, error: 'Unauthorized' };
+
+    const { error } = await supabase
+      .from('admin_devices')
+      .delete()
+      .eq('user_id', user.id)
+      .neq('device_hash', currentDeviceHash);
+
+    if (error) throw error;
+    return { success: true, error: null };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
