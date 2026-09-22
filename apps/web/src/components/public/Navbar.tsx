@@ -39,7 +39,10 @@ export default function Navbar() {
 
   // Reset scroll state on navigation to prevent navbar jump/flicker
   useEffect(() => {
-    setScrolled(window.scrollY > 20);
+    const timer = setTimeout(() => {
+      setScrolled(window.scrollY > 20);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   // Handle scroll effect

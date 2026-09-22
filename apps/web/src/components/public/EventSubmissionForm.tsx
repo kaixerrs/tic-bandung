@@ -611,7 +611,7 @@ export default function EventSubmissionForm() {
                     <div className="flex flex-wrap gap-3 justify-center mt-4">
                       {galleryFiles.map((file, idx) => (
                         <div key={idx} className="relative w-24 h-24 rounded-sm overflow-hidden border border-gray-200 shadow-sm group">
-                          <img src={URL.createObjectURL(file)} alt={Gallery } className="absolute inset-0 w-full h-full object-cover" />
+                          <img src={URL.createObjectURL(file)} alt={`Gallery ${idx + 1}`} className="absolute inset-0 w-full h-full object-cover" />
                           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <span className="text-[10px] text-white truncate px-1 w-full text-center">{file.name}</span>
                           </div>
