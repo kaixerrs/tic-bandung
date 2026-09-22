@@ -569,7 +569,14 @@ export default function EventSubmissionForm() {
   }} />
                 <div className="flex flex-col items-center gap-2 pointer-events-none">
                   <Upload className="w-8 h-8 text-gray-400" />
-                  {thumbnailFile ? <p className="font-semibold text-amber-600">{thumbnailFile.name}</p> : <>
+                  {thumbnailFile ? (
+                    <div className="flex flex-col items-center">
+                      <div className="relative w-full max-w-[200px] aspect-[3/2] mb-2 rounded-sm overflow-hidden border border-gray-200 shadow-sm">
+                        <img src={URL.createObjectURL(thumbnailFile)} alt="Thumbnail Preview" className="absolute inset-0 w-full h-full object-cover" />
+                      </div>
+                      <p className="font-semibold text-amber-600 text-sm truncate max-w-[200px]">{thumbnailFile.name}</p>
+                    </div>
+                  ) : <>
                     <p className="text-sm font-medium text-gray-700">Klik untuk upload atau drag and drop</p>
                     <p className="text-xs text-gray-500">JPG, PNG, atau WebP (Maks. 2MB) - Rekomendasi 1200x800px</p>
                   </>}
@@ -598,8 +605,19 @@ export default function EventSubmissionForm() {
                 <div className="flex flex-col items-center gap-2 pointer-events-none">
                   <div className="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-white"><Upload className="w-6 h-6" /></div>
                   <p className="text-sm font-medium text-gray-700">Drag & drop gambar di sini, atau <span className="text-amber-500">pilih file</span></p>
-                  <p className="text-xs text-gray-500">Format: JPG, PNG, WebP, GIF. Rekomendasi: 1200x800px. (Maks. 10MB per file, Max 5 file)</p>
-                  {galleryFiles.length > 0 && <p className="text-amber-600 font-semibold mt-2">{galleryFiles.length} file dipilih</p>}
+                  <p className="text-xs text-gray-500">Format: JPG, PNG, WebP, GIF. Rekomendasi: 1200x800px. (Maks. 1MB per file, Max 5 file)</p>
+                  {galleryFiles.length > 0 && (
+                    <div className="flex flex-wrap gap-3 justify-center mt-4">
+                      {galleryFiles.map((file, idx) => (
+                        <div key={idx} className="relative w-24 h-24 rounded-sm overflow-hidden border border-gray-200 shadow-sm group">
+                          <img src={URL.createObjectURL(file)} alt={Gallery } className="absolute inset-0 w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
+                            <span className="text-[10px] text-white truncate px-1 w-full text-center">{file.name}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -863,7 +881,14 @@ export default function EventSubmissionForm() {
   }} />
                           <div className="flex flex-col items-center gap-2 pointer-events-none">
                             <Upload className="w-6 h-6 text-gray-400" />
-                            {sponsor.file ? <p className="font-semibold text-amber-600">{sponsor.file.name}</p> : <p className="text-sm text-gray-600">Maks. 1MB per logo</p>}
+                            {sponsor.file ? (
+                              <div className="flex flex-col items-center">
+                                <div className="relative w-16 h-16 mb-2 rounded-sm overflow-hidden border border-gray-200 bg-white">
+                                  <img src={URL.createObjectURL(sponsor.file)} alt="Sponsor Logo" className="absolute inset-0 w-full h-full object-contain" />
+                                </div>
+                                <p className="font-semibold text-amber-600 text-xs truncate max-w-[120px]">{sponsor.file.name}</p>
+                              </div>
+                            ) : <p className="text-sm text-gray-600">Maks. 1MB per logo</p>}
                           </div>
                         </div>
                       </div>
