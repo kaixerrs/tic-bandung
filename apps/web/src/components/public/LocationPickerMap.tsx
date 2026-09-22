@@ -208,7 +208,8 @@ export default function LocationPickerMap({ onLocationChange, isActive }: Locati
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="relative w-full h-80 rounded-sm overflow-hidden border border-gray-200">
-        <div className="absolute top-4 left-4 z-[400] w-64 max-w-full">
+        <div className="absolute top-4 left-4 right-4 z-[400] flex gap-2 pointer-events-none">
+          <div className="w-full max-w-[200px] sm:max-w-[256px] pointer-events-auto">
           <div className="bg-white rounded-sm shadow-md flex items-center p-2 w-full">
             <Search className="w-4 h-4 text-gray-400 mr-2 cursor-pointer" onClick={(e: any) => handleSearch(e)} />
             <input 
@@ -250,17 +251,18 @@ export default function LocationPickerMap({ onLocationChange, isActive }: Locati
               )}
             </div>
           )}
+          </div>
+          
+          <button 
+            type="button" 
+            onClick={handleMyLocation}
+            disabled={isSearching}
+            className="pointer-events-auto bg-[#1e2a3b] hover:bg-[#2c3e50] disabled:bg-gray-400 text-white rounded-sm shadow-md flex items-center gap-2 px-3 py-2 text-sm transition-colors whitespace-nowrap h-9 shrink-0 ml-auto"
+          >
+            <Navigation className={`w-4 h-4 ${isSearching ? 'animate-pulse' : ''}`} /> 
+            {isSearching ? 'Mencari...' : 'Lokasi Saya'}
+          </button>
         </div>
-        
-        <button 
-          type="button" 
-          onClick={handleMyLocation}
-          disabled={isSearching}
-          className="absolute top-4 right-4 z-[400] bg-[#1e2a3b] hover:bg-[#2c3e50] disabled:bg-gray-400 text-white rounded-sm shadow-md flex items-center gap-2 px-3 py-2 text-sm transition-colors"
-        >
-          <Navigation className={`w-4 h-4 ${isSearching ? 'animate-pulse' : ''}`} /> 
-          {isSearching ? 'Mencari...' : 'Lokasi Saya'}
-        </button>
 
         <style dangerouslySetInnerHTML={{__html: `
           .leaflet-top.leaflet-left {
