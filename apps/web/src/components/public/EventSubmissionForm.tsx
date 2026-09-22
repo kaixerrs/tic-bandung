@@ -145,21 +145,9 @@ export default function EventSubmissionForm() {
       const stepContainer = formRef.current?.querySelector(`[data-step="${stepNum}"]`);
       if (!stepContainer) return true;
       
-      // Native validation (catches all standard inputs with 'required')
-      const invalidFields = stepContainer.querySelectorAll(':invalid');
+      const reqs = Array.from(stepContainer.querySelectorAll('[required]')) as HTMLInputElement[];
+      const invalidFields = reqs.filter(f => !f.value || f.value.trim() === '');
       if (invalidFields.length > 0) return false;
-      
-      // Custom states validation (for hidden inputs or files)
-      if (stepNum === 1) {
-        if (!eventScale || !eventCategory || !paymentType) return false;
-        if (!thumbnailFile || galleryFiles.length === 0) return false;
-      }
-      if (stepNum === 2) {
-        if (!eventType) return false;
-      }
-      if (stepNum === 3) {
-        if (!timezone) return false;
-      }
       
       return true;
     };
