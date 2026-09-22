@@ -3,6 +3,7 @@
 import { useState, useTransition, useRef } from 'react';
 import { updateAdminProfile, updateAdminPassword } from '@/app/actions/admin';
 import { User, Lock, Camera, Save, AlertTriangle } from 'lucide-react';
+import { compressImageToWebp } from '@/utils/imageUpload';
 import { toast } from 'react-hot-toast';
 
 export default function AdminProfileForm({ initialProfile }: { initialProfile: any }) {
@@ -17,8 +18,8 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        toast.error('Ukuran foto maksimal 2MB');
+      if (file.size > 4 * 1024 * 1024) {
+        toast.error('Ukuran foto maksimal 4MB');
         return;
       }
       setAvatarFile(file);
@@ -27,23 +28,36 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
     }
   };
 
-  const handleProfileSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleProfileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('display_name', displayName);
-    if (initialProfile?.avatar_url) {
-      formData.append('current_avatar_url', initialProfile.avatar_url);
-    }
-    if (avatarFile) {
-      formData.append('avatar_file', avatarFile);
-    }
-
+    
+    // We cannot use startTransition directly around the compression because it's an async operation that takes time before the transition.
+    // Instead, we will set a local loading state or just run it. startProfileTransition wraps the server action.
+    
     startProfileTransition(async () => {
-      const result = await updateAdminProfile(formData);
+      try {
+        const formData = new FormData();
+        formData.append('display_name', displayName);
+        if (initialProfile?.avatar_url) {
+          formData.append('current_avatar_url', initialProfile.avatar_url);
+        }
+        
+        if (avatarFile) {
+          toast.loading('Mengompresi foto...', { id: 'compress' });
+          const compressedFile = await compressImageToWebp(avatarFile, 800, 0.8);
+          formData.append('avatar_file', compressedFile);
+          toast.dismiss('compress');
+        }
+
+        const result = await updateAdminProfile(formData);
       if (result.error) {
         toast.error(result.error);
       } else {
         toast.success('Profil berhasil diperbarui!');
+      }
+      } catch (err: any) {
+        toast.dismiss('compress');
+        toast.error('Gagal mengompresi atau menyimpan profil');
       }
     });
   };
@@ -69,8 +83,11 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
       if (result.error) {
         toast.error(result.error);
       } else {
-        toast.success('Kata sandi berhasil diperbarui!');
+        toast.success('Sandi diubah! Silakan login kembali dengan sandi baru.', { duration: 4000 });
         (e.target as HTMLFormElement).reset();
+        setTimeout(() => {
+          window.location.href = '/admin/login';
+        }, 1500);
       }
     });
   };

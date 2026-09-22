@@ -36,11 +36,11 @@ export default function ForceChangePasswordModal({
       if (result?.error) {
         toast.error(result.error);
       } else {
-        toast.success('Kata sandi berhasil diperbarui!');
+        toast.success('Sandi diubah! Silakan login kembali dengan sandi baru.', { duration: 4000 });
         setIsSuccess(true);
         setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+          window.location.href = '/admin/login';
+        }, 2000);
       }
     });
   };
@@ -65,7 +65,7 @@ export default function ForceChangePasswordModal({
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Pembaruan Berhasil</h3>
-              <p className="text-gray-500 text-sm mb-4">Mengarahkan Anda ke dashboard...</p>
+              <p className="text-gray-500 text-sm mb-4">Silakan login kembali dengan sandi baru Anda.<br/>Mengarahkan ke halaman login...</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
