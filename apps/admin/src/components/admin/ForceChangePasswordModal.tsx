@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { updateAdminPassword } from '@/app/actions/admin';
-import { Lock, AlertTriangle } from 'lucide-react';
+import { Lock, AlertTriangle, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 export default function ForceChangePasswordModal({ 
@@ -12,6 +12,8 @@ export default function ForceChangePasswordModal({
 }) {
   const [isPending, startTransition] = useTransition();
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   if (!isOpen) return null;
 
@@ -76,23 +78,33 @@ export default function ForceChangePasswordModal({
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Kata Sandi Baru</label>
-                <input 
-                  type="password" 
-                  name="password"
-                  required
-                  placeholder="Minimal 6 karakter"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none text-black"
-                />
+                <div className="relative">
+                  <input 
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    required
+                    placeholder="Minimal 6 karakter"
+                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none text-black"
+                  />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Konfirmasi Kata Sandi Baru</label>
-                <input 
-                  type="password" 
-                  name="confirm_password"
-                  required
-                  placeholder="Ulangi kata sandi baru"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none text-black"
-                />
+                <div className="relative">
+                  <input 
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirm_password"
+                    required
+                    placeholder="Ulangi kata sandi baru"
+                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none text-black"
+                  />
+                  <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
 
               <div className="pt-4">
