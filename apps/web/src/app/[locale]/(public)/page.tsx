@@ -247,21 +247,21 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             {t('lihatSemua')} <ArrowRight className="ml-4 w-5 h-5" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {activeNews && activeNews.length > 0 ? (
             activeNews.map((item, i) => (
-              <Link key={item.id} href={`/berita/${item.slug || '#'}`} className="group cursor-pointer bg-white p-6 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-electric-green transition-all duration-300 border border-gray-100 hover:-translate-y-2">
-                <div className="relative w-full aspect-[4/3] overflow-hidden mb-6 rounded-sm bg-surface-container-high">
+              <Link key={item.id} href={`/berita/${item.slug || '#'}`} className="group cursor-pointer bg-white p-3 md:p-6 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-electric-green transition-all duration-300 border border-gray-100 hover:-translate-y-2">
+                <div className="relative w-full aspect-[4/3] overflow-hidden mb-3 md:mb-6 rounded-sm bg-surface-container-high">
                   {item.image_url ? (
                     <Image fill sizes="(max-width: 768px) 100vw, 33vw" src={item.thumbnail_url || item.image_url} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" alt={locale === 'en' ? (item.title_en || item.title) : item.title} />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center"><ImageIcon className="w-12 h-12 text-outline opacity-50" /></div>
                   )}
                 </div>
-                <span className={`text-[#0050A2] font-label-caps text-[10px] uppercase tracking-widest mb-4 inline-block  bg-surface-container-low px-3 py-1 rounded-full`}>{item.category}</span>
-                <h3 className="font-headline-md text-xl md:text-headline-md text-on-surface group-hover:text-[#00C853] transition-colors mb-6 tracking-wide leading-tight line-clamp-3">{locale === 'en' ? (item.title_en || item.title) : item.title}</h3>
-                <div className="flex items-center text-on-surface-variant border-t border-outline-variant/30 pt-4">
-                  <span className="font-label-caps text-xs tracking-widest">
+                <span className={`text-[#0050A2] font-label-caps text-[8px] md:text-[10px] uppercase tracking-widest mb-2 md:mb-4 inline-block bg-surface-container-low px-3 py-1 rounded-full`}>{item.category}</span>
+                <h3 className="font-headline-md text-sm md:text-xl lg:text-headline-md text-on-surface group-hover:text-[#00C853] transition-colors mb-2 md:mb-6 tracking-wide leading-tight line-clamp-3">{locale === 'en' ? (item.title_en || item.title) : item.title}</h3>
+                <div className="flex items-center text-on-surface-variant border-t border-outline-variant/30 pt-2 md:pt-4">
+                  <span className="font-label-caps text-[9px] md:text-xs tracking-widest">
                     {new Date(item.date_published).toLocaleDateString(locale, {day: 'numeric', month: 'long', year: 'numeric'}).toUpperCase()}
                   </span>
                 </div>
