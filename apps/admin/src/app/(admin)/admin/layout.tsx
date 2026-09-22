@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminLayoutWrapper from '@/components/admin/AdminLayoutWrapper';
-import { checkIsSuperAdmin } from '@/app/actions/admin';
+import { checkIsSuperAdmin, getCurrentAdminProfile } from '@/app/actions/admin';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -13,10 +13,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   const isSuperAdmin = await checkIsSuperAdmin();
+  const { data: profile } = await getCurrentAdminProfile();
+
   return (
     <AdminLayoutWrapper 
       isSuperAdmin={isSuperAdmin}
       userEmail={session.user.email}
+      profile={profile}
     >
       {children}
     </AdminLayoutWrapper>

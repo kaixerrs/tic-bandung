@@ -8,14 +8,18 @@ import { signoutAction } from '@/app/actions/auth';
 import { updateLastSeen } from '@/app/actions/admin';
 import { useEffect } from 'react';
 
+import ForceChangePasswordModal from './ForceChangePasswordModal';
+
 export default function AdminLayoutWrapper({
   children,
   isSuperAdmin = false,
   userEmail = "",
+  profile = null,
 }: {
   children: React.ReactNode;
   isSuperAdmin?: boolean;
   userEmail?: string;
+  profile?: { display_name?: string | null, avatar_url?: string | null, password_changed?: boolean } | null;
 }) {
   const pathname = usePathname();
 
@@ -162,17 +166,21 @@ export default function AdminLayoutWrapper({
 
         <div className="p-4 border-t border-white/10 bg-black/20 flex flex-col gap-2">
           {userEmail && (
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 mb-2">
-              <div className="w-8 h-8 rounded-full bg-[#3D7A5E]/20 flex items-center justify-center shrink-0">
-                <User className="w-4 h-4 text-[#3D7A5E]" />
+            <Link href="/admin/profil" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 mb-2 hover:bg-white/10 transition-colors">
+              <div className="w-8 h-8 rounded-full bg-[#3D7A5E]/20 flex items-center justify-center shrink-0 overflow-hidden">
+                {profile?.avatar_url ? (
+                  <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <User className="w-4 h-4 text-[#3D7A5E]" />
+                )}
               </div>
               <div className="overflow-hidden">
                 <p className="text-xs text-white/50 font-medium mb-0.5">Sedang login sebagai:</p>
-                <p className="text-sm font-semibold text-white/90 truncate" title={userEmail}>
-                  {userEmail}
+                <p className="text-sm font-semibold text-white/90 truncate" title={profile?.display_name || userEmail}>
+                  {profile?.display_name || userEmail}
                 </p>
               </div>
-            </div>
+            </Link>
           )}
           
           <Link href="/" target="_blank" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-white/80 hover:text-white">
@@ -190,6 +198,7 @@ export default function AdminLayoutWrapper({
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto bg-[#fcf9f5] relative">
+        <ForceChangePasswordModal isOpen={profile?.password_changed === false} />
         <div className="p-6 md:p-10 w-full">
           {children}
         </div>

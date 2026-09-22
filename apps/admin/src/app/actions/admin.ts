@@ -179,3 +179,104 @@ export async function requireAdminAuth() {
   }
   return user;
 }
+
+
+export async function getCurrentAdminProfile() {
+  const supabase = await createServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { data: null };
+
+  const { data } = await supabase
+    .from('admin_roles')
+    .select('display_name, avatar_url, password_changed')
+    .eq('user_id', user.id)
+    .single();
+
+  return { data };
+}
+
+export async function updateAdminProfile(formData: FormData) {
+  try {
+    const supabase = await createServerClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) return { error: "Unauthorized" };
+
+    const display_name = formData.get("display_name") as string;
+    const avatar_file = formData.get("avatar_file") as File;
+    let avatar_url = formData.get("current_avatar_url") as string || null;
+
+    const adminSupabase = getAdminSupabase();
+
+    if (avatar_file && avatar_file.size > 0) {
+      const fileExt = avatar_file.name.split('.').pop();
+      const fileName = `avatar_${user.id}_${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await adminSupabase.storage
+        .from('uploads')
+        .upload(fileName, avatar_file);
+        
+      if (uploadError) {
+        console.error("Upload avatar error:", uploadError);
+        return { error: "Gagal mengunggah foto profil" };
+      }
+      
+      const { data } = adminSupabase.storage.from('uploads').getPublicUrl(fileName);
+      avatar_url = data.publicUrl;
+    }
+
+    const { error } = await adminSupabase
+      .from('admin_roles')
+      .update({ display_name, avatar_url })
+      .eq('user_id', user.id);
+
+    if (error) return { error: error.message };
+
+    await logAdminAction('UPDATE', 'ADMIN_PROFILE', `${user.email} updated profile`);
+    revalidatePath("/admin", "layout");
+    
+    return { success: true };
+  } catch (err: any) {
+    return { error: err.message || "Unknown error occurred" };
+  }
+}
+
+export async function updateAdminPassword(formData: FormData) {
+  try {
+    const supabase = await createServerClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) return { error: "Unauthorized" };
+
+    const password = formData.get("password") as string;
+    if (!password || password.length < 6) {
+      return { error: "Kata sandi minimal 6 karakter" };
+    }
+
+    const adminSupabase = getAdminSupabase();
+    
+    // Update password in Auth
+    const { error: updateError } = await adminSupabase.auth.admin.updateUserById(
+      user.id,
+      { password }
+    );
+
+    if (updateError) {
+      return { error: `Gagal mengubah kata sandi: ${updateError.message}` };
+    }
+
+    // Set password_changed = true
+    const { error: roleError } = await adminSupabase
+      .from('admin_roles')
+      .update({ password_changed: true })
+      .eq('user_id', user.id);
+
+    if (roleError) {
+      console.error("Error setting password_changed:", roleError);
+    }
+
+    await logAdminAction('UPDATE', 'ADMIN_PROFILE', `${user.email} changed password`);
+    revalidatePath("/admin", "layout");
+
+    return { success: true };
+  } catch (err: any) {
+    return { error: err.message || "Unknown error occurred" };
+  }
+}
