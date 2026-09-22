@@ -185,7 +185,7 @@ export default function AdminLayoutWrapper({
             </Link>
           )}
           
-          <Link href="/" target="_blank" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-white/80 hover:text-white">
+          <Link href="https://ticbandung.com" target="_blank" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-white/80 hover:text-white">
             <Home className="w-5 h-5" />
             <span className="font-medium text-sm">Lihat Website</span>
           </Link>
