@@ -11,7 +11,7 @@ export default async function AdminProfilePage() {
   const { data: profile } = await getCurrentAdminProfile();
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-display font-bold text-gray-900 flex items-center gap-3">
           <User className="w-8 h-8 text-[#3D7A5E]" />
