@@ -490,12 +490,16 @@ export default function EventSubmissionForm() {
 
       <style dangerouslySetInnerHTML={{__html: `
         .field-has-error::after {
-          content: '?? Wajib diisi';
+          content: 'Wajib diisi';
           color: #ef4444;
           font-size: 0.75rem;
           margin-top: 0.375rem;
           display: block;
           font-weight: 500;
+          padding-left: 16px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: left center;
           animation: fade-in-up 0.2s ease-out;
         }
         @keyframes fade-in-up {
