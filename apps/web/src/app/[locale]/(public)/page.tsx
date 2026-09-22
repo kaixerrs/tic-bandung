@@ -51,7 +51,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
     .select('*')
     .eq('status', 'published')
     .order('sort_order', { ascending: true })
-    .limit(4);
+    .limit(20);
 
   // Fetch specific destinations to integrate images dynamically while keeping layout static
   const { data: staticDests } = await supabase
