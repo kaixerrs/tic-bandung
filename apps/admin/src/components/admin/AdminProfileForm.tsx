@@ -196,7 +196,6 @@ export default function AdminProfileForm({ initialProfile }: { initialProfile: a
             </div>
           </form>
         </div>
-        <DeviceSessions />
       </div>
 
       {/* Password Section */}
