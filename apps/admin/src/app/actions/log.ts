@@ -37,13 +37,26 @@ export async function logAdminAction(
 
 export async function getAdminLogs() {
   const supabase = await createClient();
+  const isSuperAdmin = await checkIsSuperAdmin();
   
-  const { data, error } = await supabase
+  let { data, error } = await supabase
     .from('admin_logs')
     .select('*')
     .neq('entity', 'ADMIN')
     .order('created_at', { ascending: false })
-    .limit(100);
+    .limit(isSuperAdmin ? 100 : 300);
+    
+  if (data && !isSuperAdmin) {
+    const { data: superAdmins } = await supabase
+      .from('admin_roles')
+      .select('email')
+      .eq('role', 'SUPER_ADMIN');
+      
+    if (superAdmins) {
+      const superAdminEmails = superAdmins.map(a => a.email);
+      data = data.filter(log => !superAdminEmails.includes(log.admin_email)).slice(0, 100);
+    }
+  }
     
   return { data, error };
 }
