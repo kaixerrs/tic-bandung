@@ -501,7 +501,7 @@ export default function EventSubmissionForm() {
           animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
       `}} />
-      <form ref={formRef} onClick={() => { setScaleDropdownOpen(false); setCategoryDropdownOpen(false); setPaymentDropdownOpen(false); setEventTypeDropdownOpen(false); setTimezoneDropdownOpen(false); }} onSubmit={handleSubmit} onChange={handleChange} className="space-y-10 relative mt-8">
+      <form ref={formRef} noValidate onClick={() => { setScaleDropdownOpen(false); setCategoryDropdownOpen(false); setPaymentDropdownOpen(false); setEventTypeDropdownOpen(false); setTimezoneDropdownOpen(false); }} onSubmit={handleSubmit} onChange={handleChange} className="space-y-10 relative mt-8">
         {/* Decorative Blur */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -1031,7 +1031,7 @@ export default function EventSubmissionForm() {
             <button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full sm:w-auto px-8 py-3 bg-[#00C853] hover:bg-[#00b047] active:scale-95 text-gray-900 font-bold rounded-sm transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto px-8 py-3 bg-[#00C853] hover:bg-[#00b047] active:scale-95 text-white font-bold rounded-sm transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
