@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import GalleryAutoSlider from '@/components/public/GalleryAutoSlider';
 import { Search, Map, Utensils, Sun, Landmark, Calendar, MapPin, Bus, Star, Compass, Download, Heart, ArrowRight, Camera, ArrowUpRight, Image as ImageIcon } from 'lucide-react';
 import HeroSlider from '@/components/home/HeroSlider';
 import CoECountdownBanner from '@/components/home/CoECountdownBanner';
@@ -280,34 +281,11 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             <h2 className="font-headline-lg text-[40px] md:text-[64px] font-black text-[#1A1A1A] uppercase tracking-widest leading-none">{t('galeri')}</h2>
           </div>
         </div>
-        <div className="flex md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-4 md:gap-6 md:grid-cols-4 md:grid-rows-[auto_auto] md:h-[500px] lg:h-[600px] pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
-          {(galleries && galleries.length > 0) ? (
-            galleries.map((item: any, i: number) => {
-              let gridClass = 'min-w-[60vw] md:min-w-0 md:col-span-1 h-[250px] md:h-auto snap-start';
-              if (i === 0) gridClass = 'min-w-[80vw] md:min-w-0 md:col-span-2 md:row-span-2 h-[250px] md:h-auto snap-start';
-              else if (i === 1) gridClass = 'min-w-[70vw] md:min-w-0 md:col-span-2 h-[250px] md:h-auto snap-start';
-              
-              return (
-              <div key={item.id} className={`relative group overflow-hidden rounded-sm ${gridClass} cursor-pointer shadow-sm hover:shadow-electric-yellow transition-all duration-500`}>
-                <Image 
-                  fill 
-                  sizes="(max-width: 768px) 100vw, 50vw" 
-                  src={item.image_url} 
-                  alt={item.title || 'Galeri Bandung'} 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                <div className="absolute bottom-0 left-0 p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <h3 className="font-headline-md text-2xl md:text-3xl text-white font-bold tracking-wider mb-2">{locale === 'en' ? (item.title_en || item.title) : item.title}</h3>
-                  {item.description && <p className="text-white/80 font-body-md line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{locale === 'en' ? (item.description_en || item.description) : item.description}</p>}
-                </div>
-              </div>
-              );
-            })
-          ) : (
-            <div className="col-span-full text-center py-12 text-gray-500">{t('noGallery')}</div>
-          )}
-        </div>
+        <GalleryAutoSlider 
+          galleries={galleries || []} 
+          locale={locale} 
+          noGalleryText={t('noGallery')} 
+        />
       </section>
 
       {/* FAQ SECTION */}
