@@ -252,11 +252,14 @@ export default function EventSubmissionForm() {
     let firstInvalidField: any = null;
     
     requiredFields.forEach((field: any) => {
+      const parent = field.closest('div');
+      
       if (!field.value || field.value.trim() === '') {
         field.classList.add('!border-red-500');
         if (field.type === 'hidden' && field.nextElementSibling?.tagName === 'BUTTON') {
           field.nextElementSibling.classList.add('!border-red-500');
         }
+        if (parent) parent.classList.add('field-has-error');
         isValid = false;
         if (!firstInvalidField) firstInvalidField = field;
       } else {
@@ -264,6 +267,7 @@ export default function EventSubmissionForm() {
         if (field.type === 'hidden' && field.nextElementSibling?.tagName === 'BUTTON') {
           field.nextElementSibling.classList.remove('!border-red-500');
         }
+        if (parent) parent.classList.remove('field-has-error');
       }
     });
 
@@ -484,6 +488,21 @@ export default function EventSubmissionForm() {
 
       <div className="h-8"></div> {/* Spacer for the stepper text */}
 
+      <style dangerouslySetInnerHTML={{__html: `
+        .field-has-error::after {
+          content: '?? Wajib diisi';
+          color: #ef4444;
+          font-size: 0.75rem;
+          margin-top: 0.375rem;
+          display: block;
+          font-weight: 500;
+          animation: fade-in-up 0.2s ease-out;
+        }
+        @keyframes fade-in-up {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}} />
       <form ref={formRef} onClick={() => { setScaleDropdownOpen(false); setCategoryDropdownOpen(false); setPaymentDropdownOpen(false); setEventTypeDropdownOpen(false); setTimezoneDropdownOpen(false); }} onSubmit={handleSubmit} onChange={handleChange} className="space-y-10 relative mt-8">
         {/* Decorative Blur */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[100px] pointer-events-none"></div>
