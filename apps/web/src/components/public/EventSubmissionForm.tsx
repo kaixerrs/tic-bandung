@@ -249,18 +249,33 @@ export default function EventSubmissionForm() {
 
     const requiredFields = stepContainer.querySelectorAll('[required]');
     let isValid = true;
+    let firstInvalidField: any = null;
     
     requiredFields.forEach((field: any) => {
-      if (!field.value) {
-        field.classList.add('border-red-500');
+      if (!field.value || field.value.trim() === '') {
+        field.classList.add('!border-red-500');
+        if (field.type === 'hidden' && field.nextElementSibling?.tagName === 'BUTTON') {
+          field.nextElementSibling.classList.add('!border-red-500');
+        }
         isValid = false;
+        if (!firstInvalidField) firstInvalidField = field;
       } else {
-        field.classList.remove('border-red-500');
+        field.classList.remove('!border-red-500');
+        if (field.type === 'hidden' && field.nextElementSibling?.tagName === 'BUTTON') {
+          field.nextElementSibling.classList.remove('!border-red-500');
+        }
       }
     });
 
     if (!isValid) {
-      setErrorMsg("Harap isi semua kolom wajib di langkah ini.");
+      setErrorMsg("Harap lengkapi isian yang bergaris merah.");
+      if (firstInvalidField) {
+        const scrollToTarget = firstInvalidField.closest('div') || firstInvalidField;
+        scrollToTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (firstInvalidField.type !== 'hidden') {
+          setTimeout(() => firstInvalidField.focus(), 300);
+        }
+      }
       return false;
     }
 
