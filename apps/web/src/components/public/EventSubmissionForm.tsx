@@ -423,20 +423,6 @@ export default function EventSubmissionForm() {
 
   return (
     <div className="relative">
-      <Toaster 
-        position="top-center" 
-        reverseOrder={false} 
-        toastOptions={{ 
-          style: { 
-            zIndex: 99999, 
-            fontSize: '16px', 
-            padding: '16px 24px',
-            maxWidth: '600px',
-            marginTop: '30vh',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-          } 
-        }} 
-      />
       {/* Stepper UI */}
       <div id="form-stepper-top" className="mb-10 px-4 sm:px-8 scroll-mt-32">
         <div className="flex justify-between items-center relative">
