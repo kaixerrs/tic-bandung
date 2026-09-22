@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { MapPin, Navigation, Search } from 'lucide-react';
+import { MapPin, Navigation, Search, LocateFixed } from 'lucide-react';
 
 const icon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -257,10 +257,10 @@ export default function LocationPickerMap({ onLocationChange, isActive }: Locati
             type="button" 
             onClick={handleMyLocation}
             disabled={isSearching}
-            className="pointer-events-auto bg-[#1e2a3b] hover:bg-[#2c3e50] disabled:bg-gray-400 text-white rounded-sm shadow-md flex items-center gap-2 px-3 py-2 text-sm transition-colors whitespace-nowrap h-9 shrink-0 ml-auto"
+            title="Lokasi Saya"
+            className="pointer-events-auto bg-white hover:bg-gray-50 text-gray-700 disabled:text-gray-400 rounded-sm shadow-md flex items-center justify-center transition-colors h-10 w-10 shrink-0 ml-auto"
           >
-            <Navigation className={`w-4 h-4 ${isSearching ? 'animate-pulse' : ''}`} /> 
-            {isSearching ? 'Mencari...' : 'Lokasi Saya'}
+            <LocateFixed className={`w-5 h-5 ${isSearching ? 'animate-pulse text-blue-500' : ''}`} />
           </button>
         </div>
 
