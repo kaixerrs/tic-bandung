@@ -450,7 +450,7 @@ export default function EventSubmissionForm() {
                 >
                   {isPassed ? (isValid ? <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6" /> : <AlertCircle className="w-4 h-4 sm:w-6 sm:h-6" />) : stepNumber}
                 </div>
-                <div className="absolute top-10 sm:top-14 left-1/2 -translate-x-1/2 w-36 text-center flex flex-col gap-0.5">
+                <div className={`absolute ${idx % 2 !== 0 ? 'bottom-10 sm:bottom-14 flex-col-reverse' : 'top-10 sm:top-14 flex-col'} left-1/2 -translate-x-1/2 w-36 text-center flex gap-0.5`}>
                   <span className={`text-[10px] sm:text-xs font-bold transition-colors ${
                     isActive ? 'text-yellow-500 block' : isPassed ? (isValid ? 'text-emerald-600 hidden sm:block' : 'text-yellow-500 block') : 'text-gray-400 hidden sm:block'
                   }`}>
