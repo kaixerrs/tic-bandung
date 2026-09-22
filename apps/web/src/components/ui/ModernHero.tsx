@@ -103,10 +103,10 @@ export function ModernHero({
           
           {/* Text Column */}
           <div className={`flex flex-col ${textAlignmentClass} lg:col-span-1`}>
-            <nav className={`flex text-slate-500 text-sm mb-8 items-center gap-2 font-medium bg-white/60 backdrop-blur-md px-5 py-2.5 rounded-full shadow-sm animate-fade-up border border-white/50 w-max ${navAlignClass}`}>
-              <Link className="hover:text-[#C9971E] transition-colors" href="/">Home</Link>
-              <ChevronRight className="w-4 h-4" />
-              <span className="text-[#C9971E] font-bold">{breadcrumbText}</span>
+            <nav className={`flex text-slate-500 text-sm mb-8 items-center gap-2 font-medium bg-white/60 backdrop-blur-md px-5 py-2.5 rounded-full shadow-sm animate-fade-up border border-white/50 max-w-full w-fit ${navAlignClass}`}>
+              <Link className="hover:text-[#C9971E] transition-colors shrink-0" href="/">Home</Link>
+              <ChevronRight className="w-4 h-4 shrink-0" />
+              <span className="text-[#C9971E] font-bold truncate">{breadcrumbText}</span>
             </nav>
             
             <h1 className={`${montserrat.className} text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 md:mb-6 tracking-tight animate-fade-up-delay-1 leading-[1.1]`}>
