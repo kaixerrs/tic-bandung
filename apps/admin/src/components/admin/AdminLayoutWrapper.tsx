@@ -175,9 +175,11 @@ export default function AdminLayoutWrapper({
                 )}
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs text-white/50 font-medium mb-0.5">Sedang login sebagai:</p>
-                <p className="text-sm font-semibold text-white/90 truncate" title={profile?.display_name || userEmail}>
-                  {profile?.display_name || userEmail}
+                <p className="text-sm font-semibold text-white/90 truncate" title={profile?.display_name || 'Admin'}>
+                  {profile?.display_name || 'Admin'}
+                </p>
+                <p className="text-xs text-white/50 font-medium mt-0.5 truncate" title={userEmail}>
+                  {userEmail}
                 </p>
               </div>
             </Link>
