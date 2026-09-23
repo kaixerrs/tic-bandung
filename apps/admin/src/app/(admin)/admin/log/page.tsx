@@ -6,9 +6,21 @@ import { checkIsSuperAdmin } from '@/app/actions/admin';
 import ClearLogsButton from '@/components/admin/cms/ClearLogsButton';
 import { id } from 'date-fns/locale';
 
-export default async function AdminLogsPage() {
-  const { data: logs, error } = await getAdminLogs();
+import Link from 'next/link';
+
+export default async function AdminLogsPage(
+  props: {
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+  }
+) {
+  const searchParams = await props.searchParams;
+  const page = parseInt(searchParams?.page as string) || 1;
+  const limit = 20;
+  
+  const { data: logs, error, count } = await getAdminLogs(page, limit);
   const isSuperAdmin = await checkIsSuperAdmin();
+  
+  const totalPages = count ? Math.ceil(count / limit) : 1;
 
   const getActionBadge = (action: string) => {
     switch (action) {

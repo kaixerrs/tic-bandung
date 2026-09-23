@@ -6,13 +6,25 @@ export const metadata = {
   title: 'Pendaftaran Event Masuk | TIC Kota Bandung',
 };
 
-export default async function AdminEventSubmissionsPage() {
+export default async function AdminEventSubmissionsPage(
+  props: { searchParams?: Promise<{ [key: string]: string | string[] | undefined }> }
+) {
+  const searchParams = await props.searchParams;
+  const page = parseInt(searchParams?.page as string) || 1;
+  const limit = 20;
+
   const supabase = await createClient();
 
-  const { data: submissions, error } = await supabase
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
+  const { data: submissions, error, count } = await supabase
     .from('event_submissions')
-    .select('*')
-    .order('created_at', { ascending: false });
+    .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(from, to);
+
+  const totalPages = count ? Math.ceil(count / limit) : 1;
 
   if (error) {
     console.error("Submission Fetch Error:", error);
@@ -32,7 +44,7 @@ export default async function AdminEventSubmissionsPage() {
         </div>
       </div>
 
-      <EventSubmissionTable initialData={data} />
+      <EventSubmissionTable initialData={data} currentPage={page} totalPages={totalPages} />
     </div>
   );
 }

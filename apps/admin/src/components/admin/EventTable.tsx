@@ -21,7 +21,17 @@ type EventData = {
   organizer?: string;
 };
 
-export default function EventTable({ initialData }: { initialData: EventData[] }) {
+import Link from 'next/link';
+
+export default function EventTable({ 
+  initialData,
+  currentPage = 1,
+  totalPages = 1
+}: { 
+  initialData: EventData[],
+  currentPage?: number,
+  totalPages?: number
+}) {
   const [data, setData] = useState<EventData[]>(initialData);
   const [isPending, startTransition] = useTransition();
 

@@ -35,17 +35,20 @@ export async function logAdminAction(
   }
 }
 
-export async function getAdminLogs() {
+export async function getAdminLogs(page = 1, limit = 20) {
   const supabase = await createClient();
   
-  const { data, error } = await supabase
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+  
+  const { data, error, count } = await supabase
     .from('admin_logs')
-    .select('*')
+    .select('*', { count: 'exact' })
     .neq('entity', 'ADMIN')
     .order('created_at', { ascending: false })
-    .limit(100);
+    .range(from, to);
     
-  return { data, error };
+  return { data, error, count };
 }
 
 export async function clearAdminLogs() {

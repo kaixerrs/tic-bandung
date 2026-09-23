@@ -7,17 +7,29 @@ export const metadata = {
   title: 'Manajemen Kalender Event | TIC Kota Bandung',
 };
 
-export default async function AdminEventPage() {
+export default async function AdminEventPage(
+  props: { searchParams?: Promise<{ [key: string]: string | string[] | undefined }> }
+) {
+  const searchParams = await props.searchParams;
+  const page = parseInt(searchParams?.page as string) || 1;
+  const limit = 20;
+
   const supabase = await createClient();
 
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
   // Fetch all events
-  const { data: events, error } = await supabase
+  const { data: events, error, count } = await supabase
     .from('events')
     .select(`
       id, title, slug, start_date, end_date, images, status, created_at, organizer,
       destinations:destination_id (name)
-    `)
-    .order('start_date', { ascending: false });
+    `, { count: 'exact' })
+    .order('start_date', { ascending: false })
+    .range(from, to);
+
+  const totalPages = count ? Math.ceil(count / limit) : 1;
 
   if (error) {
     console.error("Event Fetch Error:", error);
@@ -59,7 +71,7 @@ export default async function AdminEventPage() {
           </Link>
         </div>
         
-        <EventTable initialData={data} />
+        <EventTable initialData={data} currentPage={page} totalPages={totalPages} />
       </div>
     </>
   );

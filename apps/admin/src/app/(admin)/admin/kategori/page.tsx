@@ -6,14 +6,26 @@ export const metadata = {
   title: "Manajemen Kategori | Admin TIC Kota Bandung",
 };
 
-export default async function AdminCategoryPage() {
+export default async function AdminCategoryPage(
+  props: { searchParams?: Promise<{ [key: string]: string | string[] | undefined }> }
+) {
+  const searchParams = await props.searchParams;
+  const page = parseInt(searchParams?.page as string) || 1;
+  const limit = 20;
+  
   const supabase = await createClient();
   
-  const { data: categories } = await supabase
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+  
+  const { data: categories, count } = await supabase
     .from("categories")
-    .select("*")
+    .select("*", { count: 'exact' })
     .order("cluster")
-    .order("name");
+    .order("name")
+    .range(from, to);
+
+  const totalPages = count ? Math.ceil(count / limit) : 1;
 
   return (
     <div className="w-full">
@@ -27,7 +39,11 @@ export default async function AdminCategoryPage() {
         </p>
       </div>
       
-      <CategoryListClient categories={categories || []} />
+      <CategoryListClient 
+        categories={categories || []} 
+        currentPage={page} 
+        totalPages={totalPages} 
+      />
     </div>
   );
 }
