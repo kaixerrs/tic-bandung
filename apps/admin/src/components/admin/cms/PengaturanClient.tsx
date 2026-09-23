@@ -148,53 +148,6 @@ export default function PengaturanClient({ initialData }: { initialData: any }) 
           </div>
         </section>
 
-
-        <section>
-          <h3 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-4 mt-8">Halaman Informasi Footer</h3>
-          <div className="grid grid-cols-1 gap-8">
-            
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Konten Halaman "Tentang Kami"</label>
-              <div className="bg-white">
-                <ReactQuill theme="snow" value={pageAbout} onChange={setPageAbout} className="h-64 mb-12" modules={{ toolbar: [
-  [{ 'header': [1, 2, 3, false] }],
-  ['bold', 'italic', 'underline', 'strike'],
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  ['link'],
-  ['clean']
-]}} />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Konten Halaman "Kebijakan Privasi"</label>
-              <div className="bg-white">
-                <ReactQuill theme="snow" value={pagePrivacy} onChange={setPagePrivacy} className="h-64 mb-12" modules={{ toolbar: [
-  [{ 'header': [1, 2, 3, false] }],
-  ['bold', 'italic', 'underline', 'strike'],
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  ['link'],
-  ['clean']
-]}} />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Konten Halaman "Syarat & Ketentuan"</label>
-              <div className="bg-white">
-                <ReactQuill theme="snow" value={pageTerms} onChange={setPageTerms} className="h-64 mb-12" modules={{ toolbar: [
-  [{ 'header': [1, 2, 3, false] }],
-  ['bold', 'italic', 'underline', 'strike'],
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  ['link'],
-  ['clean']
-]}} />
-              </div>
-            </div>
-
-          </div>
-        </section>
-
         <div className="pt-6 flex justify-end">
           <button 
             type="submit" 

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MapPin, BookOpen, Image as ImageIcon, FileText, Settings, LogOut, Home, Camera, Plus, Calendar, Activity, Shield, User, FolderTree, Inbox, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, MapPin, BookOpen, Image as ImageIcon, FileText, Settings, LogOut, Home, Camera, Plus, Calendar, Activity, Shield, User, FolderTree, Inbox, HelpCircle, Info } from 'lucide-react';
 import { signoutAction } from '@/app/actions/auth';
 import { updateLastSeen } from '@/app/actions/admin';
 import { useEffect } from 'react';
@@ -40,6 +40,7 @@ export default function AdminLayoutWrapper({
     home: true,
     destinasi: true,
     event: true,
+    informasi: true,
     pengaturan: true
   });
 
@@ -144,6 +145,22 @@ export default function AdminLayoutWrapper({
             <Link href="/admin/event-submissions" className={navLinkClass('/admin/event-submissions')}>
               <Inbox className="w-5 h-5" />
               <span className="font-medium text-sm">Pendaftaran Masuk</span>
+            </Link>
+          </NavGroup>
+
+
+          <NavGroup title="Informasi" id="informasi">
+            <Link href="/admin/informasi/tentang-kami" className={navLinkClass('/admin/informasi/tentang-kami')}>
+              <Info className="w-5 h-5" />
+              <span className="font-medium text-sm">Tentang Kami</span>
+            </Link>
+            <Link href="/admin/informasi/kebijakan-privasi" className={navLinkClass('/admin/informasi/kebijakan-privasi')}>
+              <Info className="w-5 h-5" />
+              <span className="font-medium text-sm">Kebijakan Privasi</span>
+            </Link>
+            <Link href="/admin/informasi/syarat-ketentuan" className={navLinkClass('/admin/informasi/syarat-ketentuan')}>
+              <Info className="w-5 h-5" />
+              <span className="font-medium text-sm">Syarat & Ketentuan</span>
             </Link>
           </NavGroup>
 

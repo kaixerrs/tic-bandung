@@ -260,3 +260,26 @@ export async function updateSystemInfo(formData: FormData) {
   await logAdminAction('UPDATE', 'SETTINGS', 'System Information & Maintenance Schedule');
   return { success: true };
 }
+
+export async function updateStaticPage(field: 'page_about' | 'page_privacy' | 'page_terms', content: string) {
+  const supabase = await createClient();
+  
+  const updates = {
+    [field]: content,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { error } = await supabase
+    .from('site_settings')
+    .update(updates)
+    .eq('id', '00000000-0000-0000-0000-000000000001');
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  revalidatePath('/', 'layout');
+  revalidatePath('/admin/informasi');
+  await logAdminAction('UPDATE', 'STATIC_PAGE', `Halaman ${field}`);
+  return { success: true };
+}
