@@ -370,3 +370,42 @@ export async function deleteFAQ(id: string) {
   await logAdminAction('DELETE', 'FAQ', `ID: ${id}`);
   return { success: true };
 }
+
+export async function updateStaticPage(field: 'page_about' | 'page_privacy' | 'page_terms', content: string) {
+  await requireAdminAuth();
+  const supabase = await createClient();
+  
+  const updates = {
+    [field]: content,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { error } = await supabase
+    .from('site_settings')
+    .update(updates)
+    .eq('id', '00000000-0000-0000-0000-000000000001');
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  revalidatePath('/admin/informasi');
+  await logAdminAction('UPDATE', 'SETTINGS', `Halaman ${field}`);
+  
+  // Revalidate frontend
+  try {
+    const frontendUrl = process.env.FRONTEND_URL || 'https://ticbandung.com';
+    await fetch(`${frontendUrl}/api/revalidate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        path: '/',
+        token: process.env.REVALIDATION_TOKEN
+      })
+    });
+  } catch (err) {
+    console.error('Failed to revalidate frontend', err);
+  }
+
+  return { success: true };
+}
