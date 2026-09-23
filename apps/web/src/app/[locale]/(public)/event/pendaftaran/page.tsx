@@ -115,8 +115,16 @@ export default async function EventPage({ params }: { params: Promise<{ locale: 
           {/* Bottom Row: Registration Form */}
           <div className="w-full">
             <div className="bg-white rounded-sm p-8 border border-[#d3c5af]/50 shadow-sm">
-              <h3 className={`${montserrat.className} text-3xl font-bold text-slate-900 mb-2`}>{t('registerTitle')}</h3>
-              <p className="text-slate-600 mb-8 text-sm leading-relaxed">{t('registerDesc')}</p>
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+                <div>
+                  <h3 className={`${montserrat.className} text-3xl font-bold text-slate-900 mb-2`}>{t('registerTitle')}</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">{t('registerDesc')}</p>
+                </div>
+                <div className="shrink-0 flex flex-col items-center p-3 border border-slate-200 rounded-lg bg-slate-50">
+                  <span className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Scan untuk Akses Form</span>
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.ticbandung.com/event/pendaftaran" alt="QR Code Pendaftaran" className="w-24 h-24 mix-blend-multiply" />
+                </div>
+              </div>
               
               <EventSubmissionForm />
               
