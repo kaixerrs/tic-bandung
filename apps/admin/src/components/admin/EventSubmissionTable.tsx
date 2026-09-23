@@ -22,7 +22,9 @@ type SubmissionData = {
   thumbnail_link: string; gallery_links: string[]; sponsors: { name: string; logo_url: string }[];
 };
 
-export default function EventSubmissionTable({ initialData }: { initialData: SubmissionData[] }) {
+import Link from "next/link";
+
+export default function EventSubmissionTable({ initialData, currentPage = 1, totalPages = 1 }: { initialData: SubmissionData[], currentPage?: number, totalPages?: number }) {
   const [data, setData] = useState<SubmissionData[]>(initialData);
   const [isPending, startTransition] = useTransition();
   const [selectedSubmission, setSelectedSubmission] = useState<SubmissionData | null>(null);

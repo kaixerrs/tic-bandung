@@ -8,7 +8,9 @@ import { updateCategoryAction, createCategoryAction, deleteCategoryAction } from
 import { compressImageToWebp, uploadToSupabase } from "@/utils/imageUpload";
 import { CustomSelect } from "@/components/ui/CustomSelect";
 
-export default function CategoryListClient({ categories }: { categories: any[] }) {
+import Link from "next/link";
+
+export default function CategoryListClient({ categories, currentPage = 1, totalPages = 1 }: { categories: any[], currentPage?: number, totalPages?: number }) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
