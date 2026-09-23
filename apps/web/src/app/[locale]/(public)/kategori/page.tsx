@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ModernHero } from '@/components/ui/ModernHero';
 import { ChevronRight, Bed, Map, Coffee, Compass } from 'lucide-react';
 import { Montserrat } from 'next/font/google';
 import { ScrollReveal } from '@/components/ui/animations/ScrollReveal';
@@ -46,22 +45,7 @@ export default async function KategoriPage({ params }: { params: Promise<{ local
 
   return (
     <main className="w-full bg-[#fcf9f5] min-h-screen overflow-x-hidden">
-      <ModernHero 
-        breadcrumbText={t('breadcrumb')}
-        title={t('heroTitle')}
-        highlightText={t('heroHighlight')}
-        highlightGradient="from-[#3D7A5E] to-[#519f7b]"
-        description={t('heroDesc')}
-        layoutVariant="left"
-        illustration={
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="absolute w-[120%] h-[120%] bg-[#3D7A5E]/20 rounded-full blur-3xl mix-blend-multiply animate-pulse"></div>
-            <div className="relative bg-white/40 backdrop-blur-xl border border-white/60 p-8 rounded-[3rem] shadow-2xl rotate-3 hover:rotate-6 transition-all duration-500">
-              <Compass className="w-48 h-48 text-[#3D7A5E] drop-shadow-xl" strokeWidth={1.5} />
-            </div>
-          </div>
-        }
-      />
+
 
       <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
         <div className="w-full h-[1px] bg-gradient-to-r from-slate-200 via-slate-300 to-transparent my-4"></div>

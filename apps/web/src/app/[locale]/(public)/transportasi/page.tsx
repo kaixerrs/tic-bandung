@@ -1,6 +1,5 @@
 ﻿import Link from 'next/link';
 import Image from 'next/image';
-import { ModernHero } from '@/components/ui/ModernHero';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ArrowRight, Bus, Train, Plane, Bike, CarTaxiFront, ExternalLink, Map, Info, ChevronRight } from 'lucide-react';
 import { Montserrat } from 'next/font/google';
@@ -21,22 +20,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
   return (
     <main className="w-full bg-[#f8f9fa] min-h-screen pb-32 overflow-hidden selection:bg-blue-100">
       
-<ModernHero 
-        breadcrumbText={t('heroTitle')}
-        title={t('heroTitle')}
-        highlightText="Tanpa Batas."
-        highlightGradient="from-blue-600 to-blue-400"
-        description={t('heroDesc')}
-        layoutVariant="left"
-        illustration={
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="absolute w-[120%] h-[120%] bg-blue-500/20 rounded-full blur-3xl mix-blend-multiply animate-pulse delay-500"></div>
-            <div className="relative bg-white/40 backdrop-blur-xl border border-white/60 p-8 rounded-[3rem] shadow-2xl rotate-3 hover:rotate-6 transition-all duration-500">
-              <Bus className="w-48 h-48 text-blue-500 drop-shadow-xl" strokeWidth={1.5} />
-            </div>
-          </div>
-        }
-      />
+
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
         
