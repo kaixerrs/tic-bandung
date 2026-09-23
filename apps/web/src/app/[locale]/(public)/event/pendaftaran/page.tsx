@@ -21,6 +21,16 @@ export default async function EventPage({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('Event');
+  const now = new Date();
+  const step2Date = new Date('2026-10-26T00:00:00+07:00');
+  const step3Date = new Date('2026-11-01T00:00:00+07:00');
+  const step4Date = new Date('2026-11-20T00:00:00+07:00');
+
+  let activeStep = 1;
+  if (now >= step4Date) activeStep = 4;
+  else if (now >= step3Date) activeStep = 3;
+  else if (now >= step2Date) activeStep = 2;
+
   return (
     <main className="w-full bg-[#fcf9f5] min-h-screen overflow-x-hidden">
 <ModernHero 
@@ -40,7 +50,7 @@ export default async function EventPage({ params }: { params: Promise<{ locale: 
             {/* Timeline Section */}
             <section className="bg-white rounded-sm p-8 border border-[#d3c5af]/50 shadow-sm">
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 shrink-0 bg-amber-100 rounded-full flex items-center justify-center">
                   <Clock className="w-6 h-6 text-amber-700" />
                 </div>
                 <h2 className={`${montserrat.className} text-3xl font-bold text-slate-900`}>{t('timelineTitle')}</h2>
@@ -48,33 +58,33 @@ export default async function EventPage({ params }: { params: Promise<{ locale: 
               
               <div className="relative border-l-2 border-amber-200 ml-6 space-y-8 pb-4">
                 <div className="relative">
-                  <div className="absolute -left-[35px] bg-amber-500 w-4 h-4 rounded-full border-4 border-white shadow"></div>
+                  <div className={`absolute -left-[35px] w-4 h-4 rounded-full border-4 border-white shadow ${activeStep >= 1 ? 'bg-amber-500' : 'bg-slate-300'}`}></div>
                   <div className="pl-6">
-                    <span className="text-sm font-bold text-amber-600 block mb-1">{t('timeline1Date')}</span>
+                    <span className={`text-sm font-bold block mb-1 ${activeStep >= 1 ? 'text-amber-600' : 'text-slate-500'}`}>{t('timeline1Date')}</span>
                     <h3 className="text-xl font-bold text-slate-800">{t('timeline1Title')}</h3>
                     <p className="text-slate-600 mt-2">{t('timeline1Desc')}</p>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[35px] bg-slate-300 w-4 h-4 rounded-full border-4 border-white shadow"></div>
+                  <div className={`absolute -left-[35px] w-4 h-4 rounded-full border-4 border-white shadow ${activeStep >= 2 ? 'bg-amber-500' : 'bg-slate-300'}`}></div>
                   <div className="pl-6">
-                    <span className="text-sm font-bold text-slate-500 block mb-1">{t('timeline2Date')}</span>
+                    <span className={`text-sm font-bold block mb-1 ${activeStep >= 2 ? 'text-amber-600' : 'text-slate-500'}`}>{t('timeline2Date')}</span>
                     <h3 className="text-xl font-bold text-slate-800">{t('timeline2Title')}</h3>
                     <p className="text-slate-600 mt-2">{t('timeline2Desc')}</p>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[35px] bg-slate-300 w-4 h-4 rounded-full border-4 border-white shadow"></div>
+                  <div className={`absolute -left-[35px] w-4 h-4 rounded-full border-4 border-white shadow ${activeStep >= 3 ? 'bg-amber-500' : 'bg-slate-300'}`}></div>
                   <div className="pl-6">
-                    <span className="text-sm font-bold text-slate-500 block mb-1">{t('timeline3Date')}</span>
+                    <span className={`text-sm font-bold block mb-1 ${activeStep >= 3 ? 'text-amber-600' : 'text-slate-500'}`}>{t('timeline3Date')}</span>
                     <h3 className="text-xl font-bold text-slate-800">{t('timeline3Title')}</h3>
                     <p className="text-slate-600 mt-2">{t('timeline3Desc')}</p>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[35px] bg-slate-300 w-4 h-4 rounded-full border-4 border-white shadow"></div>
+                  <div className={`absolute -left-[35px] w-4 h-4 rounded-full border-4 border-white shadow ${activeStep >= 4 ? 'bg-amber-500' : 'bg-slate-300'}`}></div>
                   <div className="pl-6">
-                    <span className="text-sm font-bold text-slate-500 block mb-1">{t('timeline4Date')}</span>
+                    <span className={`text-sm font-bold block mb-1 ${activeStep >= 4 ? 'text-amber-600' : 'text-slate-500'}`}>{t('timeline4Date')}</span>
                     <h3 className="text-xl font-bold text-slate-800">{t('timeline4Title')}</h3>
                     <p className="text-slate-600 mt-2">{t('timeline4Desc')}</p>
                   </div>
