@@ -21,8 +21,6 @@ type EventData = {
   organizer?: string;
 };
 
-import Link from 'next/link';
-
 export default function EventTable({ 
   initialData,
   currentPage = 1,
