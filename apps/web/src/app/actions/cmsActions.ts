@@ -177,6 +177,9 @@ export async function updateSiteSettings(formData: FormData) {
     facebook_url: formData.get('facebook_url'),
     instagram_url: formData.get('instagram_url'),
     youtube_url: formData.get('youtube_url'),
+    page_about: formData.get('page_about'),
+    page_privacy: formData.get('page_privacy'),
+    page_terms: formData.get('page_terms'),
     updated_at: new Date().toISOString(),
   };
 

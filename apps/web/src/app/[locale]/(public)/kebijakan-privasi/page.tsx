@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { setRequestLocale } from 'next-intl/server';
+import { getSiteSettings } from '@/app/actions/cmsActions';
 import { Montserrat } from 'next/font/google';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '700', '900'] });
@@ -7,6 +8,8 @@ const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '700', '900'
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const settings = await getSiteSettings();
+  const pageContent = settings?.page_privacy;
   
   return (
     <main className="w-full bg-[#f8f9fa] min-h-[70vh] pb-32">
@@ -20,12 +23,13 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         <h1 className={`${montserrat.className} text-3xl md:text-5xl font-bold text-slate-900 mb-6`}>Kebijakan Privasi</h1>
         
         <div className="bg-white p-8 md:p-12 rounded-sm shadow-sm border border-slate-200">
-          <p className="text-slate-600 leading-relaxed mb-6">
-            Kebijakan privasi dan perlindungan data pengunjung.
-          </p>
-          <p className="text-slate-600 leading-relaxed italic">
-            Halaman ini masih dalam tahap pengembangan. Konten lengkap akan segera ditambahkan.
-          </p>
+          {pageContent ? (
+            <div className="prose prose-slate max-w-none prose-headings:font-display prose-a:text-amber-600" dangerouslySetInnerHTML={{ __html: pageContent }} />
+          ) : (
+            <p className="text-slate-600 leading-relaxed italic">
+              Halaman ini masih dalam tahap pengembangan. Konten lengkap akan segera ditambahkan.
+            </p>
+          )}
         </div>
       </div>
     </main>
