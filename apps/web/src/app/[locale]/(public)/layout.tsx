@@ -54,9 +54,9 @@ export default async function PublicLayout({
             </div>
             <div className="flex flex-col gap-4">
               <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 mb-2">{tFooter('info')}</h4>
-              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href="#">{tFooter('about')}</Link>
-              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href="#">{tFooter('privacy')}</Link>
-              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href="#">{tFooter('terms')}</Link>
+              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href={locale === "en" ? "/en/tentang-kami" : "/tentang-kami"}>{tFooter('about')}</Link>
+              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href={locale === "en" ? "/en/kebijakan-privasi" : "/kebijakan-privasi"}>{tFooter('privacy')}</Link>
+              <Link className="text-slate-600 hover:text-amber-700 transition-colors text-sm" href={locale === "en" ? "/en/syarat-ketentuan" : "/syarat-ketentuan"}>{tFooter('terms')}</Link>
             </div>
             <div className="flex flex-col gap-4 col-span-2 md:col-span-1">
               <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 mb-2">{tFooter('contact')}</h4>
