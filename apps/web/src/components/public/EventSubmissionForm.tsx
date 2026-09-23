@@ -515,7 +515,7 @@ export default function EventSubmissionForm() {
         {/* STEP 1: INFORMASI EVENT */}
         <div data-step="1" className={currentStep === 1 ? 'block animate-in fade-in slide-in-from-right-4 duration-300' : 'hidden'}>
           <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2 border-b border-gray-200 pb-3">
-            <Star className="w-5 h-5 text-amber-500" />
+            <FileText className="w-5 h-5 text-amber-500" />
             {STEPS[0]}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
