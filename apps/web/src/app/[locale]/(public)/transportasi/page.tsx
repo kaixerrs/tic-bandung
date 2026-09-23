@@ -22,6 +22,14 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       
 
 
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-8 pb-4 relative z-10">
+        <div className="flex items-center gap-2 text-sm text-slate-500 font-medium mb-8">
+          <Link href={`/${locale}`} className="hover:text-blue-600 transition-colors">Beranda</Link>
+          <span className="text-slate-300">/</span>
+          <span className="text-slate-900 font-bold">{t('heroTitle')}</span>
+        </div>
+      </div>
+
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
         
         {/* Modern Bento Grid Layout */}
@@ -29,7 +37,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           
           {/* Card 1: Whoosh (Image Card) */}
           <ScrollReveal className="md:col-span-2 h-full">
-          <div className="bg-slate-900 h-full rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group relative">
+          <div className="bg-slate-900 h-full rounded-sm overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group relative">
             <Image fill sizes="(max-width: 768px) 100vw, 50vw" src="/ASET VISUAL/Whoosh.jpg" className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" alt="{locale === 'en' ? 'Fast Train' : 'Kereta Cepat'} Whoosh" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/10 to-transparent"></div>
             
@@ -49,7 +57,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </ScrollReveal>
 
           {/* Card 2: Bandros (Image Card) */}
-          <div className="md:col-span-2 bg-slate-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group relative">
+          <div className="md:col-span-2 bg-slate-900 rounded-sm overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] group relative">
             <Image fill sizes="(max-width: 768px) 100vw, 50vw" src="/ASET VISUAL/bandros.jpg" className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" alt="Bandros" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/10 to-transparent"></div>
             
@@ -68,7 +76,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </div>
 
           {/* Card 3: Transportasi Online (Image Card) */}
-          <div className="lg:col-span-1 bg-slate-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 group relative">
+          <div className="lg:col-span-1 bg-slate-900 rounded-sm overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 group relative">
             <Image fill sizes="(max-width: 768px) 100vw, 50vw" src="/ASET VISUAL/transportasi-online.jpg" className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" alt="Transportasi Online" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
             
@@ -84,7 +92,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </div>
 
           {/* Card 4: Boseh (Image Card) */}
-          <div className="lg:col-span-1 bg-slate-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 group relative">
+          <div className="lg:col-span-1 bg-slate-900 rounded-sm overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 group relative">
             <Image fill sizes="(max-width: 768px) 100vw, 50vw" src="/ASET VISUAL/boseh.jpg" className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" alt="Boseh Bike Sharing" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
             
@@ -103,7 +111,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </div>
 
           {/* Card 5: DAMRI & Angkot */}
-          <div className="col-span-2 md:col-span-2 bg-white rounded-2xl p-5 md:p-10 border border-slate-100/80 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 relative overflow-hidden group">
+          <div className="col-span-2 md:col-span-2 bg-white rounded-sm p-5 md:p-10 border border-slate-100/80 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-50 rounded-bl-[100px] -z-10 transition-transform group-hover:scale-110"></div>
             <div className="flex flex-col h-full justify-between">
               <div>

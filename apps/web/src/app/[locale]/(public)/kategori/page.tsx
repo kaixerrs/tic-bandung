@@ -47,8 +47,12 @@ export default async function KategoriPage({ params }: { params: Promise<{ local
     <main className="w-full bg-[#fcf9f5] min-h-screen overflow-x-hidden">
 
 
-      <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="w-full h-[1px] bg-gradient-to-r from-slate-200 via-slate-300 to-transparent my-4"></div>
+      <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 pt-8 pb-4">
+        <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
+          <Link href={`/${locale}`} className="hover:text-blue-600 transition-colors">Beranda</Link>
+          <span className="text-slate-300">/</span>
+          <span className="text-slate-900 font-bold">{t('breadcrumb')}</span>
+        </div>
       </div>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 py-12">
