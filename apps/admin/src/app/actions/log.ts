@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { checkIsSuperAdmin } from "./admin";
 import { revalidatePath } from "next/cache";
 
@@ -22,7 +23,13 @@ export async function logAdminAction(
     let admin_avatar = null;
 
     if (user?.id) {
-      const { data: roleData } = await supabase
+      // Use service role key to bypass RLS for fetching admin profile
+      const adminSupabase = createSupabaseClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      );
+      
+      const { data: roleData } = await adminSupabase
         .from('admin_roles')
         .select('display_name, avatar_url')
         .eq('user_id', user.id)
