@@ -1013,8 +1013,8 @@ export default function EventSubmissionForm() {
               <p className="text-xs text-gray-500 mb-4">{t('letterDesc')}</p>
               <input type="file" name="commitment_letter_file" accept=".pdf,.doc,.docx" required onChange={(e) => {
     const file = e.target.files?.[0];
-    if (file && file.size > 1 * 1024 * 1024) {
-      toast.error('Ukuran surat maksimal 1 MB');
+    if (file && file.size > 2 * 1024 * 1024) {
+      toast.error('Ukuran surat maksimal 2 MB');
       e.target.value = '';
     }
   }} className="w-full px-4 py-2.5 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-white hover:file:bg-amber-600 cursor-pointer" />
