@@ -284,7 +284,7 @@ export default function EventSubmissionForm() {
       const fileInput = formRef.current.querySelector('input[name="commitment_letter_file"]') as HTMLInputElement;
       if (fileInput?.files && fileInput.files[0]) {
         if (fileInput.files[0].size > 2 * 1024 * 1024) {
-          setErrorMsg("Ukuran file Surat Kesediaan maksimal 2 MB.");
+          setErrorMsg("Ukuran file Surat Kesediaan maksimal 1 MB.");
           return false;
         }
       } else {
@@ -389,15 +389,35 @@ export default function EventSubmissionForm() {
       if (s.file) formData.append(`sponsor_file_${idx}`, s.file);
     });
 
-    const result = await submitEventFormAction(formData);
+    try {
+      // Hitung total ukuran file untuk mencegah Vercel 4.5MB limit
+      let totalSize = 0;
+      for (const [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          totalSize += value.size;
+        }
+      }
+      
+      if (totalSize > 4 * 1024 * 1024) {
+        setIsSubmitting(false);
+        toast.error('Total ukuran semua file melebihi 4MB. Mohon kompres gambar/PDF Anda sebelum mengunggah.');
+        return;
+      }
 
-    setIsSubmitting(false);
+      const result = await submitEventFormAction(formData);
 
-    if (result.error) {
-      toast.error(result.error);
-    } else {
-      setIsSuccess(true);
-      localStorage.removeItem('event_form_draft');
+      setIsSubmitting(false);
+
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        setIsSuccess(true);
+        localStorage.removeItem('event_form_draft');
+      }
+    } catch (error: any) {
+      setIsSubmitting(false);
+      console.error(error);
+      toast.error('Terjadi kesalahan jaringan atau ukuran file terlalu besar. Mohon coba lagi.');
     }
   };
 
@@ -592,8 +612,8 @@ export default function EventSubmissionForm() {
               <div className="border-2 border-dashed border-gray-300 rounded-sm p-8 text-center bg-gray-50 hover:bg-gray-100 transition-colors relative">
                 <input type="file" accept="image/png, image/jpeg, image/webp" required className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => {
     const file = e.target.files?.[0];
-    if (file && file.size > 2 * 1024 * 1024) {
-      toast.error('Ukuran thumbnail maksimal 2 MB');
+    if (file && file.size > 1 * 1024 * 1024) {
+      toast.error('Ukuran thumbnail maksimal 1 MB');
       e.target.value = '';
       setThumbnailFile(null);
     } else {
@@ -993,8 +1013,8 @@ export default function EventSubmissionForm() {
               <p className="text-xs text-gray-500 mb-4">{t('letterDesc')}</p>
               <input type="file" name="commitment_letter_file" accept=".pdf,.doc,.docx" required onChange={(e) => {
     const file = e.target.files?.[0];
-    if (file && file.size > 2 * 1024 * 1024) {
-      toast.error('Ukuran surat maksimal 2 MB');
+    if (file && file.size > 1 * 1024 * 1024) {
+      toast.error('Ukuran surat maksimal 1 MB');
       e.target.value = '';
     }
   }} className="w-full px-4 py-2.5 bg-gray-50 data-[filled]:bg-white data-[filled]:text-gray-900 border border-gray-200 data-[filled]:valid:border-amber-500 data-[filled]:invalid:border-red-500 data-[filled]:invalid:text-red-900 data-[filled]:invalid:bg-red-50 focus:invalid:border-red-500 rounded-sm text-gray-900 placeholder-slate-500 outline-none focus:border-amber-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-white hover:file:bg-amber-600 cursor-pointer" />
