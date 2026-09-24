@@ -17,11 +17,29 @@ export async function logAdminAction(
     
     // Allow anonymous admin actions fallback for dev if needed
     const admin_email = user?.email || "admin@ticbandung.com";
+    
+    let admin_name = null;
+    let admin_avatar = null;
+
+    if (user?.id) {
+      const { data: roleData } = await supabase
+        .from('admin_roles')
+        .select('display_name, avatar_url')
+        .eq('user_id', user.id)
+        .single();
+        
+      if (roleData) {
+        admin_name = roleData.display_name;
+        admin_avatar = roleData.avatar_url;
+      }
+    }
 
     const { error } = await supabase
       .from('admin_logs')
       .insert({
         admin_email,
+        admin_name,
+        admin_avatar,
         action,
         entity,
         entity_name

@@ -108,11 +108,18 @@ export default async function AdminLogsPage(
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-[#3D7A5E]/10 flex items-center justify-center">
-                            <User className="w-3.5 h-3.5 text-[#3D7A5E]" />
+                        <div className="flex items-center gap-3">
+                          {log.admin_avatar ? (
+                            <img src={log.admin_avatar} alt="Admin avatar" className="w-8 h-8 rounded-full object-cover" />
+                          ) : (
+                            <div className="w-8 h-8 rounded-full bg-[#3D7A5E]/10 flex items-center justify-center flex-shrink-0">
+                              <User className="w-4 h-4 text-[#3D7A5E]" />
+                            </div>
+                          )}
+                          <div className="flex flex-col">
+                            <span className="font-medium text-gray-800">{log.admin_name || log.admin_email.split('@')[0]}</span>
+                            <span className="text-xs text-gray-500">{log.admin_email}</span>
                           </div>
-                          <span className="font-medium text-gray-700">{log.admin_email}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
