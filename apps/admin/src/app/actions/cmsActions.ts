@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { logAdminAction } from './log';
 import { requireAdminAuth } from './admin';
+import { sanitizeHtml } from '@/utils/sanitize';
 
 async function revalidateFrontend(path = '/') {
   try {
@@ -94,9 +95,9 @@ export async function createNewsArticle(formData: FormData) {
     image_url: formData.get('image_url'),
     thumbnail_url: formData.get('thumbnail_url'),
     color_theme: formData.get('color_theme'),
-    content: formData.get('content'),
+    content: sanitizeHtml(formData.get('content') as string),
     title_en: formData.get('title_en'),
-    content_en: formData.get('content_en'),
+    content_en: sanitizeHtml(formData.get('content_en') as string),
     slug: slug,
     images: formData.get('images') ? JSON.parse(formData.get('images') as string) : []
   }]);
@@ -120,9 +121,9 @@ export async function updateNewsArticle(id: string, formData: FormData) {
     image_url: formData.get('image_url'),
     thumbnail_url: formData.get('thumbnail_url'),
     color_theme: formData.get('color_theme'),
-    content: formData.get('content'),
+    content: sanitizeHtml(formData.get('content') as string),
     title_en: formData.get('title_en'),
-    content_en: formData.get('content_en'),
+    content_en: sanitizeHtml(formData.get('content_en') as string),
     images: formData.get('images') ? JSON.parse(formData.get('images') as string) : []
   }).eq('id', id);
   if (error) return { error: error.message };
@@ -326,9 +327,9 @@ export async function createFAQ(formData: FormData) {
   const supabase = await createClient();
   const { error } = await supabase.from('faqs').insert([{
     question: formData.get('question'),
-    answer: formData.get('answer'),
+    answer: sanitizeHtml(formData.get('answer') as string),
     question_en: formData.get('question_en'),
-    answer_en: formData.get('answer_en'),
+    answer_en: sanitizeHtml(formData.get('answer_en') as string),
     is_active: formData.get('is_active') === 'on',
     order_num: parseInt(formData.get('order_num')?.toString() || '0')
   }]);
@@ -345,9 +346,9 @@ export async function updateFAQ(id: string, formData: FormData) {
   const supabase = await createClient();
   const { error } = await supabase.from('faqs').update({
     question: formData.get('question'),
-    answer: formData.get('answer'),
+    answer: sanitizeHtml(formData.get('answer') as string),
     question_en: formData.get('question_en'),
-    answer_en: formData.get('answer_en'),
+    answer_en: sanitizeHtml(formData.get('answer_en') as string),
     is_active: formData.get('is_active') === 'on',
     order_num: parseInt(formData.get('order_num')?.toString() || '0')
   }).eq('id', id);

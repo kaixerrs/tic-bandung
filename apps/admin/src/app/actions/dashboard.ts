@@ -2,14 +2,16 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { requireAdminAuth } from './admin';
 
 export async function deleteDestinationAction(id: string) {
   const supabase = await createClient();
 
   // NFR-12: Ensure admin auth
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return { error: 'Unauthorized' };
+  try {
+    await requireAdminAuth();
+  } catch (err: any) {
+    return { error: err.message };
   }
 
   // First, get the images so we can delete them from storage
@@ -55,9 +57,10 @@ export async function togglePublishStatusAction(id: string, currentStatus: strin
   const supabase = await createClient();
 
   // NFR-12: Ensure admin auth
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return { error: 'Unauthorized' };
+  try {
+    await requireAdminAuth();
+  } catch (err: any) {
+    return { error: err.message };
   }
 
   const newStatus = currentStatus === 'published' ? 'draft' : 'published';

@@ -13,6 +13,24 @@ const supabaseAdmin = createClient(
   }
 );
 
+
+// Utility to check magic bytes for security (Priority 8)
+async function isValidFile(file: File): Promise<boolean> {
+  if (file.size === 0) return true;
+  const arr = new Uint8Array(await file.slice(0, 4).arrayBuffer());
+  const header = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+  
+  if (header.startsWith('25504446')) return true; // PDF
+  if (header.startsWith('FFD8FF')) return true; // JPEG
+  if (header === '89504E47') return true; // PNG
+  if (header === '52494646') return true; // WEBP/RIFF
+  if (header === '504B0304') return true; // DOCX/ZIP
+  if (header.startsWith('3C3F786D') || header.startsWith('3C737667')) return true; // SVG (XML or SVG)
+  if (header.startsWith('47494638')) return true; // GIF
+  
+  return false;
+}
+
 export async function POST(request: Request) {
   try {
     // 1. SECURITY CHECK: Must be authenticated
@@ -29,6 +47,11 @@ export async function POST(request: Request) {
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+    }
+
+    const isValid = await isValidFile(file);
+    if (!isValid) {
+      return NextResponse.json({ error: 'Format file tidak valid / magic bytes salah.' }, { status: 400 });
     }
 
     // 2. SECURITY CHECK: File Size Limit (Max 5MB)

@@ -32,12 +32,16 @@ export default async function middleware(request: NextRequest) {
     'X-Content-Type-Options': 'nosniff',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-    'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Resource-Policy': 'same-origin',
   };
 
   Object.entries(securityHeaders).forEach(([key, value]) => {
     intlResponse.headers.set(key, value);
   });
+  
+  intlResponse.headers.delete("X-Powered-By");
 
   return intlResponse;
 }

@@ -1,5 +1,6 @@
 "use server";
 import { requireAdminAuth } from './admin';
+import { sanitizeHtml } from '@/utils/sanitize';
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -25,7 +26,7 @@ export async function createDestinationAction(formData: FormData) {
     const ticket_type = formData.get("ticket_type") as string;
     const ticket_nominal = formData.get("ticket_nominal") ? parseInt(formData.get("ticket_nominal") as string) : null;
     const opening_hours = formData.get("opening_hours") as string;
-    const content = formData.get("content") as string;
+    const content = sanitizeHtml(formData.get("content") as string);
     const founded_year = formData.get("founded_year") ? parseInt(formData.get("founded_year") as string) : null;
     const source_photo_credit = formData.get("source_photo_credit") as string;
     const status = formData.get("status") as string;
@@ -111,7 +112,7 @@ export async function updateDestinationAction(id: string, formData: FormData) {
     const ticket_type = formData.get("ticket_type") as string;
     const ticket_nominal = formData.get("ticket_nominal") ? parseInt(formData.get("ticket_nominal") as string) : null;
     const opening_hours = formData.get("opening_hours") as string;
-    const content = formData.get("content") as string;
+    const content = sanitizeHtml(formData.get("content") as string);
     const founded_year = formData.get("founded_year") ? parseInt(formData.get("founded_year") as string) : null;
     const source_photo_credit = formData.get("source_photo_credit") as string;
     const status = formData.get("status") as string;
