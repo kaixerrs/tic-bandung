@@ -150,6 +150,10 @@ export default function AdminLayoutWrapper({
 
 
           <NavGroup title="Informasi" id="informasi">
+            <Link href="/admin/faq" className={navLinkClass('/admin/faq')}>
+              <HelpCircle className="w-5 h-5" />
+              <span className="font-medium text-sm">Manajemen FAQ</span>
+            </Link>
             <Link href="/admin/informasi/tentang-kami" className={navLinkClass('/admin/informasi/tentang-kami')}>
               <Info className="w-5 h-5" />
               <span className="font-medium text-sm">Tentang Kami</span>
