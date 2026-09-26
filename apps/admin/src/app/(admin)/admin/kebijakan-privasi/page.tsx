@@ -2,6 +2,8 @@ import { getSiteSettings } from '@/app/actions/cmsActions';
 import InformasiClient from '@/components/admin/cms/InformasiClient';
 import { Info } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Kebijakan Privasi | Admin TIC',
 };

@@ -3,6 +3,8 @@ import PengaturanClient from '@/components/admin/cms/PengaturanClient';
 import { Settings } from 'lucide-react';
 import { getSiteSettings } from '@/app/actions/cmsActions';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Site Settings | Admin TIC',
 };

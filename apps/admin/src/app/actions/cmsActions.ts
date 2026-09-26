@@ -202,7 +202,6 @@ export async function deleteGallery(id: string) {
 
 export async function getSiteSettings() {
   try {
-    await requireAdminAuth();
     const supabase = await createClient();
     const { data, error } = await supabase
       .from('site_settings')
@@ -216,7 +215,7 @@ export async function getSiteSettings() {
     }
     return data;
   } catch (err) {
-    console.error('Auth or other error in getSiteSettings:', err);
+    console.error('Error in getSiteSettings:', err);
     return null;
   }
 }
