@@ -395,7 +395,9 @@ export async function updateStaticPage(field: 'page_about' | 'page_privacy' | 'p
     return { error: error.message };
   }
 
-  revalidatePath('/admin/informasi');
+  revalidatePath('/admin/tentang-kami');
+  revalidatePath('/admin/kebijakan-privasi');
+  revalidatePath('/admin/syarat-ketentuan');
   await logAdminAction('UPDATE', 'SETTINGS', `Halaman ${field}`);
   
   // Revalidate frontend

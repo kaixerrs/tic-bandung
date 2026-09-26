@@ -173,18 +173,19 @@ export async function updateLastSeen() {
 
 export async function requireAdminAuth() {
   const supabase = await createServerClient();
-  const { data: { user }, error } = await supabase.auth.getUser();
-  if (error || !user) {
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if (error || !session?.user) {
     throw new Error("Unauthorized. Security validation failed.");
   }
-  return user;
+  return session.user;
 }
 
 
 export async function getCurrentAdminProfile() {
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { data: null };
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return { data: null };
+  const user = session.user;
 
   const { data } = await supabase
     .from('admin_roles')

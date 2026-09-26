@@ -154,15 +154,15 @@ export default function AdminLayoutWrapper({
               <HelpCircle className="w-5 h-5" />
               <span className="font-medium text-sm">Manajemen FAQ</span>
             </Link>
-            <Link href="/admin/informasi/tentang-kami" className={navLinkClass('/admin/informasi/tentang-kami')}>
+            <Link href="/admin/tentang-kami" className={navLinkClass('/admin/tentang-kami')}>
               <Info className="w-5 h-5" />
               <span className="font-medium text-sm">Tentang Kami</span>
             </Link>
-            <Link href="/admin/informasi/kebijakan-privasi" className={navLinkClass('/admin/informasi/kebijakan-privasi')}>
+            <Link href="/admin/kebijakan-privasi" className={navLinkClass('/admin/kebijakan-privasi')}>
               <Info className="w-5 h-5" />
               <span className="font-medium text-sm">Kebijakan Privasi</span>
             </Link>
-            <Link href="/admin/informasi/syarat-ketentuan" className={navLinkClass('/admin/informasi/syarat-ketentuan')}>
+            <Link href="/admin/syarat-ketentuan" className={navLinkClass('/admin/syarat-ketentuan')}>
               <Info className="w-5 h-5" />
               <span className="font-medium text-sm">Syarat & Ketentuan</span>
             </Link>
