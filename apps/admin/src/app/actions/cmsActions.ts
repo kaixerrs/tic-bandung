@@ -1,4 +1,4 @@
-﻿'use server';
+'use server';
 
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -201,19 +201,24 @@ export async function deleteGallery(id: string) {
 // --- SITE SETTINGS ---
 
 export async function getSiteSettings() {
-  await requireAdminAuth();
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('site_settings')
-    .select('*')
-    .limit(1)
-    .single();
+  try {
+    await requireAdminAuth();
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('*')
+      .limit(1)
+      .single();
 
-  if (error) {
-    console.error('Error fetching site settings:', error);
+    if (error) {
+      console.error('Error fetching site settings:', error);
+      return null;
+    }
+    return data;
+  } catch (err) {
+    console.error('Auth or other error in getSiteSettings:', err);
     return null;
   }
-  return data;
 }
 
 export async function updateSiteSettings(formData: FormData) {
