@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 import { updateStaticPage } from '@/app/actions/cmsActions';
 
-const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false, loading: () => <div className="w-full h-64 bg-gray-50 border border-gray-200 rounded-xl animate-pulse flex items-center justify-center text-gray-400">Memuat Editor...</div> });
 
 interface InformasiClientProps {
   title: string;
