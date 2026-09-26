@@ -109,7 +109,11 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
     ...h,
     title: locale === 'en' && h.title_en ? h.title_en : h.title,
     subtitle: locale === 'en' && h.subtitle_en ? h.subtitle_en : h.subtitle,
-  })) : defaultSliders;
+  })) : defaultSliders.map(h => ({
+    ...h,
+    title: locale === 'en' && h.title_en ? h.title_en : h.title,
+    subtitle: locale === 'en' && h.subtitle_en ? h.subtitle_en : h.subtitle,
+  }));
 
   // Default fallback data for news if empty
   const defaultNews = [
@@ -118,6 +122,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       category: "Tips Liburan", 
       color_theme: "emerald",
       title: "Panduan Lengkap Wisata Keluarga di Kota Bandung Akhir Pekan",
+      title_en: "Complete Guide for Family Vacation in Bandung this Weekend",
       date_published: "2026-08-12T00:00:00Z",
       image_url: null
     },
@@ -126,6 +131,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       category: "Tourism Update", 
       color_theme: "blue",
       title: "Persiapan Kota Bandung Menyambut Konferensi Internasional 2027",
+      title_en: "Bandung's Preparation for the 2027 International Conference",
       date_published: "2026-08-10T00:00:00Z",
       image_url: null
     },
@@ -134,6 +140,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       category: "Kuliner Lokal", 
       color_theme: "amber",
       title: "5 Kafe Legendaris di Jalan Braga yang Wajib Anda Kunjungi",
+      title_en: "5 Legendary Cafes in Braga Street You Must Visit",
       date_published: "2026-08-08T00:00:00Z",
       image_url: null
     }
@@ -149,7 +156,10 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
     ...n,
     title: locale === 'en' && n.title_en ? n.title_en : n.title,
     content: locale === 'en' && n.content_en ? n.content_en : n.content,
-  })) : defaultNews;
+  })) : defaultNews.map(n => ({
+    ...n,
+    title: locale === 'en' && n.title_en ? n.title_en : n.title,
+  }));
 
   return (
     <main className="min-h-screen bg-background overflow-hidden relative">

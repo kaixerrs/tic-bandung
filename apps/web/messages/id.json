@@ -241,7 +241,8 @@
     "hours": "Jam",
     "mins": "Menit",
     "secs": "Detik",
-    "closed": "Ditutup: 15 September 2026, 23:59 WIB"
+    "closed": "Ditutup: 15 September 2026, 23:59 WIB",
+    "deadlineText": "Ditutup: 25 Oktober 2026, 23:59 WIB"
   },
   "Footer": {
     "slogan": "Jelajahi Keindahan, Budaya, dan Kuliner Autentik di Kota Bandung.",

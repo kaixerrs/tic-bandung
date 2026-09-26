@@ -241,7 +241,8 @@
     "hours": "Hours",
     "mins": "Mins",
     "secs": "Secs",
-    "closed": "Closes: September 15 2026, 23:59 WIB"
+    "closed": "Closes: September 15 2026, 23:59 WIB",
+    "deadlineText": "Closed: October 25, 2026, 23:59 WIB"
   },
   "Footer": {
     "slogan": "Explore the Beauty, Culture, and Authentic Culinary of Bandung City.",

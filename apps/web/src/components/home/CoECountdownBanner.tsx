@@ -76,7 +76,7 @@ export default function CoECountdownBanner() {
             href="/event" 
             className="inline-flex items-center justify-center gap-2 bg-[#C9971E] hover:bg-amber-600 active:scale-95 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-amber-500/20"
           >
-            Daftar Sekarang <ArrowRight className="w-5 h-5" />
+            {t('registerNow')} <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
 
@@ -125,7 +125,7 @@ export default function CoECountdownBanner() {
           </div>
           
           <div className="mt-6 text-center text-xs text-slate-600 font-bold bg-slate-200/50 py-2 rounded-sm">
-            Ditutup: 25 Oktober 2026, 23:59 WIB
+            {t('deadlineText')}
           </div>
         </div>
         

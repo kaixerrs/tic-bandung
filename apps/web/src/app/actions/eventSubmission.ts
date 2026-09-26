@@ -5,6 +5,28 @@ import { revalidatePath } from "next/cache";
 
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
+
+// Utility to check magic bytes for security (Priority 8)
+async function isValidFile(file: File): Promise<boolean> {
+  if (file.size === 0) return true;
+  const arr = new Uint8Array(await file.slice(0, 4).arrayBuffer());
+  const header = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+  
+  // Valid headers:
+  // PDF: 25504446
+  // JPEG: FFD8FFE0, FFD8FFE1, FFD8FFEE, FFD8FFDB
+  // PNG: 89504E47
+  // WEBP: 52494646 (RIFF) ... 57454250 (WEBP)
+  // ZIP/DOCX: 504B0304
+  if (header.startsWith('25504446')) return true; // PDF
+  if (header.startsWith('FFD8FF')) return true; // JPEG
+  if (header === '89504E47') return true; // PNG
+  if (header === '52494646') return true; // WEBP or generic RIFF
+  if (header === '504B0304') return true; // DOCX/ZIP
+  
+  return false;
+}
+
 export async function submitEventFormAction(formData: FormData) {
   const supabase = createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -59,6 +81,13 @@ export async function submitEventFormAction(formData: FormData) {
     // File Uploads
     const uploadFile = async (file: File | null, prefix: string): Promise<string> => {
       if (!file || file.size === 0) return "";
+      
+      // Magic Bytes Validation
+      const isValid = await isValidFile(file);
+      if (!isValid) {
+        console.error(`Invalid file type detected for ${file.name}`);
+        throw new Error(`File ${file.name} memiliki format yang tidak didukung atau rusak.`);
+      }
       const fileExt = file.name.split('.').pop();
       const fileName = `${prefix}_${Date.now()}.${fileExt}`;
       const { error } = await supabase.storage.from('event_submissions').upload(fileName, file);

@@ -30,6 +30,7 @@ export async function createCategoryAction(formData: FormData) {
     }
 
     const { data, error } = await supabase
+    
       .from("categories")
       .insert({
         name,

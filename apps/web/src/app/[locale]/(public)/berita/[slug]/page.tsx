@@ -13,8 +13,9 @@ import BeritaActionButtons from "@/components/public/BeritaActionButtons";
 const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "700", "900"] });
 
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }) {
   const resolvedParams = await params;
+  const locale = resolvedParams.locale;
   const supabase = await createClient();
   
   const { data: news } = await supabase
@@ -24,13 +25,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .single();
 
   if (!news) return {};
+  
+  const title = resolvedParams.locale === 'en' && news.title_en ? news.title_en : news.title;
+  const excerpt = resolvedParams.locale === 'en' && news.excerpt_en ? news.excerpt_en : news.excerpt;
 
   return {
-    title: `${news.title} | Berita TIC Kota Bandung`,
-    description: news.excerpt || news.title,
+    title: `${title} | Berita TIC Kota Bandung`,
+    description: excerpt || title,
     openGraph: {
-      title: news.title,
-      description: news.excerpt || news.title,
+      title,
+      description: excerpt || title,
       url: `https://ticbandung.com/id/berita/${news.slug}`,
       type: "article",
       publishedTime: news.date_published,
@@ -40,27 +44,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
           url: news.image_url || "/logo/tic-og-image.jpg",
           width: 1200,
           height: 630,
-          alt: news.title,
+          alt: title,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: news.title,
-      description: news.excerpt || news.title,
+      title,
+      description: excerpt || title,
       images: [news.image_url || "/logo/tic-og-image.jpg"],
     },
   };
 }
 
-export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
   const resolvedParams = await params;
+  const locale = resolvedParams.locale;
   const supabase = await createClient();
 
   
   const { data: otherNews } = await supabase
     .from("news_articles")
-    .select("title, slug, date_published, image_url")
+    .select("title, title_en, slug, date_published, image_url")
     .neq("slug", resolvedParams.slug)
     .order("date_published", { ascending: false })
     .limit(3);
@@ -77,8 +82,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
     notFound();
   }
 
-  const cleanHTML = (news.content || "").replace(/&nbsp;/g, ' ');
-  const formattedDate = new Date(news.date_published).toLocaleDateString('id-ID', {
+    const finalTitle = locale === 'en' && news.title_en ? news.title_en : news.title;
+  const finalContent = locale === 'en' && news.content_en ? news.content_en : news.content;
+  const cleanHTML = (finalContent || "").replace(/&nbsp;/g, ' ');
+  const formattedDate = new Date(news.date_published).toLocaleDateString(locale === 'en' ? 'en-US' : 'id-ID', {
     day: 'numeric', month: 'long', year: 'numeric'
   });
 
@@ -86,7 +93,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    "headline": news.title,
+    "headline": finalTitle,
     "image": [news.image_url || "https://ticbandung.com/logo/tic-og-image.jpg"],
     "datePublished": news.date_published,
     "dateModified": news.updated_at || news.date_published,
@@ -110,7 +117,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
       <section className="relative w-full h-[45vh] md:h-[70vh] bg-black">
         <Image
           src={news.image_url || "/hero-bg.webp"}
-          alt={news.title || "Berita"}
+          alt={finalTitle || "Berita"}
           fill
           className="object-cover opacity-60"
           priority
@@ -124,7 +131,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
               <ChevronRight className="w-4 h-4" />
               <Link className="hover:text-white transition-colors" href="/#berita">Berita & Artikel</Link>
               <ChevronRight className="w-4 h-4" />
-              <span className="text-white truncate max-w-[200px] md:max-w-xs">{news.title}</span>
+              <span className="text-white truncate max-w-[200px] md:max-w-xs">{finalTitle}</span>
             </nav>
 
             <ScrollReveal>
@@ -160,7 +167,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                 </div>
                 <div>
                   <p className="font-bold text-slate-900">{news.author || 'Admin TIC Bandung'}</p>
-                  <p className="text-sm text-slate-500">{news.author_role || 'Tim Redaksi'}</p>
+                  <p className="text-sm text-slate-500">{news.author_role || (locale === 'en' ? 'Editorial Team' : 'Tim Redaksi')}</p>
                 </div>
               </div>
               
@@ -180,7 +187,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
           {/* Gallery Section */}
           {news.images && news.images.length > 0 && (
             <div className="mt-16 pt-8 border-t border-[#d3c5af]/30">
-              <h3 className={`${montserrat.className} text-2xl font-bold text-slate-900 mb-6`}>Galeri Foto</h3>
+              <h3 className={`${montserrat.className} text-2xl font-bold text-slate-900 mb-6`}>{locale === 'en' ? 'Photo Gallery' : 'Galeri Foto'}</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {news.images.map((img: string, i: number) => (
                   <ScrollReveal key={i} delay={i * 0.1}>
@@ -193,14 +200,14 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                       />
                     </div>
                   </ScrollReveal>
-                ))}
+                )} )}
               </div>
             </div>
           )}
 
           <div className="mt-16 pt-8 border-t border-[#d3c5af]/30">
             <Link href="/" className="inline-flex items-center gap-2 text-[#3D7A5E] font-bold hover:text-[#2c5c45] transition-colors">
-              <ArrowLeft className="w-5 h-5" /> Kembali ke Beranda
+              <ArrowLeft className="w-5 h-5" /> {locale === 'en' ? 'Back to Home' : 'Kembali ke Beranda'}
             </Link>
           </div>
         </div>
@@ -212,39 +219,41 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             {/* Newsletter / CTA Box */}
             <div className="bg-[#3D7A5E] rounded-xl md:rounded-sm p-5 md:p-8 text-white mb-6 md:mb-10 shadow-lg relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
-              <h3 className={`${montserrat.className} text-xl font-bold mb-3 relative z-10`}>Jelajahi Bandung!</h3>
-              <p className="text-white/80 text-sm mb-6 relative z-10 leading-relaxed">Temukan destinasi wisata terbaik dan nikmati pengalaman liburan tak terlupakan di Kota Kembang.</p>
-              <Link href="/#destinasi" className="block w-full py-3 bg-white text-[#3D7A5E] font-bold text-center rounded-xl hover:bg-[#fcf9f5] transition-colors relative z-10 shadow-md">
-                Lihat Destinasi
+              <h3 className={`${montserrat.className} text-xl font-bold mb-3 relative z-10`}>{locale === 'en' ? 'Explore Bandung!' : 'Jelajahi Bandung!'}</h3>
+              <p className="text-white/80 text-sm mb-6 relative z-10 leading-relaxed">{locale === 'en' ? 'Discover the best tourist destinations and enjoy an unforgettable holiday experience in the City of Flowers.' : 'Temukan destinasi wisata terbaik dan nikmati pengalaman liburan tak terlupakan di Kota Kembang.'}</p>
+              <Link href={locale === "en" ? "/en#destinasi" : "/#destinasi"} className="block w-full py-3 bg-white text-[#3D7A5E] font-bold text-center rounded-xl hover:bg-[#fcf9f5] transition-colors relative z-10 shadow-md">
+                {locale === 'en' ? 'View Destinations' : 'Lihat Destinasi'}
               </Link>
             </div>
 
             {/* Other News */}
             <h3 className={`${montserrat.className} text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2`}>
-              Baca Juga
+              {locale === 'en' ? 'Read Also' : 'Baca Juga'}
             </h3>
             
             <div className="flex flex-col gap-6">
-              {otherNews && otherNews.map((item, i) => (
+              {otherNews && otherNews.map((item, i) => {
+                const itemTitle = locale === 'en' && item.title_en ? item.title_en : item.title;
+                return (
                 <Link href={`/berita/${item.slug}`} key={i} className="group flex gap-4 items-center bg-white p-3 rounded-sm shadow-sm border border-[#d3c5af]/30 hover:shadow-md transition-all">
                   <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0">
                     <Image 
                       src={item.image_url || "/hero-bg.webp"} 
-                      alt={item.title}
+                      alt={itemTitle}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
                   <div className="flex-1">
                     <p className="text-xs text-[#3D7A5E] font-bold mb-1 line-clamp-1">
-                      {new Date(item.date_published).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(item.date_published).toLocaleDateString(locale === 'en' ? 'en-US' : 'id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                     </p>
                     <h4 className={`${montserrat.className} text-sm font-bold text-slate-900 leading-snug group-hover:text-[#3D7A5E] transition-colors line-clamp-2`}>
-                      {item.title}
+                      {itemTitle}
                     </h4>
                   </div>
                 </Link>
-              ))}
+              )} )}
             </div>
 
           </div>
