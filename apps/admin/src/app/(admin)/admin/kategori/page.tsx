@@ -2,6 +2,8 @@ import { createClient } from "@/utils/supabase/server";
 import { FolderTree } from "lucide-react";
 import CategoryListClient from "@/components/admin/CategoryListClient";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Manajemen Kategori | Admin TIC Kota Bandung",
 };

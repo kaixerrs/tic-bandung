@@ -5,6 +5,8 @@ import EventTable from "@/components/admin/EventTable";
 import SystemInfoCard from "@/components/admin/cms/SystemInfoCard";
 import { checkIsSuperAdmin } from "@/app/actions/admin";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Dashboard | TIC Kota Bandung',
 };

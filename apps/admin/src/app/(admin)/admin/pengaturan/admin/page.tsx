@@ -6,6 +6,8 @@ import AdminManagementClient from '@/components/admin/AdminManagementClient';
 import { ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminManagementPage() {
   const isSuperAdmin = await checkIsSuperAdmin();
   

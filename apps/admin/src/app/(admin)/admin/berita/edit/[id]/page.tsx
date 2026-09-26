@@ -5,6 +5,8 @@ import BeritaForm from "@/components/admin/cms/BeritaForm";
 import Link from "next/link";
 import { ArrowLeft, BookOpen } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Edit Berita | TIC Kota Bandung',
 };

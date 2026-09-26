@@ -2,6 +2,8 @@ import LoginForm from "@/components/admin/LoginForm";
 import { Montserrat } from 'next/font/google';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '700', '900'] });
 
 export const metadata = {

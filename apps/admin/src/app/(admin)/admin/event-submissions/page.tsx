@@ -2,6 +2,8 @@ import { createClient } from "@/utils/supabase/server";
 import { Inbox } from "lucide-react";
 import EventSubmissionTable from "@/components/admin/EventSubmissionTable";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Pendaftaran Event Masuk | TIC Kota Bandung',
 };

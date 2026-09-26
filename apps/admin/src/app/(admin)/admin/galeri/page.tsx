@@ -2,6 +2,8 @@ import { createClient } from '@/utils/supabase/server';
 import { Camera } from 'lucide-react';
 import { AddGaleriButton, EditGaleriButton, DeleteGaleriButton } from '@/components/admin/cms/GaleriClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Manajemen Galeri Visual | Admin TIC',
 };

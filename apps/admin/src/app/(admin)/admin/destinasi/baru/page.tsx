@@ -3,6 +3,8 @@ import { createClient } from "@/utils/supabase/server";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Tambah Destinasi Baru | Admin TIC Kota Bandung",
 };

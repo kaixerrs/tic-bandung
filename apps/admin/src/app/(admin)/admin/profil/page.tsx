@@ -3,6 +3,8 @@ import { getCurrentAdminProfile } from '@/app/actions/admin';
 import AdminProfileForm from '@/components/admin/AdminProfileForm';
 import { User, Shield } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Profil Admin | TIC Kota Bandung',
 };

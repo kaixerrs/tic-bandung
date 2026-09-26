@@ -4,6 +4,8 @@ import DestinationForm from "@/components/admin/DestinationForm";
 import { MapPin, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Edit Destinasi | TIC Kota Bandung',
 };

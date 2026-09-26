@@ -3,6 +3,8 @@ import { createClient } from '@/utils/supabase/server';
 import { requireAdminAuth } from '@/app/actions/admin';
 import FAQClientPage from './FAQClientPage';
 
+export const dynamic = 'force-dynamic';
+
 export default async function FAQPage() {
   await requireAdminAuth();
   const supabase = await createClient();

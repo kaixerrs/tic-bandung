@@ -2,6 +2,8 @@ import { createClient } from '@/utils/supabase/server';
 import { Image as ImageIcon } from 'lucide-react';
 import { AddHeroButton, EditHeroButton, DeleteHeroButton } from '@/components/admin/cms/HeroSliderClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Manajemen Hero Slider | Admin TIC',
 };

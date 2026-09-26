@@ -3,6 +3,8 @@ import { createClient } from "@/utils/supabase/server";
 import { Calendar as CalendarIcon, Plus } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Manajemen Kalender Event | TIC Kota Bandung',
 };

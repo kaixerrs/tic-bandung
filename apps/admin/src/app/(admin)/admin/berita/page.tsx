@@ -2,6 +2,8 @@ import { createClient } from '@/utils/supabase/server';
 import { FileText } from 'lucide-react';
 import { AddBeritaButton, EditBeritaButton, DeleteBeritaButton } from '@/components/admin/cms/BeritaClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Manajemen Berita & Artikel | Admin TIC',
 };

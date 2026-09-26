@@ -2,6 +2,8 @@ import React from 'react';
 import { BookOpen, ImageIcon, FileText, Camera, MapPin, Calendar, HelpCircle, AlertCircle, CheckCircle2, ChevronRight, Shield } from 'lucide-react';
 import { checkIsSuperAdmin } from '@/app/actions/admin';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Panduan Penggunaan CMS | Admin TIC',
 };
