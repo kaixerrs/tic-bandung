@@ -22,7 +22,7 @@ export default function CoECountdownBanner() {
     setIsMounted(true);
     // Target date: October 16, 2026, 23:59:59 (End of day)
     // Use the user's current year/month based on the context: 2026-09-15
-    const targetDate = new Date("2026-10-16T23:59:59").getTime();
+    const targetDate = new Date("2026-10-25T23:59:59").getTime();
 
     const updateTimer = () => {
       const now = new Date().getTime();
