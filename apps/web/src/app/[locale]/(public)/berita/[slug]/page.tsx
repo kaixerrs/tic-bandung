@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   const { data: news } = await supabase
     .from("news_articles")
-    .select("title, excerpt, image_url, date_published, slug")
+    .select("title, title_en, excerpt, excerpt_en, image_url, date_published, slug")
     .eq("slug", resolvedParams.slug)
     .single();
 
@@ -200,7 +200,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                       />
                     </div>
                   </ScrollReveal>
-                )} )}
+                ))}
               </div>
             </div>
           )}
@@ -253,7 +253,8 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                     </h4>
                   </div>
                 </Link>
-              )} )}
+                );
+              })}
             </div>
 
           </div>
