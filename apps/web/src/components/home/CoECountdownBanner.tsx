@@ -125,7 +125,7 @@ export default function CoECountdownBanner() {
           </div>
           
           <div className="mt-6 text-center text-xs text-slate-600 font-bold bg-slate-200/50 py-2 rounded-sm">
-            Ditutup: 16 Oktober 2026, 23:59 WIB
+            Ditutup: 25 Oktober 2026, 23:59 WIB
           </div>
         </div>
         
